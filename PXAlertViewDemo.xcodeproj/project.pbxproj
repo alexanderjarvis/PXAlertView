@@ -1,0 +1,490 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA11B68217F3867100236222 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11B68117F3867100236222 /* Foundation.framework */; };
+		FA11B68417F3867100236222 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11B68317F3867100236222 /* CoreGraphics.framework */; };
+		FA11B68617F3867100236222 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11B68517F3867100236222 /* UIKit.framework */; };
+		FA11B68C17F3867100236222 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA11B68A17F3867100236222 /* InfoPlist.strings */; };
+		FA11B68E17F3867100236222 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B68D17F3867100236222 /* main.m */; };
+		FA11B69217F3867100236222 /* PXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B69117F3867100236222 /* PXAppDelegate.m */; };
+		FA11B69517F3867100236222 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA11B69317F3867100236222 /* Main_iPhone.storyboard */; };
+		FA11B69817F3867100236222 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA11B69617F3867100236222 /* Main_iPad.storyboard */; };
+		FA11B69B17F3867100236222 /* PXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B69A17F3867100236222 /* PXViewController.m */; };
+		FA11B69D17F3867100236222 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA11B69C17F3867100236222 /* Images.xcassets */; };
+		FA11B6A417F3867100236222 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11B6A317F3867100236222 /* XCTest.framework */; };
+		FA11B6A517F3867100236222 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11B68117F3867100236222 /* Foundation.framework */; };
+		FA11B6A617F3867100236222 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11B68517F3867100236222 /* UIKit.framework */; };
+		FA11B6AE17F3867100236222 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA11B6AC17F3867100236222 /* InfoPlist.strings */; };
+		FA11B6B017F3867100236222 /* PXAlertViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B6AF17F3867100236222 /* PXAlertViewDemoTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FA11B6A717F3867100236222 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA11B67617F3867100236222 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA11B67D17F3867100236222;
+			remoteInfo = PXAlertViewDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FA11B67E17F3867100236222 /* PXAlertViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PXAlertViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA11B68117F3867100236222 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FA11B68317F3867100236222 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FA11B68517F3867100236222 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FA11B68917F3867100236222 /* PXAlertViewDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PXAlertViewDemo-Info.plist"; sourceTree = "<group>"; };
+		FA11B68B17F3867100236222 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FA11B68D17F3867100236222 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FA11B68F17F3867100236222 /* PXAlertViewDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PXAlertViewDemo-Prefix.pch"; sourceTree = "<group>"; };
+		FA11B69017F3867100236222 /* PXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PXAppDelegate.h; sourceTree = "<group>"; };
+		FA11B69117F3867100236222 /* PXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PXAppDelegate.m; sourceTree = "<group>"; };
+		FA11B69417F3867100236222 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		FA11B69717F3867100236222 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		FA11B69917F3867100236222 /* PXViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PXViewController.h; sourceTree = "<group>"; };
+		FA11B69A17F3867100236222 /* PXViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PXViewController.m; sourceTree = "<group>"; };
+		FA11B69C17F3867100236222 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		FA11B6A217F3867100236222 /* PXAlertViewDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PXAlertViewDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA11B6A317F3867100236222 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		FA11B6AB17F3867100236222 /* PXAlertViewDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PXAlertViewDemoTests-Info.plist"; sourceTree = "<group>"; };
+		FA11B6AD17F3867100236222 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FA11B6AF17F3867100236222 /* PXAlertViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PXAlertViewDemoTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA11B67B17F3867100236222 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA11B68417F3867100236222 /* CoreGraphics.framework in Frameworks */,
+				FA11B68617F3867100236222 /* UIKit.framework in Frameworks */,
+				FA11B68217F3867100236222 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA11B69F17F3867100236222 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA11B6A417F3867100236222 /* XCTest.framework in Frameworks */,
+				FA11B6A617F3867100236222 /* UIKit.framework in Frameworks */,
+				FA11B6A517F3867100236222 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA11B67517F3867100236222 = {
+			isa = PBXGroup;
+			children = (
+				FA11B68717F3867100236222 /* PXAlertViewDemo */,
+				FA11B6A917F3867100236222 /* PXAlertViewDemoTests */,
+				FA11B68017F3867100236222 /* Frameworks */,
+				FA11B67F17F3867100236222 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FA11B67F17F3867100236222 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA11B67E17F3867100236222 /* PXAlertViewDemo.app */,
+				FA11B6A217F3867100236222 /* PXAlertViewDemoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA11B68017F3867100236222 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA11B68117F3867100236222 /* Foundation.framework */,
+				FA11B68317F3867100236222 /* CoreGraphics.framework */,
+				FA11B68517F3867100236222 /* UIKit.framework */,
+				FA11B6A317F3867100236222 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA11B68717F3867100236222 /* PXAlertViewDemo */ = {
+			isa = PBXGroup;
+			children = (
+				FA11B69017F3867100236222 /* PXAppDelegate.h */,
+				FA11B69117F3867100236222 /* PXAppDelegate.m */,
+				FA11B69317F3867100236222 /* Main_iPhone.storyboard */,
+				FA11B69617F3867100236222 /* Main_iPad.storyboard */,
+				FA11B69917F3867100236222 /* PXViewController.h */,
+				FA11B69A17F3867100236222 /* PXViewController.m */,
+				FA11B69C17F3867100236222 /* Images.xcassets */,
+				FA11B68817F3867100236222 /* Supporting Files */,
+			);
+			path = PXAlertViewDemo;
+			sourceTree = "<group>";
+		};
+		FA11B68817F3867100236222 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FA11B68917F3867100236222 /* PXAlertViewDemo-Info.plist */,
+				FA11B68A17F3867100236222 /* InfoPlist.strings */,
+				FA11B68D17F3867100236222 /* main.m */,
+				FA11B68F17F3867100236222 /* PXAlertViewDemo-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FA11B6A917F3867100236222 /* PXAlertViewDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				FA11B6AF17F3867100236222 /* PXAlertViewDemoTests.m */,
+				FA11B6AA17F3867100236222 /* Supporting Files */,
+			);
+			path = PXAlertViewDemoTests;
+			sourceTree = "<group>";
+		};
+		FA11B6AA17F3867100236222 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FA11B6AB17F3867100236222 /* PXAlertViewDemoTests-Info.plist */,
+				FA11B6AC17F3867100236222 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA11B67D17F3867100236222 /* PXAlertViewDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA11B6B317F3867100236222 /* Build configuration list for PBXNativeTarget "PXAlertViewDemo" */;
+			buildPhases = (
+				FA11B67A17F3867100236222 /* Sources */,
+				FA11B67B17F3867100236222 /* Frameworks */,
+				FA11B67C17F3867100236222 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PXAlertViewDemo;
+			productName = PXAlertViewDemo;
+			productReference = FA11B67E17F3867100236222 /* PXAlertViewDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FA11B6A117F3867100236222 /* PXAlertViewDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA11B6B617F3867100236222 /* Build configuration list for PBXNativeTarget "PXAlertViewDemoTests" */;
+			buildPhases = (
+				FA11B69E17F3867100236222 /* Sources */,
+				FA11B69F17F3867100236222 /* Frameworks */,
+				FA11B6A017F3867100236222 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA11B6A817F3867100236222 /* PBXTargetDependency */,
+			);
+			name = PXAlertViewDemoTests;
+			productName = PXAlertViewDemoTests;
+			productReference = FA11B6A217F3867100236222 /* PXAlertViewDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA11B67617F3867100236222 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = PX;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = panaxiom;
+				TargetAttributes = {
+					FA11B6A117F3867100236222 = {
+						TestTargetID = FA11B67D17F3867100236222;
+					};
+				};
+			};
+			buildConfigurationList = FA11B67917F3867100236222 /* Build configuration list for PBXProject "PXAlertViewDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FA11B67517F3867100236222;
+			productRefGroup = FA11B67F17F3867100236222 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA11B67D17F3867100236222 /* PXAlertViewDemo */,
+				FA11B6A117F3867100236222 /* PXAlertViewDemoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FA11B67C17F3867100236222 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA11B69817F3867100236222 /* Main_iPad.storyboard in Resources */,
+				FA11B69D17F3867100236222 /* Images.xcassets in Resources */,
+				FA11B69517F3867100236222 /* Main_iPhone.storyboard in Resources */,
+				FA11B68C17F3867100236222 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA11B6A017F3867100236222 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA11B6AE17F3867100236222 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA11B67A17F3867100236222 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA11B69B17F3867100236222 /* PXViewController.m in Sources */,
+				FA11B69217F3867100236222 /* PXAppDelegate.m in Sources */,
+				FA11B68E17F3867100236222 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA11B69E17F3867100236222 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA11B6B017F3867100236222 /* PXAlertViewDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FA11B6A817F3867100236222 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA11B67D17F3867100236222 /* PXAlertViewDemo */;
+			targetProxy = FA11B6A717F3867100236222 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FA11B68A17F3867100236222 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA11B68B17F3867100236222 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FA11B69317F3867100236222 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA11B69417F3867100236222 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		FA11B69617F3867100236222 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA11B69717F3867100236222 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		FA11B6AC17F3867100236222 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA11B6AD17F3867100236222 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FA11B6B117F3867100236222 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FA11B6B217F3867100236222 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FA11B6B417F3867100236222 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PXAlertViewDemo/PXAlertViewDemo-Prefix.pch";
+				INFOPLIST_FILE = "PXAlertViewDemo/PXAlertViewDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FA11B6B517F3867100236222 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PXAlertViewDemo/PXAlertViewDemo-Prefix.pch";
+				INFOPLIST_FILE = "PXAlertViewDemo/PXAlertViewDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		FA11B6B717F3867100236222 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PXAlertViewDemo.app/PXAlertViewDemo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PXAlertViewDemo/PXAlertViewDemo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "PXAlertViewDemoTests/PXAlertViewDemoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		FA11B6B817F3867100236222 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PXAlertViewDemo.app/PXAlertViewDemo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PXAlertViewDemo/PXAlertViewDemo-Prefix.pch";
+				INFOPLIST_FILE = "PXAlertViewDemoTests/PXAlertViewDemoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA11B67917F3867100236222 /* Build configuration list for PBXProject "PXAlertViewDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA11B6B117F3867100236222 /* Debug */,
+				FA11B6B217F3867100236222 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA11B6B317F3867100236222 /* Build configuration list for PBXNativeTarget "PXAlertViewDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA11B6B417F3867100236222 /* Debug */,
+				FA11B6B517F3867100236222 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		FA11B6B617F3867100236222 /* Build configuration list for PBXNativeTarget "PXAlertViewDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA11B6B717F3867100236222 /* Debug */,
+				FA11B6B817F3867100236222 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA11B67617F3867100236222 /* Project object */;
+}
