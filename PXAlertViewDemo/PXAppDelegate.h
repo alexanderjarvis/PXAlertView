@@ -3,7 +3,7 @@
 //  PXAlertViewDemo
 //
 //  Created by Alex Jarvis on 25/09/2013.
-//  Copyright (c) 2013 panaxiom. All rights reserved.
+//  Copyright (c) 2013 Panaxiom Ltd. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
