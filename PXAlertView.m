@@ -18,6 +18,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 @property (nonatomic) UIView *backgroundView;
 @property (nonatomic) UIView *alertView;
 @property (nonatomic) UILabel *titleLabel;
+@property (nonatomic) UIView *contentView;
 @property (nonatomic) UILabel *messageLabel;
 @property (nonatomic) UIButton *cancelButton;
 @property (nonatomic) UIButton *otherButton;
@@ -32,11 +33,11 @@ static const CGFloat AlertViewButtonHeight = 44;
                  message:(NSString *)message
              cancelTitle:(NSString *)cancelTitle
               otherTitle:(NSString *)otherTitle
+             contentView:(UIView *)contentView
               completion:(void(^) (BOOL cancelled))completion
 {
     self = [super init];
     if (self) {
-        // Initialization code
         UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
         self.frame = keyWindow.bounds;
         
@@ -62,12 +63,28 @@ static const CGFloat AlertViewButtonHeight = 44;
         _titleLabel.textColor = [UIColor whiteColor];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.font = [UIFont boldSystemFontOfSize:17];
+        _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _titleLabel.numberOfLines = 0;
         _titleLabel.frame = [self adjustLabelFrameHeight:self.titleLabel];
         [_alertView addSubview:_titleLabel];
         
+        CGFloat messageLabelY = _titleLabel.frame.origin.y + _titleLabel.frame.size.height + AlertViewVerticalElementSpace;
+        
+        // Optional Content View
+        if (contentView) {
+            _contentView = contentView;
+            _contentView.frame = CGRectMake(0,
+                                            messageLabelY,
+                                            _contentView.frame.size.width,
+                                            _contentView.frame.size.height);
+            _contentView.center = CGPointMake(AlertViewWidth/2, _contentView.center.y);
+            [_alertView addSubview:_contentView];
+            messageLabelY += contentView.frame.size.height + AlertViewVerticalElementSpace;
+        }
+        
         // Message
         _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
-                                                                  _titleLabel.frame.origin.y + _titleLabel.frame.size.height + AlertViewVerticalElementSpace,
+                                                                  messageLabelY,
                                                                   AlertViewWidth - AlertViewContentMargin*2,
                                                                   44)];
         _messageLabel.text = message;
@@ -127,13 +144,15 @@ static const CGFloat AlertViewButtonHeight = 44;
         [_alertView addSubview:_cancelButton];
         
         _alertView.bounds = CGRectMake(0, 0, AlertViewWidth, 150);
-        _alertView.center = CGPointMake(CGRectGetMidX(keyWindow.bounds), CGRectGetMidY(keyWindow.bounds));
         
-        _completion = completion;
+        if (completion) {
+            _completion = completion;
+        }
         
         [self setupGestures];
-        
         [self resizeViews];
+        
+        _alertView.center = CGPointMake(CGRectGetMidX(keyWindow.bounds), CGRectGetMidY(keyWindow.bounds));
     }
     return self;
 }
@@ -175,7 +194,9 @@ static const CGFloat AlertViewButtonHeight = 44;
         } else {
             cancelled = NO;
         }
-        self.completion(cancelled);
+        if (self.completion) {
+            self.completion(cancelled);
+        }
     }];
 }
 
@@ -194,6 +215,20 @@ static const CGFloat AlertViewButtonHeight = 44;
 + (void)showAlertWithTitle:(NSString *)title
                    message:(NSString *)message
                cancelTitle:(NSString *)cancelTitle
+                completion:(void(^) (BOOL cancelled))completion
+{
+    PXAlertView *alertView = [[PXAlertView alloc] initAlertWithTitle:title
+                                                             message:message
+                                                         cancelTitle:cancelTitle
+                                                          otherTitle:nil
+                                                         contentView:nil
+                                                          completion:completion];
+    [alertView show];
+}
+
++ (void)showAlertWithTitle:(NSString *)title
+                   message:(NSString *)message
+               cancelTitle:(NSString *)cancelTitle
                 otherTitle:(NSString *)otherTitle
                 completion:(void(^) (BOOL cancelled))completion
 {
@@ -201,6 +236,23 @@ static const CGFloat AlertViewButtonHeight = 44;
                                                              message:message
                                                          cancelTitle:cancelTitle
                                                           otherTitle:otherTitle
+                                                         contentView:nil
+                                                          completion:completion];
+    [alertView show];
+}
+
++ (void)showAlertWithTitle:(NSString *)title
+                   message:(NSString *)message
+               cancelTitle:(NSString *)cancelTitle
+                otherTitle:(NSString *)otherTitle
+               contentView:(UIView *)view
+                completion:(void(^) (BOOL cancelled))completion
+{
+    PXAlertView *alertView = [[PXAlertView alloc] initAlertWithTitle:title
+                                                             message:message
+                                                         cancelTitle:cancelTitle
+                                                          otherTitle:otherTitle
+                                                         contentView:view
                                                           completion:completion];
     [alertView show];
 }

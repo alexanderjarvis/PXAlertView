@@ -23,6 +23,7 @@
 		FA11B6AE17F3867100236222 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA11B6AC17F3867100236222 /* InfoPlist.strings */; };
 		FA11B6B017F3867100236222 /* PXAlertViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B6AF17F3867100236222 /* PXAlertViewDemoTests.m */; };
 		FA11B6BB17F386A600236222 /* PXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B6BA17F386A600236222 /* PXAlertView.m */; };
+		FADF87D717F99E950059B2B8 /* ExampleImage.png in Resources */ = {isa = PBXBuildFile; fileRef = FADF87D617F99E950059B2B8 /* ExampleImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		FA11B6AF17F3867100236222 /* PXAlertViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PXAlertViewDemoTests.m; sourceTree = "<group>"; };
 		FA11B6B917F386A600236222 /* PXAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PXAlertView.h; sourceTree = "<group>"; };
 		FA11B6BA17F386A600236222 /* PXAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PXAlertView.m; sourceTree = "<group>"; };
+		FADF87D617F99E950059B2B8 /* ExampleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ExampleImage.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				FA11B69917F3867100236222 /* PXViewController.h */,
 				FA11B69A17F3867100236222 /* PXViewController.m */,
 				FA11B69C17F3867100236222 /* Images.xcassets */,
+				FADF87D617F99E950059B2B8 /* ExampleImage.png */,
 				FA11B68817F3867100236222 /* Supporting Files */,
 			);
 			path = PXAlertViewDemo;
@@ -247,6 +250,7 @@
 			files = (
 				FA11B69817F3867100236222 /* Main_iPad.storyboard in Resources */,
 				FA11B69D17F3867100236222 /* Images.xcassets in Resources */,
+				FADF87D717F99E950059B2B8 /* ExampleImage.png in Resources */,
 				FA11B69517F3867100236222 /* Main_iPhone.storyboard in Resources */,
 				FA11B68C17F3867100236222 /* InfoPlist.strings in Resources */,
 			);

@@ -13,7 +13,19 @@
 + (void)showAlertWithTitle:(NSString *)title
                    message:(NSString *)message
                cancelTitle:(NSString *)cancelTitle
+                completion:(void(^) (BOOL cancelled))completion;
+
++ (void)showAlertWithTitle:(NSString *)title
+                   message:(NSString *)message
+               cancelTitle:(NSString *)cancelTitle
                 otherTitle:(NSString *)otherTitle
+                completion:(void(^) (BOOL cancelled))completion;
+
++ (void)showAlertWithTitle:(NSString *)title
+                   message:(NSString *)message
+               cancelTitle:(NSString *)cancelTitle
+                otherTitle:(NSString *)otherTitle
+               contentView:(UIView *)view
                 completion:(void(^) (BOOL cancelled))completion;
 
 @end

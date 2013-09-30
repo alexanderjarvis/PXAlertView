@@ -31,7 +31,6 @@
     [PXAlertView showAlertWithTitle:@"Hello World"
                             message:@"Oh my this looks like a nice message."
                         cancelTitle:@"Ok"
-                         otherTitle:nil
                          completion:^(BOOL cancelled) {
                              if (cancelled) {
                                  NSLog(@"Simple Alert View cancelled");
@@ -41,12 +40,11 @@
                          }];
 }
 
-- (IBAction)showLargerAlertView:(id)sender
+- (IBAction)showLargeAlertView:(id)sender
 {
-    [PXAlertView showAlertWithTitle:@"Why this is a larger title!"
+    [PXAlertView showAlertWithTitle:@"Why this is a larger title! Even larger than the largest large thing that ever was large in a very large way."
                             message:@"Oh my this looks like a nice message. Yes it does, and it can span multiple lines... all the way down."
                         cancelTitle:@"Ok thanks, that's grand"
-                         otherTitle:nil
                          completion:^(BOOL cancelled) {
                              if (cancelled) {
                                  NSLog(@"Larger Alert View cancelled");
@@ -69,6 +67,28 @@
                                  NSLog(@"Other (Red) button pressed");
                              }
                          }];
+}
+
+- (IBAction)showAlertViewWithContentView:(id)sender
+{
+    [PXAlertView showAlertWithTitle:@"A picture should appear below"
+                            message:@"Yay, it works!"
+                        cancelTitle:@"Ok"
+                         otherTitle:nil
+                        contentView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ExampleImage.png"]]
+                         completion:^(BOOL cancelled) {
+                         }];
+}
+
+- (IBAction)showLargeUIAlertView:(id)sender;
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Some really long title that should wrap to two lines at least. But does it cut off after a certain number of lines? Does it? Does it really? And then what? Does it truncate? Nooo it still hasn't cut off yet. Wow this AlertView can take a lot of characters."
+                               message:@"How long does the standard UIAlertView stretch to? This should give a good estimation"
+                              delegate:self
+                     cancelButtonTitle:@"Cancel"
+                     otherButtonTitles:@"Ok", nil];
+    //[self.view addSubview:alertView];
+    [alertView show];
 }
 
 @end
