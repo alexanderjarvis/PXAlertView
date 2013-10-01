@@ -98,7 +98,6 @@
                      cancelButtonTitle:@"Cancel"
                      otherButtonTitles:@"Ok", nil];
     [alertView show];
-    [[UIApplication sharedApplication] windows];
 }
 
 @end
