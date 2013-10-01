@@ -132,7 +132,11 @@ static const CGFloat AlertViewButtonHeight = 44;
         
         // Buttons
         _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_cancelButton setTitle:cancelTitle forState:UIControlStateNormal];
+        if (cancelTitle) {
+            [_cancelButton setTitle:cancelTitle forState:UIControlStateNormal];
+        } else {
+            [_cancelButton setTitle:NSLocalizedString(@"Ok", nil) forState:UIControlStateNormal];
+        }
         _cancelButton.backgroundColor = [UIColor clearColor];
         
         [_cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -192,6 +196,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 - (void)_show
 {
     [self.alertWindow makeKeyAndVisible];
+    self.visible = YES;
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
         self.mainWindow.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
         [self.mainWindow tintColorDidChange];
@@ -206,6 +211,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 
 - (void)dismiss:(id)sender
 {
+    self.visible = NO;
     [self dismissAlertAnimation];
     
     [UIView animateWithDuration:0.2 animations:^{
@@ -249,7 +255,25 @@ static const CGFloat AlertViewButtonHeight = 44;
 
 #pragma mark - public
 
-+ (void)showAlertWithTitle:(NSString *)title
++ (PXAlertView *)showAlertWithTitle:(NSString *)title
+{
+    return [PXAlertView showAlertWithTitle:title message:nil cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
+}
+
++ (PXAlertView *)showAlertWithTitle:(NSString *)title
+                   message:(NSString *)message
+{
+    return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
+}
+
++ (PXAlertView *)showAlertWithTitle:(NSString *)title
+                   message:(NSString *)message
+                completion:(void(^) (BOOL cancelled))completion
+{
+    return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:completion];
+}
+
++ (PXAlertView *)showAlertWithTitle:(NSString *)title
                    message:(NSString *)message
                cancelTitle:(NSString *)cancelTitle
                 completion:(void(^) (BOOL cancelled))completion
@@ -261,9 +285,10 @@ static const CGFloat AlertViewButtonHeight = 44;
                                                          contentView:nil
                                                           completion:completion];
     [alertView show];
+    return alertView;
 }
 
-+ (void)showAlertWithTitle:(NSString *)title
++ (PXAlertView *)showAlertWithTitle:(NSString *)title
                    message:(NSString *)message
                cancelTitle:(NSString *)cancelTitle
                 otherTitle:(NSString *)otherTitle
@@ -276,9 +301,10 @@ static const CGFloat AlertViewButtonHeight = 44;
                                                          contentView:nil
                                                           completion:completion];
     [alertView show];
+    return alertView;
 }
 
-+ (void)showAlertWithTitle:(NSString *)title
++ (PXAlertView *)showAlertWithTitle:(NSString *)title
                    message:(NSString *)message
                cancelTitle:(NSString *)cancelTitle
                 otherTitle:(NSString *)otherTitle
@@ -292,6 +318,7 @@ static const CGFloat AlertViewButtonHeight = 44;
                                                          contentView:view
                                                           completion:completion];
     [alertView show];
+    return alertView;
 }
 
 #pragma mark - gestures
