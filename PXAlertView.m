@@ -8,8 +8,19 @@
 
 #import "PXAlertView.h"
 
-static const CGFloat AlertViewWidth = 250.0;
-static const CGFloat AlertViewContentMargin = 5;
+@interface PXAlertViewQueue : NSObject
+
+@property (nonatomic) NSMutableArray *alertViews;
+
++ (PXAlertViewQueue *)sharedInstance;
+
+- (void)add:(PXAlertView *)alertView;
+- (void)remove:(PXAlertView *)alertView;
+
+@end
+
+static const CGFloat AlertViewWidth = 270.0;
+static const CGFloat AlertViewContentMargin = 7;
 static const CGFloat AlertViewVerticalElementSpace = 10;
 static const CGFloat AlertViewButtonHeight = 44;
 
@@ -31,6 +42,17 @@ static const CGFloat AlertViewButtonHeight = 44;
 
 @implementation PXAlertView
 
+- (UIWindow *)mainWindow
+{
+    NSArray *windows = [[UIApplication sharedApplication] windows];
+    for (UIWindow *window in windows) {
+        if (window.windowLevel == UIWindowLevelNormal) {
+            return window;
+        }
+    }
+    return nil;
+}
+
 - (id)initAlertWithTitle:(NSString *)title
                  message:(NSString *)message
              cancelTitle:(NSString *)cancelTitle
@@ -40,9 +62,10 @@ static const CGFloat AlertViewButtonHeight = 44;
 {
     self = [super init];
     if (self) {
-        _mainWindow = [[UIApplication sharedApplication] keyWindow];
+        _mainWindow = [self mainWindow];
         _alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
         _alertWindow.windowLevel = UIWindowLevelAlert;
+        [_alertWindow addSubview:self];
         self.frame = _alertWindow.bounds;
         
         _backgroundView = [[UIView alloc] initWithFrame:_alertWindow.bounds];
@@ -163,14 +186,18 @@ static const CGFloat AlertViewButtonHeight = 44;
 
 - (void)show
 {
-    [self.alertWindow addSubview:self];
+    [[PXAlertViewQueue sharedInstance] add:self];
+}
+
+- (void)_show
+{
     [self.alertWindow makeKeyAndVisible];
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
-        self.alertWindow.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
-        [self.alertWindow tintColorDidChange];
+        self.mainWindow.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+        [self.mainWindow tintColorDidChange];
     }
     
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         self.backgroundView.alpha = 1;
     }];
     
@@ -185,9 +212,8 @@ static const CGFloat AlertViewButtonHeight = 44;
         self.backgroundView.alpha = 0;
         self.alertView.alpha = 0;
         if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
-            UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-            keyWindow.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
-            [keyWindow tintColorDidChange];
+            self.mainWindow.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
+            [self.mainWindow tintColorDidChange];
         }
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
@@ -202,6 +228,12 @@ static const CGFloat AlertViewButtonHeight = 44;
         if (self.completion) {
             self.completion(cancelled);
         }
+        
+        double delayInSeconds = .1;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [[PXAlertViewQueue sharedInstance] remove:self];
+        });
     }];
 }
 
@@ -308,7 +340,7 @@ static const CGFloat AlertViewButtonHeight = 44;
     animation.keyTimes = @[ @0, @0.5, @1 ];
     animation.fillMode = kCAFillModeForwards;
     animation.removedOnCompletion = NO;
-    animation.duration = .2;
+    animation.duration = .3;
     
     [self.alertView.layer addAnimation:animation forKey:@"showAlert"];
 }
@@ -325,6 +357,39 @@ static const CGFloat AlertViewButtonHeight = 44;
     animation.duration = .2;
     
     [self.alertView.layer addAnimation:animation forKey:@"dismissAlert"];
+}
+
+@end
+
+@implementation PXAlertViewQueue
+
++ (instancetype)sharedInstance
+{
+    static PXAlertViewQueue *_sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedInstance = [[PXAlertViewQueue alloc] init];
+        _sharedInstance.alertViews = [NSMutableArray array];
+    });
+    
+    return _sharedInstance;
+}
+
+- (void)add:(PXAlertView *)alertView
+{
+    [self.alertViews addObject:alertView];
+    if ([self.alertViews count] == 1) {
+        [alertView _show];
+    }
+}
+
+- (void)remove:(PXAlertView *)alertView
+{
+    [self.alertViews removeObject:alertView];
+    PXAlertView *first = [self.alertViews firstObject];
+    if (first) {
+        [first _show];
+    }
 }
 
 @end

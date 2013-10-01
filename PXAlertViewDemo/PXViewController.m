@@ -80,6 +80,16 @@
                          }];
 }
 
+- (IBAction)show5StackedAlertViews:(id)sender
+{
+    for (int i = 1; i <= 5; i++) {
+        [PXAlertView showAlertWithTitle:[NSString stringWithFormat:@"Hello %@", @(i)]
+                                message:@"Oh my this looks like a nice message."
+                            cancelTitle:@"Ok"
+                             completion:^(BOOL cancelled) {}];
+    }
+}
+
 - (IBAction)showLargeUIAlertView:(id)sender;
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Some really long title that should wrap to two lines at least. But does it cut off after a certain number of lines? Does it? Does it really? And then what? Does it truncate? Nooo it still hasn't cut off yet. Wow this AlertView can take a lot of characters."
@@ -87,8 +97,8 @@
                               delegate:self
                      cancelButtonTitle:@"Cancel"
                      otherButtonTitles:@"Ok", nil];
-    //[self.view addSubview:alertView];
     [alertView show];
+    [[UIApplication sharedApplication] windows];
 }
 
 @end
