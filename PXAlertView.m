@@ -15,6 +15,8 @@ static const CGFloat AlertViewButtonHeight = 44;
 
 @interface PXAlertView ()
 
+@property (nonatomic) UIWindow *mainWindow;
+@property (nonatomic) UIWindow *alertWindow;
 @property (nonatomic) UIView *backgroundView;
 @property (nonatomic) UIView *alertView;
 @property (nonatomic) UILabel *titleLabel;
@@ -38,10 +40,12 @@ static const CGFloat AlertViewButtonHeight = 44;
 {
     self = [super init];
     if (self) {
-        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-        self.frame = keyWindow.bounds;
+        _mainWindow = [[UIApplication sharedApplication] keyWindow];
+        _alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _alertWindow.windowLevel = UIWindowLevelAlert;
+        self.frame = _alertWindow.bounds;
         
-        _backgroundView = [[UIView alloc] initWithFrame:keyWindow.bounds];
+        _backgroundView = [[UIView alloc] initWithFrame:_alertWindow.bounds];
         _backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.25];
         _backgroundView.alpha = 0;
         [self addSubview:_backgroundView];
@@ -152,18 +156,18 @@ static const CGFloat AlertViewButtonHeight = 44;
         [self setupGestures];
         [self resizeViews];
         
-        _alertView.center = CGPointMake(CGRectGetMidX(keyWindow.bounds), CGRectGetMidY(keyWindow.bounds));
+        _alertView.center = CGPointMake(CGRectGetMidX(_alertWindow.bounds), CGRectGetMidY(_alertWindow.bounds));
     }
     return self;
 }
 
 - (void)show
 {
-    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-    [keyWindow addSubview:self];
+    [self.alertWindow addSubview:self];
+    [self.alertWindow makeKeyAndVisible];
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
-        keyWindow.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
-        [keyWindow tintColorDidChange];
+        self.alertWindow.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+        [self.alertWindow tintColorDidChange];
     }
     
     [UIView animateWithDuration:0.2 animations:^{
@@ -187,6 +191,7 @@ static const CGFloat AlertViewButtonHeight = 44;
         }
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
+        [self.mainWindow makeKeyAndVisible];
         
         BOOL cancelled;
         if (sender == self.cancelButton || sender == self.tap) {
