@@ -42,15 +42,25 @@ static const CGFloat AlertViewButtonHeight = 44;
 
 @implementation PXAlertView
 
-- (UIWindow *)mainWindow
+- (UIWindow *)windowWithLevel:(UIWindowLevel)windowLevel
 {
     NSArray *windows = [[UIApplication sharedApplication] windows];
     for (UIWindow *window in windows) {
-        if (window.windowLevel == UIWindowLevelNormal) {
+        if (window.windowLevel == windowLevel) {
             return window;
         }
     }
     return nil;
+}
+
+- (UIWindow *)mainWindow
+{
+    return [self windowWithLevel:UIWindowLevelNormal];
+}
+
+- (UIWindow *)alertWindow
+{
+    return [self windowWithLevel:UIWindowLevelAlert];
 }
 
 - (id)initAlertWithTitle:(NSString *)title
@@ -63,9 +73,11 @@ static const CGFloat AlertViewButtonHeight = 44;
     self = [super init];
     if (self) {
         _mainWindow = [self mainWindow];
-        _alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _alertWindow.windowLevel = UIWindowLevelAlert;
-        [_alertWindow addSubview:self];
+        _alertWindow = [self alertWindow];
+        if (!_alertWindow) {
+            _alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+            _alertWindow.windowLevel = UIWindowLevelAlert;
+        }
         self.frame = _alertWindow.bounds;
         
         _backgroundView = [[UIView alloc] initWithFrame:_alertWindow.bounds];
@@ -193,47 +205,46 @@ static const CGFloat AlertViewButtonHeight = 44;
     [[PXAlertViewQueue sharedInstance] add:self];
 }
 
-- (void)_show
+- (void)_show:(BOOL)animated
 {
+    [self.alertWindow addSubview:self];
     [self.alertWindow makeKeyAndVisible];
     self.visible = YES;
+    
+    if (animated) {
+        [self showAlertAnimation];
+    }
+}
+
+- (void)showBackgroundView
+{
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
         self.mainWindow.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
         [self.mainWindow tintColorDidChange];
     }
-    
     [UIView animateWithDuration:0.3 animations:^{
         self.backgroundView.alpha = 1;
     }];
-    
-    [self showAlertAnimation];
 }
 
 - (void)dismiss:(id)sender
 {
     self.visible = NO;
-    [self dismissAlertAnimation];
     
-    [UIView animateWithDuration:0.2 animations:^{
-        self.backgroundView.alpha = 0;
-        self.alertView.alpha = 0;
+    if ([[[PXAlertViewQueue sharedInstance] alertViews] count] == 1) {
+        [self dismissAlertAnimation];
         if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
             self.mainWindow.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
             [self.mainWindow tintColorDidChange];
         }
+    }
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.backgroundView.alpha = 0;
+        self.alertView.alpha = 0;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
         [self.mainWindow makeKeyAndVisible];
-        
-        BOOL cancelled;
-        if (sender == self.cancelButton || sender == self.tap) {
-            cancelled = YES;
-        } else {
-            cancelled = NO;
-        }
-        if (self.completion) {
-            self.completion(cancelled);
-        }
         
         double delayInSeconds = .1;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -241,6 +252,16 @@ static const CGFloat AlertViewButtonHeight = 44;
             [[PXAlertViewQueue sharedInstance] remove:self];
         });
     }];
+    
+    BOOL cancelled;
+    if (sender == self.cancelButton || sender == self.tap) {
+        cancelled = YES;
+    } else {
+        cancelled = NO;
+    }
+    if (self.completion) {
+        self.completion(cancelled);
+    }
 }
 
 - (void)setBackgroundColorForButton:(id)sender
@@ -261,22 +282,22 @@ static const CGFloat AlertViewButtonHeight = 44;
 }
 
 + (PXAlertView *)showAlertWithTitle:(NSString *)title
-                   message:(NSString *)message
+                            message:(NSString *)message
 {
     return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
 }
 
 + (PXAlertView *)showAlertWithTitle:(NSString *)title
-                   message:(NSString *)message
-                completion:(void(^) (BOOL cancelled))completion
+                            message:(NSString *)message
+                         completion:(void(^) (BOOL cancelled))completion
 {
     return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:completion];
 }
 
 + (PXAlertView *)showAlertWithTitle:(NSString *)title
-                   message:(NSString *)message
-               cancelTitle:(NSString *)cancelTitle
-                completion:(void(^) (BOOL cancelled))completion
+                            message:(NSString *)message
+                        cancelTitle:(NSString *)cancelTitle
+                         completion:(void(^) (BOOL cancelled))completion
 {
     PXAlertView *alertView = [[PXAlertView alloc] initAlertWithTitle:title
                                                              message:message
@@ -289,10 +310,10 @@ static const CGFloat AlertViewButtonHeight = 44;
 }
 
 + (PXAlertView *)showAlertWithTitle:(NSString *)title
-                   message:(NSString *)message
-               cancelTitle:(NSString *)cancelTitle
-                otherTitle:(NSString *)otherTitle
-                completion:(void(^) (BOOL cancelled))completion
+                            message:(NSString *)message
+                        cancelTitle:(NSString *)cancelTitle
+                         otherTitle:(NSString *)otherTitle
+                         completion:(void(^) (BOOL cancelled))completion
 {
     PXAlertView *alertView = [[PXAlertView alloc] initAlertWithTitle:title
                                                              message:message
@@ -305,11 +326,11 @@ static const CGFloat AlertViewButtonHeight = 44;
 }
 
 + (PXAlertView *)showAlertWithTitle:(NSString *)title
-                   message:(NSString *)message
-               cancelTitle:(NSString *)cancelTitle
-                otherTitle:(NSString *)otherTitle
-               contentView:(UIView *)view
-                completion:(void(^) (BOOL cancelled))completion
+                            message:(NSString *)message
+                        cancelTitle:(NSString *)cancelTitle
+                         otherTitle:(NSString *)otherTitle
+                        contentView:(UIView *)view
+                         completion:(void(^) (BOOL cancelled))completion
 {
     PXAlertView *alertView = [[PXAlertView alloc] initAlertWithTitle:title
                                                              message:message
@@ -406,16 +427,17 @@ static const CGFloat AlertViewButtonHeight = 44;
 {
     [self.alertViews addObject:alertView];
     if ([self.alertViews count] == 1) {
-        [alertView _show];
+        [alertView showBackgroundView];
     }
+    [alertView _show:YES];
 }
 
 - (void)remove:(PXAlertView *)alertView
 {
     [self.alertViews removeObject:alertView];
-    PXAlertView *first = [self.alertViews firstObject];
-    if (first) {
-        [first _show];
+    PXAlertView *last = [self.alertViews lastObject];
+    if (last) {
+        [last _show:NO];
     }
 }
 
