@@ -53,16 +53,6 @@ static const CGFloat AlertViewButtonHeight = 44;
     return nil;
 }
 
-- (UIWindow *)mainWindow
-{
-    return [self windowWithLevel:UIWindowLevelNormal];
-}
-
-- (UIWindow *)alertWindow
-{
-    return [self windowWithLevel:UIWindowLevelAlert];
-}
-
 - (id)initAlertWithTitle:(NSString *)title
                  message:(NSString *)message
              cancelTitle:(NSString *)cancelTitle
@@ -72,8 +62,8 @@ static const CGFloat AlertViewButtonHeight = 44;
 {
     self = [super init];
     if (self) {
-        _mainWindow = [self mainWindow];
-        _alertWindow = [self alertWindow];
+        _mainWindow = [self windowWithLevel:UIWindowLevelNormal];
+        _alertWindow = [self windowWithLevel:UIWindowLevelAlert];
         if (!_alertWindow) {
             _alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
             _alertWindow.windowLevel = UIWindowLevelAlert;
