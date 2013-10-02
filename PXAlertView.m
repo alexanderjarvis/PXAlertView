@@ -195,15 +195,13 @@ static const CGFloat AlertViewButtonHeight = 44;
     [[PXAlertViewQueue sharedInstance] add:self];
 }
 
-- (void)_show:(BOOL)animated
+- (void)_show
 {
     [self.alertWindow addSubview:self];
     [self.alertWindow makeKeyAndVisible];
     self.visible = YES;
-    
-    if (animated) {
-        [self showAlertAnimation];
-    }
+    [self showBackgroundView];
+    [self showAlertAnimation];
 }
 
 - (void)showBackgroundView
@@ -217,6 +215,11 @@ static const CGFloat AlertViewButtonHeight = 44;
     }];
 }
 
+- (void)hide
+{
+    [self removeFromSuperview];
+}
+
 - (void)dismiss:(id)sender
 {
     self.visible = NO;
@@ -227,20 +230,19 @@ static const CGFloat AlertViewButtonHeight = 44;
             self.mainWindow.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
             [self.mainWindow tintColorDidChange];
         }
+        [UIView animateWithDuration:0.2 animations:^{
+            self.backgroundView.alpha = 0;
+            [self.mainWindow makeKeyAndVisible];
+        }];
     }
     
+    
+    
     [UIView animateWithDuration:0.2 animations:^{
-        self.backgroundView.alpha = 0;
         self.alertView.alpha = 0;
     } completion:^(BOOL finished) {
+        [[PXAlertViewQueue sharedInstance] remove:self];
         [self removeFromSuperview];
-        [self.mainWindow makeKeyAndVisible];
-        
-        double delayInSeconds = .1;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [[PXAlertViewQueue sharedInstance] remove:self];
-        });
     }];
     
     BOOL cancelled;
@@ -416,10 +418,12 @@ static const CGFloat AlertViewButtonHeight = 44;
 - (void)add:(PXAlertView *)alertView
 {
     [self.alertViews addObject:alertView];
-    if ([self.alertViews count] == 1) {
-        [alertView showBackgroundView];
+    [alertView _show];
+    for (PXAlertView *av in self.alertViews) {
+        if (av != alertView) {
+            [av hide];
+        }
     }
-    [alertView _show:YES];
 }
 
 - (void)remove:(PXAlertView *)alertView
@@ -427,7 +431,7 @@ static const CGFloat AlertViewButtonHeight = 44;
     [self.alertViews removeObject:alertView];
     PXAlertView *last = [self.alertViews lastObject];
     if (last) {
-        [last _show:NO];
+        [last _show];
     }
 }
 
