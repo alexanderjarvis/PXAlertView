@@ -20,7 +20,7 @@
 @end
 
 static const CGFloat AlertViewWidth = 270.0;
-static const CGFloat AlertViewContentMargin = 7;
+static const CGFloat AlertViewContentMargin = 9;
 static const CGFloat AlertViewVerticalElementSpace = 10;
 static const CGFloat AlertViewButtonHeight = 44;
 
