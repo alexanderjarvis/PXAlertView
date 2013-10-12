@@ -349,8 +349,28 @@ static const CGFloat AlertViewButtonHeight = 44;
 
 - (CGRect)adjustLabelFrameHeight:(UILabel *)label
 {
-    CGSize size = [label.text sizeWithFont:label.font constrainedToSize:CGSizeMake(label.frame.size.width, FLT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-    return CGRectMake(label.frame.origin.x, label.frame.origin.y, label.frame.size.width, size.height);
+    CGFloat height;
+    
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        CGSize size = [label.text sizeWithFont:label.font
+                             constrainedToSize:CGSizeMake(label.frame.size.width, FLT_MAX)
+                                 lineBreakMode:NSLineBreakByWordWrapping];
+        
+        height = size.height;
+        #pragma clang diagnostic pop
+    } else {
+        NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
+        context.minimumScaleFactor = 1.0;
+        CGRect bounds = [label.text boundingRectWithSize:CGSizeMake(label.frame.size.width, FLT_MAX)
+                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                     attributes:@{NSFontAttributeName:label.font}
+                                        context:context];
+        height = bounds.size.height;
+    }
+    
+    return CGRectMake(label.frame.origin.x, label.frame.origin.y, label.frame.size.width, height);
 }
 
 - (void)resizeViews
