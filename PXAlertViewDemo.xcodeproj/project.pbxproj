@@ -22,7 +22,7 @@
 		FA11B6A617F3867100236222 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11B68517F3867100236222 /* UIKit.framework */; };
 		FA11B6AE17F3867100236222 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA11B6AC17F3867100236222 /* InfoPlist.strings */; };
 		FA11B6B017F3867100236222 /* PXAlertViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B6AF17F3867100236222 /* PXAlertViewDemoTests.m */; };
-		FA11B6BB17F386A600236222 /* PXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B6BA17F386A600236222 /* PXAlertView.m */; };
+		FA53E9561809B3BC001E6B60 /* PXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA53E9551809B3BC001E6B60 /* PXAlertView.m */; };
 		FADF87D717F99E950059B2B8 /* ExampleImage.png in Resources */ = {isa = PBXBuildFile; fileRef = FADF87D617F99E950059B2B8 /* ExampleImage.png */; };
 /* End PBXBuildFile section */
 
@@ -55,10 +55,10 @@
 		FA11B6AB17F3867100236222 /* PXAlertViewDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PXAlertViewDemoTests-Info.plist"; sourceTree = "<group>"; };
 		FA11B6AD17F3867100236222 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FA11B6AF17F3867100236222 /* PXAlertViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PXAlertViewDemoTests.m; sourceTree = "<group>"; };
-		FA11B6B917F386A600236222 /* PXAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PXAlertView.h; sourceTree = "<group>"; };
-		FA11B6BA17F386A600236222 /* PXAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PXAlertView.m; sourceTree = "<group>"; };
 		FA53E9511809A8FB001E6B60 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		FA53E9521809A902001E6B60 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		FA53E9541809B3BC001E6B60 /* PXAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PXAlertView.h; sourceTree = "<group>"; };
+		FA53E9551809B3BC001E6B60 /* PXAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PXAlertView.m; sourceTree = "<group>"; };
 		FADF87D617F99E950059B2B8 /* ExampleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ExampleImage.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -89,7 +89,7 @@
 		FA11B67517F3867100236222 = {
 			isa = PBXGroup;
 			children = (
-				FA11B6BC17F386B200236222 /* PXAlertView */,
+				FA53E9531809B3BC001E6B60 /* Classes */,
 				FA11B68717F3867100236222 /* PXAlertViewDemo */,
 				FA11B6A917F3867100236222 /* PXAlertViewDemoTests */,
 				FA11B68017F3867100236222 /* Frameworks */,
@@ -162,13 +162,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		FA11B6BC17F386B200236222 /* PXAlertView */ = {
+		FA53E9531809B3BC001E6B60 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				FA11B6B917F386A600236222 /* PXAlertView.h */,
-				FA11B6BA17F386A600236222 /* PXAlertView.m */,
+				FA53E9541809B3BC001E6B60 /* PXAlertView.h */,
+				FA53E9551809B3BC001E6B60 /* PXAlertView.m */,
 			);
-			name = PXAlertView;
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,7 +274,7 @@
 				FA11B69B17F3867100236222 /* PXViewController.m in Sources */,
 				FA11B69217F3867100236222 /* PXAppDelegate.m in Sources */,
 				FA11B68E17F3867100236222 /* main.m in Sources */,
-				FA11B6BB17F386A600236222 /* PXAlertView.m in Sources */,
+				FA53E9561809B3BC001E6B60 /* PXAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
