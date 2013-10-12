@@ -12,13 +12,21 @@ PXAlertView is a UIAlertView replacement similar to the style in iOS 7 but with 
 * Fully customisable
 * Add your own UIView beneath the title
 
+## Installation
+
+Add the following to your [CocoaPods](http://cocoapods.org/) Podfile 
+
+	pod 'PXAlertView', '~> 0.0.1'
+
+or clone as a git submodule,
+
+or just copy ```PXAlertView.h``` and ```.m``` into your project.
+
 ## Usage
 
-Copy ```PXAlertView.h``` and ```.m``` into your project.
+See [PXAlertView.h](PXAlertView.h) for the complete API.
 
-See ```PXAlertView.h``` for the complete API.
-
-## An Example
+### An Example
 
 ```Objective-C
 [PXAlertView showAlertWithTitle:@"The Matrix"
