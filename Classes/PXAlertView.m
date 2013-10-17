@@ -259,6 +259,7 @@ static const CGFloat AlertViewButtonHeight = 44;
         }
         [UIView animateWithDuration:0.2 animations:^{
             self.backgroundView.alpha = 0;
+        } completion:^(BOOL finished) {
             self.alertWindow.hidden = YES;
             [self.mainWindow makeKeyAndVisible];
         }];
