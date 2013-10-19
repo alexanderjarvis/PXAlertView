@@ -65,14 +65,14 @@ static const CGFloat AlertViewButtonHeight = 44;
         _mainWindow = [self windowWithLevel:UIWindowLevelNormal];
         _alertWindow = [self windowWithLevel:UIWindowLevelAlert];
         
-        CGRect frame = [self frameForOrientation:self.interfaceOrientation];
-        
         if (!_alertWindow) {
-            _alertWindow = [[UIWindow alloc] initWithFrame:frame];
+            _alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
             _alertWindow.windowLevel = UIWindowLevelAlert;
         }
         _alertWindow.rootViewController = self;
-        _alertWindow.frame = frame;
+        
+        CGRect frame = [self frameForOrientation:self.interfaceOrientation];
+        self.view.frame = frame;
         
         _backgroundView = [[UIView alloc] initWithFrame:frame];
         _backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.25];
@@ -186,10 +186,11 @@ static const CGFloat AlertViewButtonHeight = 44;
             _completion = completion;
         }
         
-        [self setupGestures];
         [self resizeViews];
         
-        _alertView.center = CGPointMake(CGRectGetMidX(_alertWindow.bounds), CGRectGetMidY(_alertWindow.bounds));
+        _alertView.center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
+        
+        [self setupGestures];
     }
     return self;
 }
@@ -211,9 +212,9 @@ static const CGFloat AlertViewButtonHeight = 44;
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
     CGRect frame = [self frameForOrientation:toInterfaceOrientation];
-    self.alertWindow.frame = frame;
+    self.view.frame = frame;
     self.backgroundView.frame = frame;
-    self.alertView.center = CGPointMake(CGRectGetMidX(self.alertWindow.bounds), CGRectGetMidY(self.alertWindow.bounds));
+    self.alertView.center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
 }
 
 - (void)show
