@@ -8,7 +8,7 @@
 
 @import UIKit;
 
-@interface PXAlertView : UIView
+@interface PXAlertView : UIViewController
 
 @property (nonatomic, getter = isVisible) BOOL visible;
 
