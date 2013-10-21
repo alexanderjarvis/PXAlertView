@@ -7,7 +7,7 @@
 //
 
 #import "PXViewController.h"
-
+#import "PXAlertView+Customization.h"
 @interface PXViewController ()
 
 @end
@@ -40,6 +40,26 @@
                          }];
 }
 
+- (IBAction)showSimpleCustomizedAlertView:(id)sender
+{
+    PXAlertView *alert = [PXAlertView showAlertWithTitle:@"Hello World"
+                                                 message:@"Oh my this looks like a nice message."
+                                             cancelTitle:@"Ok"
+                                              completion:^(BOOL cancelled) {
+                                                  if (cancelled) {
+                                                      NSLog(@"Simple Alert View cancelled");
+                                                  } else {
+                                                      NSLog(@"Simple Alert View dismissed, but not cancelled");
+                                                  }
+                                              }];
+    [alert setWindowTintColor:[UIColor colorWithRed:94/255.0 green:196/255.0 blue:221/255.0 alpha:0.25]];
+    [alert setBackgroundColor:[UIColor colorWithRed:255/255.0 green:206/255.0 blue:13/255.0 alpha:1.0]];
+    [alert setCancelButtonBackgroundColor:[UIColor redColor]];
+    [alert setTitleFont:[UIFont fontWithName:@"Zapfino" size:15.0f]];
+    [alert setTitleColor:[UIColor darkGrayColor]];
+}
+
+
 - (IBAction)showLargeAlertView:(id)sender
 {
     [PXAlertView showAlertWithTitle:@"Why this is a larger title! Even larger than the largest large thing that ever was large in a very large way."
@@ -56,7 +76,7 @@
 
 - (IBAction)showTwoButtonAlertView:(id)sender
 {
-    [PXAlertView showAlertWithTitle:@"The Matrix"
+    PXAlertView *alert = [PXAlertView showAlertWithTitle:@"The Matrix"
                             message:@"Pick the Red pill, or the blue pill"
                         cancelTitle:@"Blue"
                          otherTitle:@"Red"
@@ -67,6 +87,9 @@
                                  NSLog(@"Other (Red) button pressed");
                              }
                          }];
+    
+    [alert setCancelButtonBackgroundColor:[UIColor blueColor]];
+    [alert setOtherButtonBackgroundColor:[UIColor redColor]];
 }
 
 - (IBAction)showAlertViewWithContentView:(id)sender
