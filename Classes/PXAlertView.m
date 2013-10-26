@@ -188,7 +188,7 @@ static const CGFloat AlertViewButtonHeight = 44;
         
         [self resizeViews];
         
-        _alertView.center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
+        _alertView.center = [self centerWithFrame:frame];
         
         [self setupGestures];
     }
@@ -214,7 +214,36 @@ static const CGFloat AlertViewButtonHeight = 44;
     CGRect frame = [self frameForOrientation:toInterfaceOrientation];
     self.view.frame = frame;
     self.backgroundView.frame = frame;
-    self.alertView.center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
+    self.alertView.center = [self centerWithFrame:frame];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
+}
+
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (CGPoint)centerWithFrame:(CGRect)frame
+{
+    return CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) - [self statusBarOffset]);
+}
+
+- (CGFloat)statusBarOffset
+{
+    CGFloat statusBarOffset = 0;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        statusBarOffset = 20;
+    }
+    return statusBarOffset;
 }
 
 - (void)show

@@ -26,6 +26,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
+}
+
 - (IBAction)showSimpleAlertView:(id)sender
 {
     [PXAlertView showAlertWithTitle:@"Hello World"
