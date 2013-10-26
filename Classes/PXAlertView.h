@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Panaxiom Ltd. All rights reserved.
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 @interface PXAlertView : UIViewController
 
