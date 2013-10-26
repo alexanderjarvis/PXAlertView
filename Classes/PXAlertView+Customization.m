@@ -9,19 +9,22 @@
 #import "PXAlertView+Customization.h"
 #import <objc/runtime.h>
 
-static NSString *const kCancelBGKey = @"cancelBGKey";
-static NSString *const kOtherBGKey = @"otherBGKey";
+static NSString * const kCancelBGKey = @"cancelBGKey";
+static NSString * const kOtherBGKey = @"otherBGKey";
+
 @interface PXAlertView ()
+
 @property (nonatomic) UIView *backgroundView;
 @property (nonatomic) UIView *alertView;
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UILabel *messageLabel;
 @property (nonatomic) UIButton *cancelButton;
 @property (nonatomic) UIButton *otherButton;
+
 @end
 
-
 @implementation PXAlertView (Customization)
+
 - (void)setWindowTintColor:(UIColor *)color
 {
     self.backgroundView.backgroundColor = color;
@@ -56,17 +59,12 @@ static NSString *const kOtherBGKey = @"otherBGKey";
 #pragma mark Buttons Customization
 - (void)setBackgroundColorForButton:(id)sender
 {
-    if (sender == self.cancelButton && self.cancelButtonBackgroundColor)
-    {
+    if (sender == self.cancelButton && self.cancelButtonBackgroundColor) {
         self.cancelButton.backgroundColor = self.cancelButtonBackgroundColor;
-    }
-    else if (sender == self.otherButton && self.otherButtonBackgroundColor)
-    {
+    } else if (sender == self.otherButton && self.otherButtonBackgroundColor) {
         self.otherButton.backgroundColor = self.otherButtonBackgroundColor;
-    }
-    else
-    {
-        [sender setBackgroundColor:[UIColor colorWithRed:94 / 255.0 green:196 / 255.0 blue:221 / 255.0 alpha:1.0]];
+    } else {
+        [sender setBackgroundColor:[UIColor colorWithRed:94/255.0 green:196/255.0 blue:221/255.0 alpha:1]];
     }
 }
 

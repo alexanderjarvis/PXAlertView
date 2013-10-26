@@ -9,6 +9,7 @@
 #import "PXAlertView.h"
 
 @interface PXAlertView (Customization)
+
 - (void)setWindowTintColor:(UIColor *)color;
 - (void)setBackgroundColor:(UIColor *)color;
 
