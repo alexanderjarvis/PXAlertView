@@ -36,7 +36,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 @property (nonatomic) UIButton *cancelButton;
 @property (nonatomic) UIButton *otherButton;
 @property (nonatomic) UITapGestureRecognizer *tap;
-@property (nonatomic, strong) void (^completion)(BOOL cancelled);
+@property (nonatomic, copy) void (^completion)(BOOL cancelled);
 
 @end
 
