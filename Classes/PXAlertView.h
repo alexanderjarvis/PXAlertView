@@ -14,31 +14,31 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled);
 
 @property (nonatomic, getter = isVisible) BOOL visible;
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title;
++ (instancetype)showAlertWithTitle:(NSString *)title;
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title
-                            message:(NSString *)message;
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message;
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title
-                            message:(NSString *)message
-                         completion:(PXAlertViewCompletionBlock)completion;
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+						completion:(PXAlertViewCompletionBlock)completion;
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title
-                            message:(NSString *)message
-                        cancelTitle:(NSString *)cancelTitle
-                         completion:(PXAlertViewCompletionBlock)completion;
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						completion:(PXAlertViewCompletionBlock)completion;
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title
-                            message:(NSString *)message
-                        cancelTitle:(NSString *)cancelTitle
-                         otherTitle:(NSString *)otherTitle
-                         completion:(PXAlertViewCompletionBlock)completion;
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						otherTitle:(NSString *)otherTitle
+						completion:(PXAlertViewCompletionBlock)completion;
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title
-                            message:(NSString *)message
-                        cancelTitle:(NSString *)cancelTitle
-                         otherTitle:(NSString *)otherTitle
-                        contentView:(UIView *)view
-                         completion:(PXAlertViewCompletionBlock)completion;
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						otherTitle:(NSString *)otherTitle
+					   contentView:(UIView *)view
+						completion:(PXAlertViewCompletionBlock)completion;
 
 @end

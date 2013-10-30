@@ -360,28 +360,28 @@ static const CGFloat AlertViewButtonHeight = 44;
 
 #pragma mark - public
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title
++ (instancetype)showAlertWithTitle:(NSString *)title
 {
     return [PXAlertView showAlertWithTitle:title message:nil cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
 }
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title
-                            message:(NSString *)message
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
 {
     return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
 }
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title
-                            message:(NSString *)message
-                         completion:(PXAlertViewCompletionBlock)completion
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+						completion:(PXAlertViewCompletionBlock)completion
 {
     return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:completion];
 }
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title
-                            message:(NSString *)message
-                        cancelTitle:(NSString *)cancelTitle
-                         completion:(PXAlertViewCompletionBlock)completion
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						completion:(PXAlertViewCompletionBlock)completion
 {
     PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
 														message:message
@@ -393,11 +393,11 @@ static const CGFloat AlertViewButtonHeight = 44;
     return alertView;
 }
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title
-                            message:(NSString *)message
-                        cancelTitle:(NSString *)cancelTitle
-                         otherTitle:(NSString *)otherTitle
-                         completion:(PXAlertViewCompletionBlock)completion
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						otherTitle:(NSString *)otherTitle
+						completion:(PXAlertViewCompletionBlock)completion
 {
     PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
 														message:message
@@ -409,12 +409,12 @@ static const CGFloat AlertViewButtonHeight = 44;
     return alertView;
 }
 
-+ (PXAlertView *)showAlertWithTitle:(NSString *)title
-                            message:(NSString *)message
-                        cancelTitle:(NSString *)cancelTitle
-                         otherTitle:(NSString *)otherTitle
-                        contentView:(UIView *)view
-                         completion:(PXAlertViewCompletionBlock)completion
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						otherTitle:(NSString *)otherTitle
+					   contentView:(UIView *)view
+						completion:(PXAlertViewCompletionBlock)completion
 {
     PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
 														message:message
