@@ -53,12 +53,12 @@ static const CGFloat AlertViewButtonHeight = 44;
     return nil;
 }
 
-- (id)initAlertWithTitle:(NSString *)title
-                 message:(NSString *)message
-             cancelTitle:(NSString *)cancelTitle
-              otherTitle:(NSString *)otherTitle
-             contentView:(UIView *)contentView
-              completion:(void(^) (BOOL cancelled))completion
+- (id)initWithTitle:(NSString *)title
+			message:(NSString *)message
+		cancelTitle:(NSString *)cancelTitle
+		 otherTitle:(NSString *)otherTitle
+		contentView:(UIView *)contentView
+		 completion:(void(^) (BOOL cancelled))completion
 {
     self = [super init];
     if (self) {
@@ -383,12 +383,12 @@ static const CGFloat AlertViewButtonHeight = 44;
                         cancelTitle:(NSString *)cancelTitle
                          completion:(void(^) (BOOL cancelled))completion
 {
-    PXAlertView *alertView = [[PXAlertView alloc] initAlertWithTitle:title
-                                                             message:message
-                                                         cancelTitle:cancelTitle
-                                                          otherTitle:nil
-                                                         contentView:nil
-                                                          completion:completion];
+    PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
+														message:message
+													cancelTitle:cancelTitle
+													 otherTitle:nil
+													contentView:nil
+													 completion:completion];
     [alertView show];
     return alertView;
 }
@@ -399,12 +399,12 @@ static const CGFloat AlertViewButtonHeight = 44;
                          otherTitle:(NSString *)otherTitle
                          completion:(void(^) (BOOL cancelled))completion
 {
-    PXAlertView *alertView = [[PXAlertView alloc] initAlertWithTitle:title
-                                                             message:message
-                                                         cancelTitle:cancelTitle
-                                                          otherTitle:otherTitle
-                                                         contentView:nil
-                                                          completion:completion];
+    PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
+														message:message
+													cancelTitle:cancelTitle
+													 otherTitle:otherTitle
+													contentView:nil
+													 completion:completion];
     [alertView show];
     return alertView;
 }
@@ -416,12 +416,12 @@ static const CGFloat AlertViewButtonHeight = 44;
                         contentView:(UIView *)view
                          completion:(void(^) (BOOL cancelled))completion
 {
-    PXAlertView *alertView = [[PXAlertView alloc] initAlertWithTitle:title
-                                                             message:message
-                                                         cancelTitle:cancelTitle
-                                                          otherTitle:otherTitle
-                                                         contentView:view
-                                                          completion:completion];
+    PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
+														message:message
+													cancelTitle:cancelTitle
+													 otherTitle:otherTitle
+													contentView:view
+													 completion:completion];
     [alertView show];
     return alertView;
 }
