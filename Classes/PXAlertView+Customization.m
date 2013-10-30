@@ -9,8 +9,8 @@
 #import "PXAlertView+Customization.h"
 #import <objc/runtime.h>
 
-static NSString * const kCancelBGKey = @"cancelBGKey";
-static NSString * const kOtherBGKey = @"otherBGKey";
+void * const kCancelBGKey = (void * const) &kCancelBGKey;
+void * const kOtherBGKey = (void * const) &kOtherBGKey;
 
 @interface PXAlertView ()
 
@@ -70,22 +70,22 @@ static NSString * const kOtherBGKey = @"otherBGKey";
 
 - (void)setCancelButtonBackgroundColor:(UIColor *)color
 {
-    objc_setAssociatedObject(self, (__bridge const void *)(kCancelBGKey), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, kCancelBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (UIColor *)cancelButtonBackgroundColor
 {
-    return objc_getAssociatedObject( self, (__bridge const void *)(kCancelBGKey) );
+    return objc_getAssociatedObject(self, kCancelBGKey);
 }
 
 - (void)setOtherButtonBackgroundColor:(UIColor *)color
 {
-    objc_setAssociatedObject(self, (__bridge const void *)(kOtherBGKey), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, kOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (UIColor *)otherButtonBackgroundColor
 {
-    return objc_getAssociatedObject( self, (__bridge const void *)(kOtherBGKey) );
+    return objc_getAssociatedObject(self, kOtherBGKey);
 }
 
 @end
