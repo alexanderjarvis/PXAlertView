@@ -112,14 +112,14 @@ static const CGFloat AlertViewButtonHeight = 44;
         [_alertView.layer addSublayer:lineLayer];
         
         // Buttons
-        _cancelButton = [[self class] cancelButtonWithTitle:cancelTitle];
+        _cancelButton = [[self class] cancelButtonWithTitle:cancelTitle target:self];
 
         CGFloat buttonsY = lineLayer.frame.origin.y + lineLayer.frame.size.height;
         if (otherTitle) {
             _cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
             _cancelButton.frame = CGRectMake(0, buttonsY, AlertViewWidth/2, AlertViewButtonHeight);
             
-            _otherButton = [[self class] otherButtonWithTitle:otherTitle];
+            _otherButton = [[self class] otherButtonWithTitle:otherTitle target:self];
             _otherButton.frame = CGRectMake(_cancelButton.frame.size.width, buttonsY, AlertViewWidth/2, 44);
             [self.alertView addSubview:_otherButton];
             
@@ -194,7 +194,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return messageLabel;
 }
 
-+ (UIButton *)cancelButtonWithTitle:(NSString *)title {
++ (UIButton *)cancelButtonWithTitle:(NSString *)title target:(id)target {
 	UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	if (title) {
 		[cancelButton setTitle:title forState:UIControlStateNormal];
@@ -205,22 +205,22 @@ static const CGFloat AlertViewButtonHeight = 44;
 	
 	[cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	[cancelButton setTitleColor:[UIColor colorWithWhite:0.25 alpha:1] forState:UIControlStateHighlighted];
-	[cancelButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
-	[cancelButton addTarget:self action:@selector(setBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
-	[cancelButton addTarget:self action:@selector(clearBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
+	[cancelButton addTarget:target action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
+	[cancelButton addTarget:target action:@selector(setBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
+	[cancelButton addTarget:target action:@selector(clearBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
 	return cancelButton;
 }
 
-+ (UIButton *)otherButtonWithTitle:(NSString *)title {
++ (UIButton *)otherButtonWithTitle:(NSString *)title target:(id)target {
 	UIButton *otherButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[otherButton setTitle:title forState:UIControlStateNormal];
 	otherButton.backgroundColor = [UIColor clearColor];
 	otherButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
 	[otherButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	[otherButton setTitleColor:[UIColor colorWithWhite:0.25 alpha:1] forState:UIControlStateHighlighted];
-	[otherButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
-	[otherButton addTarget:self action:@selector(setBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
-	[otherButton addTarget:self action:@selector(clearBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
+	[otherButton addTarget:target action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
+	[otherButton addTarget:target action:@selector(setBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
+	[otherButton addTarget:target action:@selector(clearBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
 	return otherButton;
 }
 
