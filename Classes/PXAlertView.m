@@ -251,7 +251,7 @@ static const CGFloat AlertViewButtonHeight = 44;
     [[PXAlertViewQueue sharedInstance] add:self];
 }
 
-- (void)_show
+- (void)showInternal
 {
     self.alertWindow.hidden = NO;
     [self.alertWindow addSubview:self.view];
@@ -495,7 +495,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 - (void)add:(PXAlertView *)alertView
 {
     [self.alertViews addObject:alertView];
-    [alertView _show];
+    [alertView showInternal];
     for (PXAlertView *av in self.alertViews) {
         if (av != alertView) {
             [av hide];
@@ -508,7 +508,7 @@ static const CGFloat AlertViewButtonHeight = 44;
     [self.alertViews removeObject:alertView];
     PXAlertView *last = [self.alertViews lastObject];
     if (last) {
-        [last _show];
+        [last showInternal];
     }
 }
 
