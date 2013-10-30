@@ -383,7 +383,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 					   cancelTitle:(NSString *)cancelTitle
 						completion:(PXAlertViewCompletionBlock)completion
 {
-    PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
 														message:message
 													cancelTitle:cancelTitle
 													 otherTitle:nil
@@ -399,7 +399,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 						otherTitle:(NSString *)otherTitle
 						completion:(PXAlertViewCompletionBlock)completion
 {
-    PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
 														message:message
 													cancelTitle:cancelTitle
 													 otherTitle:otherTitle
@@ -416,7 +416,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 					   contentView:(UIView *)view
 						completion:(PXAlertViewCompletionBlock)completion
 {
-    PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
 														message:message
 													cancelTitle:cancelTitle
 													 otherTitle:otherTitle
