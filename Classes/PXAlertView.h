@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled);
+
 @interface PXAlertView : UIViewController
 
 @property (nonatomic, getter = isVisible) BOOL visible;
@@ -19,24 +21,24 @@
 
 + (PXAlertView *)showAlertWithTitle:(NSString *)title
                             message:(NSString *)message
-                         completion:(void(^) (BOOL cancelled))completion;
+                         completion:(PXAlertViewCompletionBlock)completion;
 
 + (PXAlertView *)showAlertWithTitle:(NSString *)title
                             message:(NSString *)message
                         cancelTitle:(NSString *)cancelTitle
-                         completion:(void(^) (BOOL cancelled))completion;
+                         completion:(PXAlertViewCompletionBlock)completion;
 
 + (PXAlertView *)showAlertWithTitle:(NSString *)title
                             message:(NSString *)message
                         cancelTitle:(NSString *)cancelTitle
                          otherTitle:(NSString *)otherTitle
-                         completion:(void(^) (BOOL cancelled))completion;
+                         completion:(PXAlertViewCompletionBlock)completion;
 
 + (PXAlertView *)showAlertWithTitle:(NSString *)title
                             message:(NSString *)message
                         cancelTitle:(NSString *)cancelTitle
                          otherTitle:(NSString *)otherTitle
                         contentView:(UIView *)view
-                         completion:(void(^) (BOOL cancelled))completion;
+                         completion:(PXAlertViewCompletionBlock)completion;
 
 @end

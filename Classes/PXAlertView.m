@@ -58,7 +58,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 		cancelTitle:(NSString *)cancelTitle
 		 otherTitle:(NSString *)otherTitle
 		contentView:(UIView *)contentView
-		 completion:(void(^) (BOOL cancelled))completion
+		 completion:(PXAlertViewCompletionBlock)completion
 {
     self = [super init];
     if (self) {
@@ -373,7 +373,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 
 + (PXAlertView *)showAlertWithTitle:(NSString *)title
                             message:(NSString *)message
-                         completion:(void(^) (BOOL cancelled))completion
+                         completion:(PXAlertViewCompletionBlock)completion
 {
     return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:completion];
 }
@@ -381,7 +381,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 + (PXAlertView *)showAlertWithTitle:(NSString *)title
                             message:(NSString *)message
                         cancelTitle:(NSString *)cancelTitle
-                         completion:(void(^) (BOOL cancelled))completion
+                         completion:(PXAlertViewCompletionBlock)completion
 {
     PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
 														message:message
@@ -397,7 +397,7 @@ static const CGFloat AlertViewButtonHeight = 44;
                             message:(NSString *)message
                         cancelTitle:(NSString *)cancelTitle
                          otherTitle:(NSString *)otherTitle
-                         completion:(void(^) (BOOL cancelled))completion
+                         completion:(PXAlertViewCompletionBlock)completion
 {
     PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
 														message:message
@@ -414,7 +414,7 @@ static const CGFloat AlertViewButtonHeight = 44;
                         cancelTitle:(NSString *)cancelTitle
                          otherTitle:(NSString *)otherTitle
                         contentView:(UIView *)view
-                         completion:(void(^) (BOOL cancelled))completion
+                         completion:(PXAlertViewCompletionBlock)completion
 {
     PXAlertView *alertView = [[PXAlertView alloc] initWithTitle:title
 														message:message
