@@ -74,14 +74,14 @@ static const CGFloat AlertViewButtonHeight = 44;
         CGRect frame = [self frameForOrientation:self.interfaceOrientation];
         self.view.frame = frame;
         
-        _backgroundView = [[self class] backgroundViewWithFrame:frame];
+        _backgroundView = [self backgroundViewWithFrame:frame];
         [self.view addSubview:_backgroundView];
         
-        _alertView = [[self class] alertView];
+        _alertView = [self alertView];
         [self.view addSubview:_alertView];
         
         // Title
-        _titleLabel = [[self class] titleLabelWithTitle:title];
+        _titleLabel = [self titleLabelWithTitle:title];
         [_alertView addSubview:_titleLabel];
         
         CGFloat messageLabelY = _titleLabel.frame.origin.y + _titleLabel.frame.size.height + AlertViewVerticalElementSpace;
@@ -99,7 +99,7 @@ static const CGFloat AlertViewButtonHeight = 44;
         }
         
         // Message
-        _messageLabel = [[self class] messageLabelWithMessage:message];
+        _messageLabel = [self messageLabelWithMessage:message];
 		_messageLabel.frame = CGRectMake(AlertViewContentMargin,
 										 messageLabelY,
 										 AlertViewWidth - AlertViewContentMargin * 2,
@@ -107,23 +107,23 @@ static const CGFloat AlertViewButtonHeight = 44;
         [_alertView addSubview:_messageLabel];
         
         // Line
-        CALayer *lineLayer = [[self class] lineLayer];
+        CALayer *lineLayer = [self lineLayer];
         lineLayer.frame = CGRectMake(0, _messageLabel.frame.origin.y + _messageLabel.frame.size.height + AlertViewVerticalElementSpace, AlertViewWidth, 0.5);
         [_alertView.layer addSublayer:lineLayer];
         
         // Buttons
-        _cancelButton = [[self class] cancelButtonWithTitle:cancelTitle target:self];
+        _cancelButton = [self cancelButtonWithTitle:cancelTitle target:self];
 
         CGFloat buttonsY = lineLayer.frame.origin.y + lineLayer.frame.size.height;
         if (otherTitle) {
             _cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
             _cancelButton.frame = CGRectMake(0, buttonsY, AlertViewWidth/2, AlertViewButtonHeight);
             
-            _otherButton = [[self class] otherButtonWithTitle:otherTitle target:self];
+            _otherButton = [self otherButtonWithTitle:otherTitle target:self];
             _otherButton.frame = CGRectMake(_cancelButton.frame.size.width, buttonsY, AlertViewWidth/2, 44);
             [self.alertView addSubview:_otherButton];
             
-            CALayer *lineLayer = [[self class] lineLayer];
+            CALayer *lineLayer = [self lineLayer];
             lineLayer.frame = CGRectMake(_otherButton.frame.origin.x, _otherButton.frame.origin.y, 0.5, AlertViewButtonHeight);
             [_alertView.layer addSublayer:lineLayer];
             
@@ -149,7 +149,7 @@ static const CGFloat AlertViewButtonHeight = 44;
     return self;
 }
 
-+ (UIView *)alertView
+- (UIView *)alertView
 {
 	UIView *alertView = [[UIView alloc] init];
 	alertView.backgroundColor = [UIColor colorWithWhite:0.25 alpha:1];
@@ -159,7 +159,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return alertView;
 }
 
-+ (UIView *)backgroundViewWithFrame:(CGRect)frame
+- (UIView *)backgroundViewWithFrame:(CGRect)frame
 {
 	UIView *backgroundView = [[UIView alloc] initWithFrame:frame];
 	backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.25];
@@ -167,7 +167,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return backgroundView;
 }
 
-+ (UILabel *)titleLabelWithTitle:(NSString *)title
+- (UILabel *)titleLabelWithTitle:(NSString *)title
 {
 	UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
 																	AlertViewVerticalElementSpace,
@@ -184,7 +184,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return titleLabel;
 }
 
-+ (UILabel *)messageLabelWithMessage:(NSString *)message
+- (UILabel *)messageLabelWithMessage:(NSString *)message
 {
 	UILabel *messageLabel = [[UILabel alloc] init];
 	messageLabel.text = message;
@@ -198,7 +198,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return messageLabel;
 }
 
-+ (UIButton *)cancelButtonWithTitle:(NSString *)title target:(id)target
+- (UIButton *)cancelButtonWithTitle:(NSString *)title target:(id)target
 {
 	UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	if (title) {
@@ -216,7 +216,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return cancelButton;
 }
 
-+ (UIButton *)otherButtonWithTitle:(NSString *)title target:(id)target
+- (UIButton *)otherButtonWithTitle:(NSString *)title target:(id)target
 {
 	UIButton *otherButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[otherButton setTitle:title forState:UIControlStateNormal];
@@ -230,7 +230,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return otherButton;
 }
 
-+ (CALayer *)lineLayer
+- (CALayer *)lineLayer
 {
 	CALayer *lineLayer = [CALayer layer];
 	lineLayer.backgroundColor = [[UIColor colorWithWhite:0.90 alpha:0.3] CGColor];
@@ -446,7 +446,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 
 #pragma mark -
 
-+ (CGRect)adjustLabelFrameHeight:(UILabel *)label
+- (CGRect)adjustLabelFrameHeight:(UILabel *)label
 {
     CGFloat height;
     
