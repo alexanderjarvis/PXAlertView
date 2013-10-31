@@ -149,7 +149,8 @@ static const CGFloat AlertViewButtonHeight = 44;
     return self;
 }
 
-+ (UIView *)alertView {
++ (UIView *)alertView
+{
 	UIView *alertView = [[UIView alloc] init];
 	alertView.backgroundColor = [UIColor colorWithWhite:0.25 alpha:1];
 	alertView.layer.cornerRadius = 8.0;
@@ -158,14 +159,16 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return alertView;
 }
 
-+ (UIView *)backgroundViewWithFrame:(CGRect)frame  {
++ (UIView *)backgroundViewWithFrame:(CGRect)frame
+{
 	UIView *backgroundView = [[UIView alloc] initWithFrame:frame];
 	backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.25];
 	backgroundView.alpha = 0;
 	return backgroundView;
 }
 
-+ (UILabel *)titleLabelWithTitle:(NSString *)title {
++ (UILabel *)titleLabelWithTitle:(NSString *)title
+{
 	UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
 																	AlertViewVerticalElementSpace,
 																	AlertViewWidth - AlertViewContentMargin*2,
@@ -181,7 +184,8 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return titleLabel;
 }
 
-+ (UILabel *)messageLabelWithMessage:(NSString *)message {
++ (UILabel *)messageLabelWithMessage:(NSString *)message
+{
 	UILabel *messageLabel = [[UILabel alloc] init];
 	messageLabel.text = message;
 	messageLabel.backgroundColor = [UIColor clearColor];
@@ -194,7 +198,8 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return messageLabel;
 }
 
-+ (UIButton *)cancelButtonWithTitle:(NSString *)title target:(id)target {
++ (UIButton *)cancelButtonWithTitle:(NSString *)title target:(id)target
+{
 	UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	if (title) {
 		[cancelButton setTitle:title forState:UIControlStateNormal];
@@ -211,7 +216,8 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return cancelButton;
 }
 
-+ (UIButton *)otherButtonWithTitle:(NSString *)title target:(id)target {
++ (UIButton *)otherButtonWithTitle:(NSString *)title target:(id)target
+{
 	UIButton *otherButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[otherButton setTitle:title forState:UIControlStateNormal];
 	otherButton.backgroundColor = [UIColor clearColor];
@@ -224,7 +230,8 @@ static const CGFloat AlertViewButtonHeight = 44;
 	return otherButton;
 }
 
-+ (CALayer *)lineLayer {
++ (CALayer *)lineLayer
+{
 	CALayer *lineLayer = [CALayer layer];
 	lineLayer.backgroundColor = [[UIColor colorWithWhite:0.90 alpha:0.3] CGColor];
 	return lineLayer;
