@@ -208,26 +208,30 @@ static const CGFloat AlertViewButtonHeight = 44;
     return frame;
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
+- (CGRect)adjustLabelFrameHeight:(UILabel *)label
 {
-    CGRect frame = [self frameForOrientation:interfaceOrientation];
-    self.backgroundView.frame = frame;
-    self.alertView.center = [self centerWithFrame:frame];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
+    CGFloat height;
+    
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        CGSize size = [label.text sizeWithFont:label.font
+                             constrainedToSize:CGSizeMake(label.frame.size.width, FLT_MAX)
+                                 lineBreakMode:NSLineBreakByWordWrapping];
+        
+        height = size.height;
+        #pragma clang diagnostic pop
+    } else {
+        NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
+        context.minimumScaleFactor = 1.0;
+        CGRect bounds = [label.text boundingRectWithSize:CGSizeMake(label.frame.size.width, FLT_MAX)
+                                                 options:NSStringDrawingUsesLineFragmentOrigin
+                                              attributes:@{NSFontAttributeName:label.font}
+                                                 context:context];
+        height = bounds.size.height;
+    }
+    
+    return CGRectMake(label.frame.origin.x, label.frame.origin.y, label.frame.size.width, height);
 }
 
 - (CGPoint)centerWithFrame:(CGRect)frame
@@ -242,6 +246,42 @@ static const CGFloat AlertViewButtonHeight = 44;
         statusBarOffset = 20;
     }
     return statusBarOffset;
+}
+
+- (void)setupGestures
+{
+    self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss:)];
+    [self.tap setNumberOfTapsRequired:1];
+    [self.backgroundView setUserInteractionEnabled:YES];
+    [self.backgroundView setMultipleTouchEnabled:NO];
+    [self.backgroundView addGestureRecognizer:self.tap];
+}
+
+- (void)resizeViews
+{
+    CGFloat totalHeight = 0;
+    for (UIView *view in [self.alertView subviews]) {
+        if ([view class] != [UIButton class]) {
+            totalHeight += view.frame.size.height + AlertViewVerticalElementSpace;
+        }
+    }
+    totalHeight += AlertViewButtonHeight;
+    totalHeight += AlertViewVerticalElementSpace;
+    
+    self.alertView.frame = CGRectMake(self.alertView.frame.origin.x,
+                                      self.alertView.frame.origin.y,
+                                      self.alertView.frame.size.width,
+                                      totalHeight);
+}
+
+- (void)setBackgroundColorForButton:(id)sender
+{
+    [sender setBackgroundColor:[UIColor colorWithRed:94/255.0 green:196/255.0 blue:221/255.0 alpha:1.0]];
+}
+
+- (void)clearBackgroundColorForButton:(id)sender
+{
+    [sender setBackgroundColor:[UIColor clearColor]];
 }
 
 - (void)show
@@ -311,140 +351,6 @@ static const CGFloat AlertViewButtonHeight = 44;
     }
 }
 
-- (void)setBackgroundColorForButton:(id)sender
-{
-    [sender setBackgroundColor:[UIColor colorWithRed:94/255.0 green:196/255.0 blue:221/255.0 alpha:1.0]];
-}
-
-- (void)clearBackgroundColorForButton:(id)sender
-{
-    [sender setBackgroundColor:[UIColor clearColor]];
-}
-
-#pragma mark - public
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-{
-    return [PXAlertView showAlertWithTitle:title message:nil cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
-}
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-						   message:(NSString *)message
-{
-    return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
-}
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-						   message:(NSString *)message
-						completion:(PXAlertViewCompletionBlock)completion
-{
-    return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:completion];
-}
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-						   message:(NSString *)message
-					   cancelTitle:(NSString *)cancelTitle
-						completion:(PXAlertViewCompletionBlock)completion
-{
-    PXAlertView *alertView = [[self alloc] initWithTitle:title
-														message:message
-													cancelTitle:cancelTitle
-													 otherTitle:nil
-													contentView:nil
-													 completion:completion];
-    [alertView show];
-    return alertView;
-}
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-						   message:(NSString *)message
-					   cancelTitle:(NSString *)cancelTitle
-						otherTitle:(NSString *)otherTitle
-						completion:(PXAlertViewCompletionBlock)completion
-{
-    PXAlertView *alertView = [[self alloc] initWithTitle:title
-														message:message
-													cancelTitle:cancelTitle
-													 otherTitle:otherTitle
-													contentView:nil
-													 completion:completion];
-    [alertView show];
-    return alertView;
-}
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-						   message:(NSString *)message
-					   cancelTitle:(NSString *)cancelTitle
-						otherTitle:(NSString *)otherTitle
-					   contentView:(UIView *)view
-						completion:(PXAlertViewCompletionBlock)completion
-{
-    PXAlertView *alertView = [[self alloc] initWithTitle:title
-														message:message
-													cancelTitle:cancelTitle
-													 otherTitle:otherTitle
-													contentView:view
-													 completion:completion];
-    [alertView show];
-    return alertView;
-}
-
-#pragma mark - gestures
-
-- (void)setupGestures
-{
-    self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss:)];
-    [self.tap setNumberOfTapsRequired:1];
-    [self.backgroundView setUserInteractionEnabled:YES];
-    [self.backgroundView setMultipleTouchEnabled:NO];
-    [self.backgroundView addGestureRecognizer:self.tap];
-}
-
-#pragma mark -
-
-- (CGRect)adjustLabelFrameHeight:(UILabel *)label
-{
-    CGFloat height;
-    
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        CGSize size = [label.text sizeWithFont:label.font
-                             constrainedToSize:CGSizeMake(label.frame.size.width, FLT_MAX)
-                                 lineBreakMode:NSLineBreakByWordWrapping];
-        
-        height = size.height;
-        #pragma clang diagnostic pop
-    } else {
-        NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
-        context.minimumScaleFactor = 1.0;
-        CGRect bounds = [label.text boundingRectWithSize:CGSizeMake(label.frame.size.width, FLT_MAX)
-                                        options:NSStringDrawingUsesLineFragmentOrigin
-                                     attributes:@{NSFontAttributeName:label.font}
-                                        context:context];
-        height = bounds.size.height;
-    }
-    
-    return CGRectMake(label.frame.origin.x, label.frame.origin.y, label.frame.size.width, height);
-}
-
-- (void)resizeViews
-{
-    CGFloat totalHeight = 0;
-    for (UIView *view in [self.alertView subviews]) {
-        if ([view class] != [UIButton class]) {
-            totalHeight += view.frame.size.height + AlertViewVerticalElementSpace;
-        }
-    }
-    totalHeight += AlertViewButtonHeight;
-    totalHeight += AlertViewVerticalElementSpace;
-    
-    self.alertView.frame = CGRectMake(self.alertView.frame.origin.x,
-                                      self.alertView.frame.origin.y,
-                                      self.alertView.frame.size.width,
-                                      totalHeight);
-}
-
 - (void)showAlertAnimation
 {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
@@ -472,6 +378,100 @@ static const CGFloat AlertViewButtonHeight = 44;
     animation.duration = .2;
     
     [self.alertView.layer addAnimation:animation forKey:@"dismissAlert"];
+}
+
+#pragma mark -
+#pragma mark UIViewController
+
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
+{
+    CGRect frame = [self frameForOrientation:interfaceOrientation];
+    self.backgroundView.frame = frame;
+    self.alertView.center = [self centerWithFrame:frame];
+}
+
+#pragma mark -
+#pragma mark Public
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+{
+    return [PXAlertView showAlertWithTitle:title message:nil cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
+}
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+{
+    return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
+}
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+						completion:(PXAlertViewCompletionBlock)completion
+{
+    return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:completion];
+}
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                              otherTitle:nil
+                                             contentView:nil
+                                              completion:completion];
+    [alertView show];
+    return alertView;
+}
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						otherTitle:(NSString *)otherTitle
+						completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                              otherTitle:otherTitle
+                                             contentView:nil
+                                              completion:completion];
+    [alertView show];
+    return alertView;
+}
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						otherTitle:(NSString *)otherTitle
+					   contentView:(UIView *)view
+						completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                              otherTitle:otherTitle
+                                             contentView:view
+                                              completion:completion];
+    [alertView show];
+    return alertView;
 }
 
 @end
