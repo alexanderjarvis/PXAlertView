@@ -208,13 +208,10 @@ static const CGFloat AlertViewButtonHeight = 44;
     return frame;
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    CGRect frame = [self frameForOrientation:toInterfaceOrientation];
-    self.view.frame = frame;
-    self.backgroundView.frame = frame;
+    CGRect frame = [self frameForOrientation:interfaceOrientation];
+    self.backgroundView.frame = [self frameForOrientation:interfaceOrientation];
     self.alertView.center = [self centerWithFrame:frame];
 }
 
