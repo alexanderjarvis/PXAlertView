@@ -68,6 +68,7 @@ static const CGFloat AlertViewButtonHeight = 44;
         if (!_alertWindow) {
             _alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
             _alertWindow.windowLevel = UIWindowLevelAlert;
+            _alertWindow.backgroundColor = [UIColor clearColor];
         }
         _alertWindow.rootViewController = self;
         
