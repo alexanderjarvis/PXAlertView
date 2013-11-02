@@ -17,28 +17,34 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled);
 + (instancetype)showAlertWithTitle:(NSString *)title;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-						   message:(NSString *)message;
+               message:(NSString *)message;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-						   message:(NSString *)message
-						completion:(PXAlertViewCompletionBlock)completion;
+               message:(NSString *)message
+            completion:(PXAlertViewCompletionBlock)completion;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-						   message:(NSString *)message
-					   cancelTitle:(NSString *)cancelTitle
-						completion:(PXAlertViewCompletionBlock)completion;
+               message:(NSString *)message
+             cancelTitle:(NSString *)cancelTitle
+            completion:(PXAlertViewCompletionBlock)completion;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-						   message:(NSString *)message
-					   cancelTitle:(NSString *)cancelTitle
-						otherTitle:(NSString *)otherTitle
-						completion:(PXAlertViewCompletionBlock)completion;
+               message:(NSString *)message
+             cancelTitle:(NSString *)cancelTitle
+            otherTitle:(NSString *)otherTitle
+            completion:(PXAlertViewCompletionBlock)completion;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-						   message:(NSString *)message
-					   cancelTitle:(NSString *)cancelTitle
-						otherTitle:(NSString *)otherTitle
-					   contentView:(UIView *)view
-						completion:(PXAlertViewCompletionBlock)completion;
+               message:(NSString *)message
+             cancelTitle:(NSString *)cancelTitle
+            otherTitle:(NSString *)otherTitle
+             contentView:(UIView *)view
+            completion:(PXAlertViewCompletionBlock)completion;
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+               message:(NSString *)message
+             cancelTitle:(NSString *)cancelTitle
+                 otherButtonTitles:(id *)otherButtonTitles
+            completion:(PXAlertViewCompletionBlock)completion;
 
 @end
