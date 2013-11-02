@@ -23,6 +23,7 @@ static const CGFloat AlertViewWidth = 270.0;
 static const CGFloat AlertViewContentMargin = 9;
 static const CGFloat AlertViewVerticalElementSpace = 10;
 static const CGFloat AlertViewButtonHeight = 44;
+static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 @interface PXAlertView ()
 
@@ -151,7 +152,7 @@ static const CGFloat AlertViewButtonHeight = 44;
 
         // Line
         CALayer *lineLayer = [self lineLayer];
-        lineLayer.frame = CGRectMake(0, _messageLabel.frame.origin.y + _messageLabel.frame.size.height + AlertViewVerticalElementSpace, AlertViewWidth, 0.5);
+        lineLayer.frame = CGRectMake(0, _messageLabel.frame.origin.y + _messageLabel.frame.size.height + AlertViewVerticalElementSpace, AlertViewWidth, AlerViewLineLayerWidth);
         [_alertView.layer addSublayer:lineLayer];
         
         _buttonsY = lineLayer.frame.origin.y + lineLayer.frame.size.height;
@@ -539,7 +540,7 @@ static const CGFloat AlertViewButtonHeight = 44;
         if ([self.buttons count] == 2) {
             [self.verticalLine removeFromSuperlayer];
             CALayer *lineLayer = [self lineLayer];
-            lineLayer.frame = CGRectMake(0, self.buttonsY + AlertViewButtonHeight, AlertViewWidth, 0.5);
+            lineLayer.frame = CGRectMake(0, self.buttonsY + AlertViewButtonHeight, AlertViewWidth, AlerViewLineLayerWidth);
             [self.alertView.layer addSublayer:lineLayer];
             lastButton.frame = CGRectMake(0, self.buttonsY + AlertViewButtonHeight, AlertViewWidth, AlertViewButtonHeight);
             self.cancelButton.frame = CGRectMake(0, self.buttonsY, AlertViewWidth, AlertViewButtonHeight);
@@ -547,11 +548,11 @@ static const CGFloat AlertViewButtonHeight = 44;
         CGFloat lastButtonYOffset = lastButton.frame.origin.y + AlertViewButtonHeight;
         button.frame = CGRectMake(0, lastButtonYOffset, AlertViewWidth, AlertViewButtonHeight);
         CALayer *lineLayer = [self lineLayer];
-        lineLayer.frame = CGRectMake(0, lastButtonYOffset, AlertViewWidth, 0.5);
+        lineLayer.frame = CGRectMake(0, lastButtonYOffset, AlertViewWidth, AlerViewLineLayerWidth);
         [self.alertView.layer addSublayer:lineLayer];
     } else {
         self.verticalLine = [self lineLayer];
-        self.verticalLine.frame = CGRectMake(AlertViewWidth/2, self.buttonsY, 0.5, AlertViewButtonHeight);
+        self.verticalLine.frame = CGRectMake(AlertViewWidth/2, self.buttonsY, AlerViewLineLayerWidth, AlertViewButtonHeight);
         [self.alertView.layer addSublayer:self.verticalLine];
         button.frame = CGRectMake(AlertViewWidth/2, self.buttonsY, AlertViewWidth/2, AlertViewButtonHeight);
         self.otherButton = button;
