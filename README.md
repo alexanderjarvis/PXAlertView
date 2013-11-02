@@ -33,7 +33,7 @@ See [PXAlertView.h](Classes/PXAlertView.h) for the complete API.
                         message:@"Pick the Red pill, or the blue pill"
                     cancelTitle:@"Blue"
                      otherTitle:@"Red"
-                     completion:^(BOOL cancelled) {
+                     completion:^(BOOL cancelled, NSInteger buttonIndex) {
                          if (cancelled) {
                              NSLog(@"Cancel (Blue) button pressed");
                          } else {
@@ -46,7 +46,6 @@ See [PXAlertView.h](Classes/PXAlertView.h) for the complete API.
 
 * Add style that matches iOS 7 exactly
 * Ability to dynamically specify the styling of AlertView: default/dark
-* Ability to add more than two buttons (was not an initial requirement)
 * Allow usage using the same API methods as UIAlertView and delegate.
 
 ## License
