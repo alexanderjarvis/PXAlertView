@@ -562,7 +562,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     
     [self.alertView addSubview:button];
     self.buttons = (self.buttons) ? [self.buttons arrayByAddingObject:button] : @[ button ];
-    return [self.buttons count];
+    return [self.buttons count] - 1;
 }
 
 @end
