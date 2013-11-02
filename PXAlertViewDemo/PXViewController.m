@@ -8,6 +8,7 @@
 
 #import "PXViewController.h"
 #import "PXAlertView+Customization.h"
+
 @interface PXViewController ()
 
 @end
@@ -41,7 +42,7 @@
     [PXAlertView showAlertWithTitle:@"Hello World"
                             message:@"Oh my this looks like a nice message."
                         cancelTitle:@"Ok"
-                         completion:^(BOOL cancelled) {
+                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
                              if (cancelled) {
                                  NSLog(@"Simple Alert View cancelled");
                              } else {
@@ -55,7 +56,7 @@
     PXAlertView *alert = [PXAlertView showAlertWithTitle:@"Hello World"
                                                  message:@"Oh my this looks like a nice message."
                                              cancelTitle:@"Ok"
-                                              completion:^(BOOL cancelled) {
+                                              completion:^(BOOL cancelled, NSInteger buttonIndex) {
                                                   if (cancelled) {
                                                       NSLog(@"Simple Alert View cancelled");
                                                   } else {
@@ -75,7 +76,7 @@
     [PXAlertView showAlertWithTitle:@"Why this is a larger title! Even larger than the largest large thing that ever was large in a very large way."
                             message:@"Oh my this looks like a nice message. Yes it does, and it can span multiple lines... all the way down."
                         cancelTitle:@"Ok thanks, that's grand"
-                         completion:^(BOOL cancelled) {
+                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
                              if (cancelled) {
                                  NSLog(@"Larger Alert View cancelled");
                              } else {
@@ -90,7 +91,7 @@
                             message:@"Pick the Red pill, or the blue pill"
                         cancelTitle:@"Blue"
                          otherTitle:@"Red"
-                         completion:^(BOOL cancelled) {
+                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
                              if (cancelled) {
                                  NSLog(@"Cancel (Blue) button pressed");
                              } else {
@@ -102,6 +103,21 @@
     [alert setOtherButtonBackgroundColor:[UIColor redColor]];
 }
 
+- (IBAction)showMultiButtonAlertView:(id)sender
+{
+    [PXAlertView showAlertWithTitle:@"Porridge"
+                            message:@"How would you like it?"
+                        cancelTitle:@"No thanks"
+                        otherTitles:@[ @"Too Hot", @"Luke Warm", @"Quite nippy" ]
+                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
+                             if (cancelled) {
+                                 NSLog(@"Cancel button pressed");
+                             } else {
+                                 NSLog(@"Button with index %i pressed", buttonIndex);
+                             }
+                         }];
+}
+
 - (IBAction)showAlertViewWithContentView:(id)sender
 {
     [PXAlertView showAlertWithTitle:@"A picture should appear below"
@@ -109,7 +125,7 @@
                         cancelTitle:@"Ok"
                          otherTitle:nil
                         contentView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ExampleImage.png"]]
-                         completion:^(BOOL cancelled) {
+                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
                          }];
 }
 
@@ -119,7 +135,7 @@
         [PXAlertView showAlertWithTitle:[NSString stringWithFormat:@"Hello %@", @(i)]
                                 message:@"Oh my this looks like a nice message."
                             cancelTitle:@"Ok"
-                             completion:^(BOOL cancelled) {}];
+                             completion:^(BOOL cancelled, NSInteger buttonIndex) {}];
     }
 }
 

@@ -35,8 +35,11 @@ static const CGFloat AlertViewButtonHeight = 44;
 @property (nonatomic) UILabel *messageLabel;
 @property (nonatomic) UIButton *cancelButton;
 @property (nonatomic) UIButton *otherButton;
+@property (nonatomic) NSArray *buttons;
+@property (nonatomic) CGFloat buttonsY;
+@property (nonatomic) CALayer *verticalLine;
 @property (nonatomic) UITapGestureRecognizer *tap;
-@property (nonatomic, copy) void (^completion)(BOOL cancelled);
+@property (nonatomic, copy) void (^completion)(BOOL cancelled, NSInteger buttonIndex);
 
 @end
 
@@ -57,6 +60,21 @@ static const CGFloat AlertViewButtonHeight = 44;
             message:(NSString *)message
         cancelTitle:(NSString *)cancelTitle
          otherTitle:(NSString *)otherTitle
+        contentView:(UIView *)contentView
+         completion:(PXAlertViewCompletionBlock)completion
+{
+    return [self initWithTitle:title
+                       message:message
+                   cancelTitle:cancelTitle
+                   otherTitles:(otherTitle) ? @[ otherTitle ] : nil
+                   contentView:contentView
+                    completion:completion];
+}
+
+- (id)initWithTitle:(NSString *)title
+            message:(NSString *)message
+        cancelTitle:(NSString *)cancelTitle
+        otherTitles:(NSArray *)otherTitles
         contentView:(UIView *)contentView
          completion:(PXAlertViewCompletionBlock)completion
 {
@@ -132,54 +150,25 @@ static const CGFloat AlertViewButtonHeight = 44;
         [_alertView addSubview:_messageLabel];
 
         // Line
-        CALayer *lineLayer = [CALayer layer];
-        lineLayer.backgroundColor = [[UIColor colorWithWhite:0.90 alpha:0.3] CGColor];
+        CALayer *lineLayer = [self lineLayer];
         lineLayer.frame = CGRectMake(0, _messageLabel.frame.origin.y + _messageLabel.frame.size.height + AlertViewVerticalElementSpace, AlertViewWidth, 0.5);
         [_alertView.layer addSublayer:lineLayer];
+        
+        _buttonsY = lineLayer.frame.origin.y + lineLayer.frame.size.height;
 
         // Buttons
-        _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
         if (cancelTitle) {
-            [_cancelButton setTitle:cancelTitle forState:UIControlStateNormal];
+            [self addButtonWithTitle:cancelTitle];
         } else {
-            [_cancelButton setTitle:NSLocalizedString(@"Ok", nil) forState:UIControlStateNormal];
+            [self addButtonWithTitle:NSLocalizedString(@"Ok", nil)];
         }
-        _cancelButton.backgroundColor = [UIColor clearColor];
-
-        [_cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_cancelButton setTitleColor:[UIColor colorWithWhite:0.25 alpha:1] forState:UIControlStateHighlighted];
-        [_cancelButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
-        [_cancelButton addTarget:self action:@selector(setBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
-        [_cancelButton addTarget:self action:@selector(clearBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
-
-        CGFloat buttonsY = lineLayer.frame.origin.y + lineLayer.frame.size.height;
-        if (otherTitle) {
-            _cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
-            _cancelButton.frame = CGRectMake(0, buttonsY, AlertViewWidth/2, AlertViewButtonHeight);
-
-            _otherButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [_otherButton setTitle:otherTitle forState:UIControlStateNormal];
-            _otherButton.backgroundColor = [UIColor clearColor];
-            _otherButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-            [_otherButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [_otherButton setTitleColor:[UIColor colorWithWhite:0.25 alpha:1] forState:UIControlStateHighlighted];
-            [_otherButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
-            [_otherButton addTarget:self action:@selector(setBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
-            [_otherButton addTarget:self action:@selector(clearBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
-            _otherButton.frame = CGRectMake(_cancelButton.frame.size.width, buttonsY, AlertViewWidth/2, 44);
-            [self.alertView addSubview:_otherButton];
-
-            CALayer *lineLayer = [CALayer layer];
-            lineLayer.backgroundColor = [[UIColor colorWithWhite:0.90 alpha:0.3] CGColor];
-            lineLayer.frame = CGRectMake(_otherButton.frame.origin.x, _otherButton.frame.origin.y, 0.5, AlertViewButtonHeight);
-            [_alertView.layer addSublayer:lineLayer];
-
-        } else {
-            _cancelButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-            _cancelButton.frame = CGRectMake(0, buttonsY, AlertViewWidth, AlertViewButtonHeight);
+        
+        if (otherTitles && [otherTitles count] > 0) {
+            for (id otherTitle in otherTitles) {
+                NSParameterAssert([otherTitle isKindOfClass:[NSString class]]);
+                [self addButtonWithTitle:(NSString *)otherTitle];
+            }
         }
-
-        [_alertView addSubview:_cancelButton];
 
         _alertView.bounds = CGRectMake(0, 0, AlertViewWidth, 150);
 
@@ -234,6 +223,19 @@ static const CGFloat AlertViewButtonHeight = 44;
     return CGRectMake(label.frame.origin.x, label.frame.origin.y, label.frame.size.width, height);
 }
 
+- (UIButton *)genericButton
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.backgroundColor = [UIColor clearColor];
+    button.titleLabel.font = [UIFont systemFontOfSize:17];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithWhite:0.25 alpha:1] forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(setBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
+    [button addTarget:self action:@selector(clearBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
+    return button;
+}
+
 - (CGPoint)centerWithFrame:(CGRect)frame
 {
     return CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame) - [self statusBarOffset]);
@@ -265,7 +267,10 @@ static const CGFloat AlertViewButtonHeight = 44;
             totalHeight += view.frame.size.height + AlertViewVerticalElementSpace;
         }
     }
-    totalHeight += AlertViewButtonHeight;
+    if (self.buttons) {
+        NSUInteger otherButtonsCount = [self.buttons count];
+        totalHeight += AlertViewButtonHeight * (otherButtonsCount > 2 ? otherButtonsCount : 1);
+    }
     totalHeight += AlertViewVerticalElementSpace;
 
     self.alertView.frame = CGRectMake(self.alertView.frame.origin.x,
@@ -340,14 +345,19 @@ static const CGFloat AlertViewButtonHeight = 44;
         [self.view removeFromSuperview];
     }];
 
-    BOOL cancelled;
-    if (sender == self.cancelButton || sender == self.tap) {
-        cancelled = YES;
-    } else {
-        cancelled = NO;
-    }
     if (self.completion) {
-        self.completion(cancelled);
+        BOOL cancelled = NO;
+        if (sender == self.cancelButton || sender == self.tap) {
+            cancelled = YES;
+        }
+        NSInteger buttonIndex = -1;
+        if (self.buttons) {
+            NSUInteger index = [self.buttons indexOfObject:sender];
+            if (buttonIndex != NSNotFound) {
+                buttonIndex = index;
+            }
+        }
+        self.completion(cancelled, buttonIndex);
     }
 }
 
@@ -378,6 +388,13 @@ static const CGFloat AlertViewButtonHeight = 44;
     animation.duration = .2;
 
     [self.alertView.layer addAnimation:animation forKey:@"dismissAlert"];
+}
+
+- (CALayer *)lineLayer
+{
+    CALayer *lineLayer = [CALayer layer];
+    lineLayer.backgroundColor = [[UIColor colorWithWhite:0.90 alpha:0.3] CGColor];
+    return lineLayer;
 }
 
 #pragma mark -
@@ -460,6 +477,22 @@ static const CGFloat AlertViewButtonHeight = 44;
 + (instancetype)showAlertWithTitle:(NSString *)title
                            message:(NSString *)message
                        cancelTitle:(NSString *)cancelTitle
+                       otherTitles:(NSArray *)otherTitles
+                        completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                             otherTitles:otherTitles
+                                             contentView:nil
+                                              completion:completion];
+    [alertView show];
+    return alertView;
+}
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
                         otherTitle:(NSString *)otherTitle
                        contentView:(UIView *)view
                         completion:(PXAlertViewCompletionBlock)completion
@@ -472,6 +505,63 @@ static const CGFloat AlertViewButtonHeight = 44;
                                               completion:completion];
     [alertView show];
     return alertView;
+}
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                       otherTitles:(NSArray *)otherTitles
+                       contentView:(UIView *)view
+                        completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                             otherTitles:otherTitles
+                                             contentView:view
+                                              completion:completion];
+    [alertView show];
+    return alertView;
+}
+
+- (NSInteger)addButtonWithTitle:(NSString *)title
+{
+    UIButton *button = [self genericButton];
+    [button setTitle:title forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    
+    if (!self.cancelButton) {
+        self.cancelButton = button;
+        self.cancelButton.frame = CGRectMake(0, self.buttonsY, AlertViewWidth, AlertViewButtonHeight);
+    } else if (self.buttons && [self.buttons count] > 1) {
+        UIButton *lastButton = (UIButton *)[self.buttons lastObject];
+        lastButton.titleLabel.font = [UIFont systemFontOfSize:17];
+        if ([self.buttons count] == 2) {
+            [self.verticalLine removeFromSuperlayer];
+            CALayer *lineLayer = [self lineLayer];
+            lineLayer.frame = CGRectMake(0, self.buttonsY + AlertViewButtonHeight, AlertViewWidth, 0.5);
+            [self.alertView.layer addSublayer:lineLayer];
+            lastButton.frame = CGRectMake(0, self.buttonsY + AlertViewButtonHeight, AlertViewWidth, AlertViewButtonHeight);
+            self.cancelButton.frame = CGRectMake(0, self.buttonsY, AlertViewWidth, AlertViewButtonHeight);
+        }
+        CGFloat lastButtonYOffset = lastButton.frame.origin.y + AlertViewButtonHeight;
+        button.frame = CGRectMake(0, lastButtonYOffset, AlertViewWidth, AlertViewButtonHeight);
+        CALayer *lineLayer = [self lineLayer];
+        lineLayer.frame = CGRectMake(0, lastButtonYOffset, AlertViewWidth, 0.5);
+        [self.alertView.layer addSublayer:lineLayer];
+    } else {
+        self.verticalLine = [self lineLayer];
+        self.verticalLine.frame = CGRectMake(AlertViewWidth/2, self.buttonsY, 0.5, AlertViewButtonHeight);
+        [self.alertView.layer addSublayer:self.verticalLine];
+        button.frame = CGRectMake(AlertViewWidth/2, self.buttonsY, AlertViewWidth/2, AlertViewButtonHeight);
+        self.otherButton = button;
+        self.cancelButton.frame = CGRectMake(0, self.buttonsY, AlertViewWidth/2, AlertViewButtonHeight);
+        self.cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    }
+    
+    [self.alertView addSubview:button];
+    self.buttons = (self.buttons) ? [self.buttons arrayByAddingObject:button] : @[ button ];
+    return [self.buttons count];
 }
 
 @end

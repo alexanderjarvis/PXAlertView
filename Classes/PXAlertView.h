@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled);
+typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex);
 
 @interface PXAlertView : UIViewController
 
@@ -34,11 +34,37 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled);
                         otherTitle:(NSString *)otherTitle
                         completion:(PXAlertViewCompletionBlock)completion;
 
+/**
+ * @param otherTitles Must be a NSArray containing type NSString, or set to nil for no otherTitles.
+ */
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                       otherTitles:(NSArray *)otherTitles
+                        completion:(PXAlertViewCompletionBlock)completion;
+
+
 + (instancetype)showAlertWithTitle:(NSString *)title
                            message:(NSString *)message
                        cancelTitle:(NSString *)cancelTitle
                         otherTitle:(NSString *)otherTitle
                        contentView:(UIView *)view
                         completion:(PXAlertViewCompletionBlock)completion;
+/**
+ * @param otherTitles Must be a NSArray containing type NSString, or set to nil for no otherTitles.
+ */
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                       otherTitles:(NSArray *)otherTitles
+                       contentView:(UIView *)view
+                        completion:(PXAlertViewCompletionBlock)completion;
+
+/**
+ * Adds a button to the receiver with the given title.
+ * @param The title of the new button
+ * @return The index of the new button. Button indices start at 0 and increase in the order they are added.
+ */
+- (NSInteger)addButtonWithTitle:(NSString *)title;
 
 @end
