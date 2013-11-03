@@ -401,6 +401,11 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 #pragma mark -
 #pragma mark UIViewController
 
+- (BOOL)prefersStatusBarHidden
+{
+	return [UIApplication sharedApplication].statusBarHidden;
+}
+
 - (BOOL)shouldAutorotate
 {
     return YES;
