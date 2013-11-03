@@ -8,14 +8,14 @@
 
 #import "PXAlertView.h"
 
-@interface PXAlertViewQueue : NSObject
+@interface PXAlertViewStack : NSObject
 
 @property (nonatomic) NSMutableArray *alertViews;
 
-+ (PXAlertViewQueue *)sharedInstance;
++ (PXAlertViewStack *)sharedInstance;
 
-- (void)add:(PXAlertView *)alertView;
-- (void)remove:(PXAlertView *)alertView;
+- (void)push:(PXAlertView *)alertView;
+- (void)pop:(PXAlertView *)alertView;
 
 @end
 
@@ -292,7 +292,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 - (void)show
 {
-    [[PXAlertViewQueue sharedInstance] add:self];
+    [[PXAlertViewStack sharedInstance] push:self];
 }
 
 - (void)showInternal
@@ -325,7 +325,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 {
     self.visible = NO;
 
-    if ([[[PXAlertViewQueue sharedInstance] alertViews] count] == 1) {
+    if ([[[PXAlertViewStack sharedInstance] alertViews] count] == 1) {
         [self dismissAlertAnimation];
         if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
             self.mainWindow.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
@@ -342,7 +342,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     [UIView animateWithDuration:0.2 animations:^{
         self.alertView.alpha = 0;
     } completion:^(BOOL finished) {
-        [[PXAlertViewQueue sharedInstance] remove:self];
+        [[PXAlertViewStack sharedInstance] pop:self];
         [self.view removeFromSuperview];
     }];
 
@@ -567,21 +567,21 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 @end
 
-@implementation PXAlertViewQueue
+@implementation PXAlertViewStack
 
 + (instancetype)sharedInstance
 {
-    static PXAlertViewQueue *_sharedInstance = nil;
+    static PXAlertViewStack *_sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedInstance = [[PXAlertViewQueue alloc] init];
+        _sharedInstance = [[PXAlertViewStack alloc] init];
         _sharedInstance.alertViews = [NSMutableArray array];
     });
 
     return _sharedInstance;
 }
 
-- (void)add:(PXAlertView *)alertView
+- (void)push:(PXAlertView *)alertView
 {
     [self.alertViews addObject:alertView];
     [alertView showInternal];
@@ -592,7 +592,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     }
 }
 
-- (void)remove:(PXAlertView *)alertView
+- (void)pop:(PXAlertView *)alertView
 {
     [self.alertViews removeObject:alertView];
     PXAlertView *last = [self.alertViews lastObject];
