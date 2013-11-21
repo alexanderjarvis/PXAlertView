@@ -335,6 +335,8 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
             self.backgroundView.alpha = 0;
         } completion:^(BOOL finished) {
             self.alertWindow.hidden = YES;
+            [self.alertWindow removeFromSuperview];
+            self.alertWindow = nil;
             [self.mainWindow makeKeyAndVisible];
         }];
     }
