@@ -433,20 +433,20 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
 {
-    return [PXAlertView showAlertWithTitle:title message:nil cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
+    return [[self class] showAlertWithTitle:title message:nil cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
 }
 
 + (instancetype)showAlertWithTitle:(NSString *)title
                            message:(NSString *)message
 {
-    return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
+    return [[self class] showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:nil];
 }
 
 + (instancetype)showAlertWithTitle:(NSString *)title
                            message:(NSString *)message
                         completion:(PXAlertViewCompletionBlock)completion
 {
-    return [PXAlertView showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:completion];
+    return [[self class] showAlertWithTitle:title message:message cancelTitle:NSLocalizedString(@"Ok", nil) completion:completion];
 }
 
 + (instancetype)showAlertWithTitle:(NSString *)title
