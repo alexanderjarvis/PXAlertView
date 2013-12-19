@@ -57,7 +57,7 @@ void * const kOtherBGKey = (void * const) &kOtherBGKey;
 
 #pragma mark -
 #pragma mark Buttons Customization
-- (void)setBackgroundColorForButton:(id)sender
+- (void)setCustomBackgroundColorForButton:(id)sender
 {
     if (sender == self.cancelButton && self.cancelButtonBackgroundColor) {
         self.cancelButton.backgroundColor = self.cancelButtonBackgroundColor;
