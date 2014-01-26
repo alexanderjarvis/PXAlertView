@@ -570,6 +570,11 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     return [self.buttons count] - 1;
 }
 
+- (void)setTapToDismissEnabled:(BOOL)enabled
+{
+    self.tap.enabled = enabled;
+}
+
 @end
 
 @implementation PXAlertViewStack

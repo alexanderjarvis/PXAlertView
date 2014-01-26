@@ -67,4 +67,10 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
  */
 - (NSInteger)addButtonWithTitle:(NSString *)title;
 
+/**
+ * By default the alert allows you to tap anywhere around the alert to dismiss it.
+ * This method enables or disables this feature.
+ */
+- (void)setTapToDismissEnabled:(BOOL)enabled;
+
 @end
