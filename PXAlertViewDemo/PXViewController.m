@@ -113,7 +113,7 @@
                              if (cancelled) {
                                  NSLog(@"Cancel button pressed");
                              } else {
-                                 NSLog(@"Button with index %i pressed", buttonIndex);
+                                 NSLog(@"Button with index %li pressed", (long)buttonIndex);
                              }
                          }];
 }
