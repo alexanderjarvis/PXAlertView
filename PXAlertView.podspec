@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = 'PXAlertView'
-    s.version = '0.0.7'
+    s.version = '0.0.8'
     s.summary = 'A drop-in replacement for UIAlertView that is more customisable and skinnable'
     s.description = 'PXAlertView is a UIAlertView replacement similar to the style in iOS 7 but with a block based API and the ability to customise the styling and add custom views.'
     s.homepage = 'https://github.com/alexanderjarvis/PXAlertView'

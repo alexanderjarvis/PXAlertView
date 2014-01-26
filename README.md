@@ -14,9 +14,9 @@ PXAlertView is a UIAlertView replacement similar to the style in iOS 7 but with 
 
 ## Installation
 
-Add the following to your [CocoaPods](http://cocoapods.org/) Podfile 
+Add the following to your [CocoaPods](http://cocoapods.org/) Podfile
 
-	pod 'PXAlertView', '~> 0.0.7'
+	pod 'PXAlertView', '~> 0.0.8'
 
 or clone as a git submodule,
 
