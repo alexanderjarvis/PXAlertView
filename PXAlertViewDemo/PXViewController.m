@@ -146,6 +146,15 @@
     [alertView setTapToDismissEnabled:NO];
 }
 
+- (IBAction)dismissWithNoAnimationAfter1Second:(id)sender
+{
+    PXAlertView *alertView = [PXAlertView showAlertWithTitle:@"No Animation" message:@"When dismissed"];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [alertView dismissWithClickedButtonIndex:0 animated:NO];
+    });
+}
+
 - (IBAction)showLargeUIAlertView:(id)sender
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Some really long title that should wrap to two lines at least. But does it cut off after a certain number of lines? Does it? Does it really? And then what? Does it truncate? Nooo it still hasn't cut off yet. Wow this AlertView can take a lot of characters."

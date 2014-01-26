@@ -68,6 +68,11 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
 - (NSInteger)addButtonWithTitle:(NSString *)title;
 
 /**
+ * Dismisses the receiver, optionally with animation.
+ */
+- (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex animated:(BOOL)animated;
+
+/**
  * By default the alert allows you to tap anywhere around the alert to dismiss it.
  * This method enables or disables this feature.
  */

@@ -323,15 +323,22 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 - (void)dismiss:(id)sender
 {
+    [self dismiss:sender animated:YES];
+}
+
+- (void)dismiss:(id)sender animated:(BOOL)animated
+{
     self.visible = NO;
 
     if ([[[PXAlertViewStack sharedInstance] alertViews] count] == 1) {
-        [self dismissAlertAnimation];
+        if (animated) {
+            [self dismissAlertAnimation];
+        }
         if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
             self.mainWindow.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
             [self.mainWindow tintColorDidChange];
         }
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
             self.backgroundView.alpha = 0;
         } completion:^(BOOL finished) {
             self.alertWindow.hidden = YES;
@@ -339,7 +346,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         }];
     }
 
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
         self.alertView.alpha = 0;
     } completion:^(BOOL finished) {
         [[PXAlertViewStack sharedInstance] pop:self];
@@ -568,6 +575,13 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     [self.alertView addSubview:button];
     self.buttons = (self.buttons) ? [self.buttons arrayByAddingObject:button] : @[ button ];
     return [self.buttons count] - 1;
+}
+
+- (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex animated:(BOOL)animated
+{
+    if (buttonIndex >= 0 && buttonIndex < [self.buttons count]) {
+        [self dismiss:self.buttons[buttonIndex] animated:animated];
+    }
 }
 
 - (void)setTapToDismissEnabled:(BOOL)enabled
