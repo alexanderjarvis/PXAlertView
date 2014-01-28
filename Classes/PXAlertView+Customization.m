@@ -71,6 +71,8 @@ void * const kOtherBGKey = (void * const) &kOtherBGKey;
 - (void)setCancelButtonBackgroundColor:(UIColor *)color
 {
     objc_setAssociatedObject(self, kCancelBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self.cancelButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
+    [self.cancelButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
 }
 
 - (UIColor *)cancelButtonBackgroundColor
@@ -81,6 +83,8 @@ void * const kOtherBGKey = (void * const) &kOtherBGKey;
 - (void)setOtherButtonBackgroundColor:(UIColor *)color
 {
     objc_setAssociatedObject(self, kOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self.otherButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
+    [self.otherButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
 }
 
 - (UIColor *)otherButtonBackgroundColor
