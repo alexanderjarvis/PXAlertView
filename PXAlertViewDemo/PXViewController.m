@@ -68,6 +68,7 @@
     [alert setCancelButtonBackgroundColor:[UIColor redColor]];
     [alert setTitleFont:[UIFont fontWithName:@"Zapfino" size:15.0f]];
     [alert setTitleColor:[UIColor darkGrayColor]];
+    [alert setCancelButtonBackgroundColor:[UIColor redColor]];
 }
 
 
