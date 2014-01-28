@@ -58,9 +58,9 @@
                                              cancelTitle:@"Ok"
                                               completion:^(BOOL cancelled, NSInteger buttonIndex) {
                                                   if (cancelled) {
-                                                      NSLog(@"Simple Alert View cancelled");
+                                                      NSLog(@"Simple Customised Alert View cancelled");
                                                   } else {
-                                                      NSLog(@"Simple Alert View dismissed, but not cancelled");
+                                                      NSLog(@"Simple Customised Alert View dismissed, but not cancelled");
                                                   }
                                               }];
     [alert setWindowTintColor:[UIColor colorWithRed:94/255.0 green:196/255.0 blue:221/255.0 alpha:0.25]];
