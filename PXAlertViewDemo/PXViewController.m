@@ -156,6 +156,15 @@
     });
 }
 
+- (IBAction)showAlertInsideAlertCompletion:(id)sender
+{
+    [PXAlertView showAlertWithTitle:@"Alert Inception"
+                            message:@"After pressing ok, another alert should appear"
+                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
+                             [PXAlertView showAlertWithTitle:@"Woohoo"];
+                         }];
+}
+
 - (IBAction)showLargeUIAlertView:(id)sender
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Some really long title that should wrap to two lines at least. But does it cut off after a certain number of lines? Does it? Does it really? And then what? Does it truncate? Nooo it still hasn't cut off yet. Wow this AlertView can take a lot of characters."

@@ -113,6 +113,16 @@
                                     <action selector="dismissWithNoAnimationAfter1Second:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="F5b-HV-Hie"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Yet-HP-s6d">
+                                <rect key="frame" x="39" y="388" width="242" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Alert inception (alert inside an alert)">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showAlertInsideAlertCompletion:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="MMU-k9-rIj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>

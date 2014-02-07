@@ -297,7 +297,6 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 - (void)showInternal
 {
-    self.alertWindow.hidden = NO;
     [self.alertWindow addSubview:self.view];
     [self.alertWindow makeKeyAndVisible];
     self.visible = YES;
@@ -341,7 +340,6 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
             self.backgroundView.alpha = 0;
         } completion:^(BOOL finished) {
-            self.alertWindow.hidden = YES;
             [self.alertWindow removeFromSuperview];
             self.alertWindow = nil;
             [self.mainWindow makeKeyAndVisible];
