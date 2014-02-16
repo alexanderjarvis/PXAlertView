@@ -62,7 +62,7 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
 
 /**
  * Adds a button to the receiver with the given title.
- * @param The title of the new button
+ * @param title The title of the new button
  * @return The index of the new button. Button indices start at 0 and increase in the order they are added.
  */
 - (NSInteger)addButtonWithTitle:(NSString *)title;
