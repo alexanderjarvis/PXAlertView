@@ -40,7 +40,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 @property (nonatomic) CGFloat buttonsY;
 @property (nonatomic) CALayer *verticalLine;
 @property (nonatomic) UITapGestureRecognizer *tap;
-@property (nonatomic, copy) void (^completion)(BOOL cancelled, NSInteger buttonIndex);
+@property (nonatomic, copy) PXAlertViewCompletionBlock completion;
 
 @end
 
@@ -327,32 +327,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 - (void)dismiss:(id)sender animated:(BOOL)animated
 {
-    self.visible = NO;
-
-    if ([[[PXAlertViewStack sharedInstance] alertViews] count] == 1) {
-        if (animated) {
-            [self dismissAlertAnimation];
-        }
-        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
-            self.mainWindow.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
-            [self.mainWindow tintColorDidChange];
-        }
-        [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
-            self.backgroundView.alpha = 0;
-        } completion:^(BOOL finished) {
-            [self.alertWindow removeFromSuperview];
-            self.alertWindow = nil;
-            [self.mainWindow makeKeyAndVisible];
-        }];
-    }
-
-    [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
-        self.alertView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [[PXAlertViewStack sharedInstance] pop:self];
-        [self.view removeFromSuperview];
-    }];
-
+    BOOL shouldDismiss = YES;
     if (self.completion) {
         BOOL cancelled = NO;
         if (sender == self.cancelButton || sender == self.tap) {
@@ -365,8 +340,39 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                 buttonIndex = index;
             }
         }
-        self.completion(cancelled, buttonIndex);
+        self.completion(cancelled, buttonIndex, &shouldDismiss);
     }
+
+    if (shouldDismiss) {
+        self.visible = NO;
+
+        if ([[[PXAlertViewStack sharedInstance] alertViews] count] == 1) {
+            if (animated) {
+                [self dismissAlertAnimation];
+            }
+            if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
+                self.mainWindow.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
+                [self.mainWindow tintColorDidChange];
+            }
+            [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
+                self.backgroundView.alpha = 0;
+            } completion:^(BOOL finished) {
+                [self.alertWindow removeFromSuperview];
+                self.alertWindow = nil;
+                [self.mainWindow makeKeyAndVisible];
+            }];
+        }
+
+        [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
+            self.alertView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [[PXAlertViewStack sharedInstance] pop:self];
+            [self.view removeFromSuperview];
+        }];
+    }
+
+    if ([sender isKindOfClass:[UIButton class]])
+        [self clearBackgroundColorForButton:sender];
 }
 
 - (void)showAlertAnimation

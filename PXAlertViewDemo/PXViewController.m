@@ -42,7 +42,7 @@
     [PXAlertView showAlertWithTitle:@"Hello World"
                             message:@"Oh my this looks like a nice message."
                         cancelTitle:@"Ok"
-                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
+                         completion:^(BOOL cancelled, NSInteger buttonIndex, BOOL *shouldDismiss) {
                              if (cancelled) {
                                  NSLog(@"Simple Alert View cancelled");
                              } else {
@@ -56,7 +56,7 @@
     PXAlertView *alert = [PXAlertView showAlertWithTitle:@"Hello World"
                                                  message:@"Oh my this looks like a nice message."
                                              cancelTitle:@"Ok"
-                                              completion:^(BOOL cancelled, NSInteger buttonIndex) {
+                                              completion:^(BOOL cancelled, NSInteger buttonIndex, BOOL *shouldDismiss) {
                                                   if (cancelled) {
                                                       NSLog(@"Simple Customised Alert View cancelled");
                                                   } else {
@@ -77,7 +77,7 @@
     [PXAlertView showAlertWithTitle:@"Why this is a larger title! Even larger than the largest large thing that ever was large in a very large way."
                             message:@"Oh my this looks like a nice message. Yes it does, and it can span multiple lines... all the way down."
                         cancelTitle:@"Ok thanks, that's grand"
-                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
+                         completion:^(BOOL cancelled, NSInteger buttonIndex, BOOL *shouldDismiss) {
                              if (cancelled) {
                                  NSLog(@"Larger Alert View cancelled");
                              } else {
@@ -92,7 +92,7 @@
                             message:@"Pick the Red pill, or the blue pill"
                         cancelTitle:@"Blue"
                          otherTitle:@"Red"
-                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
+                         completion:^(BOOL cancelled, NSInteger buttonIndex, BOOL *shouldDismiss) {
                              if (cancelled) {
                                  NSLog(@"Cancel (Blue) button pressed");
                              } else {
@@ -110,7 +110,7 @@
                             message:@"How would you like it?"
                         cancelTitle:@"No thanks"
                         otherTitles:@[ @"Too Hot", @"Luke Warm", @"Quite nippy" ]
-                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
+                         completion:^(BOOL cancelled, NSInteger buttonIndex, BOOL *shouldDismiss) {
                              if (cancelled) {
                                  NSLog(@"Cancel button pressed");
                              } else {
@@ -126,7 +126,7 @@
                         cancelTitle:@"Ok"
                          otherTitle:nil
                         contentView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ExampleImage.png"]]
-                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
+                         completion:^(BOOL cancelled, NSInteger buttonIndex, BOOL *shouldDismiss) {
                          }];
 }
 
@@ -136,7 +136,7 @@
         [PXAlertView showAlertWithTitle:[NSString stringWithFormat:@"Hello %@", @(i)]
                                 message:@"Oh my this looks like a nice message."
                             cancelTitle:@"Ok"
-                             completion:^(BOOL cancelled, NSInteger buttonIndex) {}];
+                             completion:^(BOOL cancelled, NSInteger buttonIndex, BOOL *shouldDismiss) {}];
     }
 }
 
@@ -160,7 +160,7 @@
 {
     [PXAlertView showAlertWithTitle:@"Alert Inception"
                             message:@"After pressing ok, another alert should appear"
-                         completion:^(BOOL cancelled, NSInteger buttonIndex) {
+                         completion:^(BOOL cancelled, NSInteger buttonIndex, BOOL *shouldDismiss) {
                              [PXAlertView showAlertWithTitle:@"Woohoo"];
                          }];
 }
@@ -173,6 +173,24 @@
                      cancelButtonTitle:@"Cancel"
                      otherButtonTitles:@"Ok", nil];
     [alertView show];
+}
+
+- (IBAction)showNonDismissAlertView:(id)sender {
+    __block BOOL hasPressed = NO;
+    __block PXAlertView *alert = [PXAlertView showAlertWithTitle:@"Buttons don't dismiss"
+                                                         message:@"Press the button below to get a callback that you can use to perform an action without dismissing the alert view"
+                                                     cancelTitle:@"Press me"
+                                                     otherTitles:@[]
+                                                     contentView:nil
+                                                      completion:^(BOOL cancelled, NSInteger buttonIndex, BOOL *cancelDismiss) {
+                                                          if (0 == buttonIndex) {
+                                                              if (NO == hasPressed) {
+                                                                  [alert addButtonWithTitle:@"Now press me"];
+                                                                  hasPressed = YES;
+                                                              }
+                                                              *cancelDismiss = NO;
+                                                          }
+                                                      }];
 }
 
 @end
