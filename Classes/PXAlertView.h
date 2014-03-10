@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex);
+typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex, BOOL *cancelDismiss);
 
 @interface PXAlertView : UIViewController
 
