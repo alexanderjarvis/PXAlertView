@@ -28,7 +28,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 @interface PXAlertView ()
 
 @property (nonatomic) UIWindow *mainWindow;
-@property (nonatomic) UIWindow *alertWindow;
+@property (nonatomic,strong) UIWindow *alertWindow;
 @property (nonatomic) UIView *backgroundView;
 @property (nonatomic) UIView *alertView;
 @property (nonatomic) UILabel *titleLabel;
@@ -69,7 +69,8 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                    cancelTitle:cancelTitle
                    otherTitles:(otherTitle) ? @[ otherTitle ] : nil
                    contentView:contentView
-                    completion:completion];
+                    completion:completion
+                   tapGestures:NO];
 }
 
 - (id)initWithTitle:(NSString *)title
@@ -78,6 +79,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         otherTitles:(NSArray *)otherTitles
         contentView:(UIView *)contentView
          completion:(PXAlertViewCompletionBlock)completion
+        tapGestures:(BOOL)isTapEnable
 {
     self = [super init];
     if (self) {
@@ -89,6 +91,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
             _alertWindow.windowLevel = UIWindowLevelAlert;
             _alertWindow.backgroundColor = [UIColor clearColor];
         }
+        _alertWindow.userInteractionEnabled = YES;
         _alertWindow.rootViewController = self;
 
         CGRect frame = [self frameForOrientation:self.interfaceOrientation];
@@ -180,12 +183,13 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         [self resizeViews];
 
         _alertView.center = [self centerWithFrame:frame];
-
-        [self setupGestures];
+        if (isTapEnable) {
+           [self setupGestures];
+        }
+        
     }
     return self;
 }
-
 - (CGRect)frameForOrientation:(UIInterfaceOrientation)orientation
 {
     CGRect frame;
@@ -299,6 +303,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 {
     [self.alertWindow addSubview:self.view];
     [self.alertWindow makeKeyAndVisible];
+    self.alertWindow.userInteractionEnabled = YES;
     self.visible = YES;
     [self showBackgroundView];
     [self showAlertAnimation];
@@ -320,6 +325,14 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     [self.view removeFromSuperview];
 }
 
+- (void)clearWindow
+{
+    self.alertWindow.userInteractionEnabled = NO;
+    [self.alertWindow removeFromSuperview];
+    self.alertWindow = nil;
+    [self.mainWindow makeKeyAndVisible];
+}
+
 - (void)dismiss:(id)sender
 {
     [self dismiss:sender animated:YES];
@@ -328,8 +341,6 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 - (void)dismiss:(id)sender animated:(BOOL)animated
 {
     self.visible = NO;
-
-    if ([[[PXAlertViewStack sharedInstance] alertViews] count] == 1) {
         if (animated) {
             [self dismissAlertAnimation];
         }
@@ -339,34 +350,36 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         }
         [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
             self.backgroundView.alpha = 0;
+            self.alertView.alpha = 0;
         } completion:^(BOOL finished) {
-            [self.alertWindow removeFromSuperview];
-            self.alertWindow = nil;
-            [self.mainWindow makeKeyAndVisible];
-        }];
-    }
-
-    [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
-        self.alertView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [[PXAlertViewStack sharedInstance] pop:self];
-        [self.view removeFromSuperview];
-    }];
-
-    if (self.completion) {
-        BOOL cancelled = NO;
-        if (sender == self.cancelButton || sender == self.tap) {
-            cancelled = YES;
-        }
-        NSInteger buttonIndex = -1;
-        if (self.buttons) {
-            NSUInteger index = [self.buttons indexOfObject:sender];
-            if (buttonIndex != NSNotFound) {
-                buttonIndex = index;
+            [[PXAlertViewStack sharedInstance] pop:self];
+            if ([PXAlertViewStack sharedInstance].alertViews.count<=0) {
+                [self clearWindow];
             }
-        }
-        self.completion(cancelled, buttonIndex);
-    }
+            [self.view removeFromSuperview];
+            
+            if (self.completion) {
+                BOOL cancelled = NO;
+                if (sender == self.cancelButton || sender == self.tap) {
+                    cancelled = YES;
+                }
+                NSInteger buttonIndex = -1;
+                if (self.buttons) {
+                    NSUInteger index = [self.buttons indexOfObject:sender];
+                    if (buttonIndex != NSNotFound) {
+                        buttonIndex = index;
+                    }
+                }
+                self.completion(cancelled, buttonIndex);
+            }
+            
+            
+            
+        }];
+
+    
+
+    
 }
 
 - (void)showAlertAnimation
@@ -498,7 +511,8 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                                              cancelTitle:cancelTitle
                                              otherTitles:otherTitles
                                              contentView:nil
-                                              completion:completion];
+                                              completion:completion
+                                             tapGestures:NO];
     [alertView show];
     return alertView;
 }
@@ -532,7 +546,8 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                                              cancelTitle:cancelTitle
                                              otherTitles:otherTitles
                                              contentView:view
-                                              completion:completion];
+                                              completion:completion
+                                             tapGestures:NO];
     [alertView show];
     return alertView;
 }
