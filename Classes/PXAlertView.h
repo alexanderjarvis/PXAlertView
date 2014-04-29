@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+extern void *const kCancelBGKey;
+extern void *const kOtherBGKey;
+
 typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex);
 
 @interface PXAlertView : UIViewController
 
 @property (nonatomic, getter = isVisible) BOOL visible;
+
++ (instancetype)appearance;
 
 + (instancetype)showAlertWithTitle:(NSString *)title;
 

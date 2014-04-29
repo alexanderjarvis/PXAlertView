@@ -9,9 +9,6 @@
 #import "PXAlertView+Customization.h"
 #import <objc/runtime.h>
 
-void * const kCancelBGKey = (void * const) &kCancelBGKey;
-void * const kOtherBGKey = (void * const) &kOtherBGKey;
-
 @interface PXAlertView ()
 
 @property (nonatomic) UIView *backgroundView;
@@ -53,6 +50,16 @@ void * const kOtherBGKey = (void * const) &kOtherBGKey;
 - (void)setMessageFont:(UIFont *)font
 {
     self.messageLabel.font = font;
+}
+
+- (void)setCancelButtonFont:(UIFont *)font
+{
+    [self.cancelButton.titleLabel setFont:font];
+}
+
+- (void)setOtherButtonFont:(UIFont *)font
+{
+    [self.otherButton.titleLabel setFont:font];
 }
 
 #pragma mark -
