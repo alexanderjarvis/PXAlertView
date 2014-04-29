@@ -7,6 +7,10 @@
 //
 
 #import "PXAlertView.h"
+#import <objc/runtime.h>
+
+void * const kCancelBGKey = (void * const) &kCancelBGKey;
+void * const kOtherBGKey = (void * const) &kOtherBGKey;
 
 @interface PXAlertViewStack : NSObject
 
@@ -46,11 +50,44 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 @implementation PXAlertView
 
++ (instancetype)appearance
+{
+    static PXAlertView *appearance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        appearance = [[self alloc] init];
+        appearance.alertView = [[UIView alloc] init];
+        appearance.titleLabel = [[UILabel alloc] init];
+        appearance.messageLabel = [[UILabel alloc] init];
+        appearance.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        appearance.otherButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        appearance.alertView.backgroundColor = [UIColor colorWithWhite:0.25 alpha:1];
+        
+        appearance.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+        appearance.titleLabel.textColor = [UIColor whiteColor];
+        
+        appearance.messageLabel.font = [UIFont systemFontOfSize:15];
+        appearance.messageLabel.textColor = [UIColor whiteColor];
+        
+        appearance.cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+        appearance.otherButton.titleLabel.font = [UIFont systemFontOfSize:17];
+        
+        appearance.cancelButton.backgroundColor = [UIColor colorWithWhite:0.25*0.8 alpha:1];
+        objc_setAssociatedObject(self, kCancelBGKey, [UIColor colorWithWhite:0.25*0.8 alpha:1], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        appearance.otherButton.backgroundColor = [UIColor colorWithWhite:0.25*0.8 alpha:1];
+        objc_setAssociatedObject(self, kOtherBGKey, [UIColor colorWithWhite:0.25*0.8 alpha:1], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    });
+    return appearance;
+}
+
 - (UIWindow *)windowWithLevel:(UIWindowLevel)windowLevel
 {
     NSArray *windows = [[UIApplication sharedApplication] windows];
     for (UIWindow *window in windows) {
         if (window.windowLevel == windowLevel) {
+            if (CGRectIsEmpty(window.frame))
+                window.frame = [[UIScreen mainScreen] bounds];
             return window;
         }
     }
@@ -100,7 +137,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         [self.view addSubview:_backgroundView];
 
         _alertView = [[UIView alloc] init];
-        _alertView.backgroundColor = [UIColor colorWithWhite:0.25 alpha:1];
+        _alertView.backgroundColor = [PXAlertView appearance].alertView.backgroundColor;
         _alertView.layer.cornerRadius = 8.0;
         _alertView.layer.opacity = .95;
         _alertView.clipsToBounds = YES;
@@ -115,7 +152,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textColor = [UIColor whiteColor];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.font = [UIFont boldSystemFontOfSize:17];
+        _titleLabel.font = [PXAlertView appearance].titleLabel.font;
         _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _titleLabel.numberOfLines = 0;
         _titleLabel.frame = [self adjustLabelFrameHeight:self.titleLabel];
@@ -144,7 +181,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         _messageLabel.backgroundColor = [UIColor clearColor];
         _messageLabel.textColor = [UIColor whiteColor];
         _messageLabel.textAlignment = NSTextAlignmentCenter;
-        _messageLabel.font = [UIFont systemFontOfSize:15];
+        _messageLabel.font = [PXAlertView appearance].messageLabel.font;
         _messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _messageLabel.numberOfLines = 0;
         _messageLabel.frame = [self adjustLabelFrameHeight:self.messageLabel];
@@ -228,7 +265,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.backgroundColor = [UIColor clearColor];
-    button.titleLabel.font = [UIFont systemFontOfSize:17];
+    button.titleLabel.font = [[PXAlertView appearance] cancelButton].titleLabel.font;
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor colorWithWhite:0.25 alpha:1] forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
@@ -282,7 +319,18 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 - (void)setBackgroundColorForButton:(id)sender
 {
-    [sender setBackgroundColor:[UIColor colorWithRed:94/255.0 green:196/255.0 blue:221/255.0 alpha:1.0]];
+    if (sender == self.cancelButton)
+    {
+        UIColor *color = objc_getAssociatedObject([PXAlertView appearance], kCancelBGKey);
+        if (!color) color = [UIColor colorWithRed:94/255.0 green:196/255.0 blue:221/255.0 alpha:1.0];
+        [sender setBackgroundColor:color];
+    }
+    else
+    {
+        UIColor *color = objc_getAssociatedObject([PXAlertView appearance], kOtherBGKey);
+        if (!color) color = [UIColor colorWithRed:94/255.0 green:196/255.0 blue:221/255.0 alpha:1.0];
+        [sender setBackgroundColor:color];
+    }
 }
 
 - (void)clearBackgroundColorForButton:(id)sender
@@ -298,6 +346,10 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 - (void)showInternal
 {
     [self.alertWindow addSubview:self.view];
+    if (![self.alertWindow isUserInteractionEnabled])
+    {
+        self.alertWindow.userInteractionEnabled = YES;
+    }
     [self.alertWindow makeKeyAndVisible];
     self.visible = YES;
     [self showBackgroundView];
@@ -340,10 +392,10 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
             self.backgroundView.alpha = 0;
         } completion:^(BOOL finished) {
-            [self.alertWindow removeFromSuperview];
+            [self.mainWindow makeKeyAndVisible];
+            self.alertWindow.hidden = YES;
             self.alertWindow.rootViewController = nil;
             self.alertWindow = nil;
-            [self.mainWindow makeKeyAndVisible];
         }];
     }
 
@@ -542,7 +594,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 {
     UIButton *button = [self genericButton];
     [button setTitle:title forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    button.titleLabel.font = [PXAlertView appearance].otherButton.titleLabel.font;
     
     if (!self.cancelButton) {
         self.cancelButton = button;
@@ -570,7 +622,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         button.frame = CGRectMake(AlertViewWidth/2, self.buttonsY, AlertViewWidth/2, AlertViewButtonHeight);
         self.otherButton = button;
         self.cancelButton.frame = CGRectMake(0, self.buttonsY, AlertViewWidth/2, AlertViewButtonHeight);
-        self.cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+        self.cancelButton.titleLabel.font = [PXAlertView appearance].cancelButton.titleLabel.font;
     }
     
     [self.alertView addSubview:button];
