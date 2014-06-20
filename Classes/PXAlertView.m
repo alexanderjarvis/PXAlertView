@@ -81,82 +81,82 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 {
     self = [super init];
     if (self) {
-        _mainWindow = [self windowWithLevel:UIWindowLevelNormal];
-        _alertWindow = [self windowWithLevel:UIWindowLevelAlert];
-
-        if (!_alertWindow) {
-            _alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-            _alertWindow.windowLevel = UIWindowLevelAlert;
-            _alertWindow.backgroundColor = [UIColor clearColor];
+        self.mainWindow = [self windowWithLevel:UIWindowLevelNormal];
+        self.alertWindow = [self windowWithLevel:UIWindowLevelAlert];
+        
+        if (!self.alertWindow) {
+            self.alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+            self.alertWindow.windowLevel = UIWindowLevelAlert;
+            self.alertWindow.backgroundColor = [UIColor clearColor];
         }
-        _alertWindow.rootViewController = self;
-
+        self.alertWindow.rootViewController = self;
+        
         CGRect frame = [self frameForOrientation:self.interfaceOrientation];
         self.view.frame = frame;
-
-        _backgroundView = [[UIView alloc] initWithFrame:frame];
-        _backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.25];
-        _backgroundView.alpha = 0;
-        [self.view addSubview:_backgroundView];
-
-        _alertView = [[UIView alloc] init];
-        _alertView.backgroundColor = [UIColor colorWithWhite:0.25 alpha:1];
-        _alertView.layer.cornerRadius = 8.0;
-        _alertView.layer.opacity = .95;
-        _alertView.clipsToBounds = YES;
-        [self.view addSubview:_alertView];
-
+        
+        self.backgroundView = [[UIView alloc] initWithFrame:frame];
+        self.backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.25];
+        self.backgroundView.alpha = 0;
+        [self.view addSubview:self.backgroundView];
+        
+        self.alertView = [[UIView alloc] init];
+        self.alertView.backgroundColor = [UIColor colorWithWhite:0.25 alpha:1];
+        self.alertView.layer.cornerRadius = 8.0;
+        self.alertView.layer.opacity = .95;
+        self.alertView.clipsToBounds = YES;
+        [self.view addSubview:self.alertView];
+        
         // Title
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
-                                                                AlertViewVerticalElementSpace,
-                                                                AlertViewWidth - AlertViewContentMargin*2,
-                                                                44)];
-        _titleLabel.text = title;
-        _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.textColor = [UIColor whiteColor];
-        _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.font = [UIFont boldSystemFontOfSize:17];
-        _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        _titleLabel.numberOfLines = 0;
-        _titleLabel.frame = [self adjustLabelFrameHeight:self.titleLabel];
-        [_alertView addSubview:_titleLabel];
-
-        CGFloat messageLabelY = _titleLabel.frame.origin.y + _titleLabel.frame.size.height + AlertViewVerticalElementSpace;
-
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
+                                                                    AlertViewVerticalElementSpace,
+                                                                    AlertViewWidth - AlertViewContentMargin*2,
+                                                                    44)];
+        self.titleLabel.text = title;
+        self.titleLabel.backgroundColor = [UIColor clearColor];
+        self.titleLabel.textColor = [UIColor whiteColor];
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+        self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        self.titleLabel.numberOfLines = 0;
+        self.titleLabel.frame = [self adjustLabelFrameHeight:self.titleLabel];
+        [self.alertView addSubview:self.titleLabel];
+        
+        CGFloat messageLabelY = self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + AlertViewVerticalElementSpace;
+        
         // Optional Content View
         if (contentView) {
-            _contentView = contentView;
-            _contentView.frame = CGRectMake(0,
-                                            messageLabelY,
-                                            _contentView.frame.size.width,
-                                            _contentView.frame.size.height);
-            _contentView.center = CGPointMake(AlertViewWidth/2, _contentView.center.y);
-            [_alertView addSubview:_contentView];
+            self.contentView = contentView;
+            self.contentView.frame = CGRectMake(0,
+                                                messageLabelY,
+                                                self.contentView.frame.size.width,
+                                                self.contentView.frame.size.height);
+            self.contentView.center = CGPointMake(AlertViewWidth/2, self.contentView.center.y);
+            [self.alertView addSubview:self.contentView];
             messageLabelY += contentView.frame.size.height + AlertViewVerticalElementSpace;
         }
 
         // Message
-        _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
-                                                                  messageLabelY,
-                                                                  AlertViewWidth - AlertViewContentMargin*2,
-                                                                  44)];
-        _messageLabel.text = message;
-        _messageLabel.backgroundColor = [UIColor clearColor];
-        _messageLabel.textColor = [UIColor whiteColor];
-        _messageLabel.textAlignment = NSTextAlignmentCenter;
-        _messageLabel.font = [UIFont systemFontOfSize:15];
-        _messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        _messageLabel.numberOfLines = 0;
-        _messageLabel.frame = [self adjustLabelFrameHeight:self.messageLabel];
-        [_alertView addSubview:_messageLabel];
-
+        self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
+                                                                      messageLabelY,
+                                                                      AlertViewWidth - AlertViewContentMargin*2,
+                                                                      44)];
+        self.messageLabel.text = message;
+        self.messageLabel.backgroundColor = [UIColor clearColor];
+        self.messageLabel.textColor = [UIColor whiteColor];
+        self.messageLabel.textAlignment = NSTextAlignmentCenter;
+        self.messageLabel.font = [UIFont systemFontOfSize:15];
+        self.messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        self.messageLabel.numberOfLines = 0;
+        self.messageLabel.frame = [self adjustLabelFrameHeight:self.messageLabel];
+        [self.alertView addSubview:self.messageLabel];
+        
         // Line
         CALayer *lineLayer = [self lineLayer];
-        lineLayer.frame = CGRectMake(0, _messageLabel.frame.origin.y + _messageLabel.frame.size.height + AlertViewVerticalElementSpace, AlertViewWidth, AlertViewLineLayerWidth);
-        [_alertView.layer addSublayer:lineLayer];
+        lineLayer.frame = CGRectMake(0, self.messageLabel.frame.origin.y + self.messageLabel.frame.size.height + AlertViewVerticalElementSpace, AlertViewWidth, AlertViewLineLayerWidth);
+        [self.alertView.layer addSublayer:lineLayer];
         
-        _buttonsY = lineLayer.frame.origin.y + lineLayer.frame.size.height;
-
+        self.buttonsY = lineLayer.frame.origin.y + lineLayer.frame.size.height;
+        
         // Buttons
         if (cancelTitle) {
             [self addButtonWithTitle:cancelTitle];
@@ -170,17 +170,17 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                 [self addButtonWithTitle:(NSString *)otherTitle];
             }
         }
-
-        _alertView.bounds = CGRectMake(0, 0, AlertViewWidth, 150);
-
+        
+        self.alertView.bounds = CGRectMake(0, 0, AlertViewWidth, 150);
+        
         if (completion) {
-            _completion = completion;
+            self.completion = completion;
         }
 
         [self resizeViews];
-
-        _alertView.center = [self centerWithFrame:frame];
-
+        
+        self.alertView.center = [self centerWithFrame:frame];
+        
         [self setupGestures];
     }
     return self;
@@ -220,7 +220,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                                                  context:context];
         height = bounds.size.height;
     }
-
+    
     return CGRectMake(label.frame.origin.x, label.frame.origin.y, label.frame.size.width, height);
 }
 
@@ -273,7 +273,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         totalHeight += AlertViewButtonHeight * (otherButtonsCount > 2 ? otherButtonsCount : 1);
     }
     totalHeight += AlertViewVerticalElementSpace;
-
+    
     self.alertView.frame = CGRectMake(self.alertView.frame.origin.x,
                                       self.alertView.frame.origin.y,
                                       self.alertView.frame.size.width,
@@ -340,13 +340,14 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
             self.backgroundView.alpha = 0;
         } completion:^(BOOL finished) {
+            [self.alertWindow setHidden:YES];
             [self.alertWindow removeFromSuperview];
             self.alertWindow.rootViewController = nil;
             self.alertWindow = nil;
             [self.mainWindow makeKeyAndVisible];
         }];
     }
-
+    
     [UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
         self.alertView.alpha = 0;
     } completion:^(BOOL finished) {
