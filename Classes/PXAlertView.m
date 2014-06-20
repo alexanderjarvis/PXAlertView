@@ -134,7 +134,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
             [self.alertView addSubview:self.contentView];
             messageLabelY += contentView.frame.size.height + AlertViewVerticalElementSpace;
         }
-        
+
         // Message
         self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
                                                                       messageLabelY,
@@ -176,7 +176,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         if (completion) {
             self.completion = completion;
         }
-        
+
         [self resizeViews];
         
         self.alertView.center = [self centerWithFrame:frame];
@@ -201,16 +201,16 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 - (CGRect)adjustLabelFrameHeight:(UILabel *)label
 {
     CGFloat height;
-    
+
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         CGSize size = [label.text sizeWithFont:label.font
                              constrainedToSize:CGSizeMake(label.frame.size.width, FLT_MAX)
                                  lineBreakMode:NSLineBreakByWordWrapping];
-        
+
         height = size.height;
-#pragma clang diagnostic pop
+        #pragma clang diagnostic pop
     } else {
         NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
         context.minimumScaleFactor = 1.0;
@@ -328,7 +328,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 - (void)dismiss:(id)sender animated:(BOOL)animated
 {
     self.visible = NO;
-    
+
     if ([[[PXAlertViewStack sharedInstance] alertViews] count] == 1) {
         if (animated) {
             [self dismissAlertAnimation];
@@ -342,6 +342,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         } completion:^(BOOL finished) {
             [self.alertWindow setHidden:YES];
             [self.alertWindow removeFromSuperview];
+            self.alertWindow.rootViewController = nil;
             self.alertWindow = nil;
             [self.mainWindow makeKeyAndVisible];
         }];
@@ -353,7 +354,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         [[PXAlertViewStack sharedInstance] pop:self];
         [self.view removeFromSuperview];
     }];
-    
+
     if (self.completion) {
         BOOL cancelled = NO;
         if (sender == self.cancelButton || sender == self.tap) {
@@ -373,7 +374,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 - (void)showAlertAnimation
 {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    
+
     animation.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.2, 1.2, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.05, 1.05, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1)]];
@@ -381,21 +382,21 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     animation.fillMode = kCAFillModeForwards;
     animation.removedOnCompletion = NO;
     animation.duration = .3;
-    
+
     [self.alertView.layer addAnimation:animation forKey:@"showAlert"];
 }
 
 - (void)dismissAlertAnimation
 {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    
+
     animation.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.95, 0.95, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.8, 0.8, 1)]];
     animation.keyTimes = @[ @0, @0.5, @1 ];
     animation.fillMode = kCAFillModeRemoved;
     animation.duration = .2;
-    
+
     [self.alertView.layer addAnimation:animation forKey:@"dismissAlert"];
 }
 
@@ -602,7 +603,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         _sharedInstance = [[PXAlertViewStack alloc] init];
         _sharedInstance.alertViews = [NSMutableArray array];
     });
-    
+
     return _sharedInstance;
 }
 
