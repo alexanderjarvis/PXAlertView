@@ -27,5 +27,6 @@
 - (void)setAllButtonsTextColor:(UIColor *)color;
 - (void)setOtherButtonTextColor:(UIColor *)color;
 
+- (void)useDefaultIOS7Style;
 
 @end

@@ -27,6 +27,17 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
 
 @implementation PXAlertView (Customization)
 
+- (void)useDefaultIOS7Style {
+    [self setTapToDismissEnabled:NO];
+    UIColor *ios7BlueColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+    [self setAllButtonsTextColor:ios7BlueColor];
+    [self setTitleColor:[UIColor blackColor]];
+    [self setMessageColor:[UIColor blackColor]];
+    UIColor *defaultBackgroundColor = [UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1.0];
+    [self setAllButtonsBackgroundColor:defaultBackgroundColor];
+    [self setBackgroundColor:[UIColor whiteColor]];
+}
+
 - (void)setWindowTintColor:(UIColor *)color
 {
     self.backgroundView.backgroundColor = color;
@@ -116,18 +127,21 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
 #pragma mark Buttons Text Colors
 - (void)setCancelButtonTextColor:(UIColor *)color
 {
-    self.cancelButton.titleLabel.textColor = color;
+    [self.cancelButton setTitleColor:color forState:UIControlStateNormal];
+    [self.cancelButton setTitleColor:color forState:UIControlStateHighlighted];
 }
 
 - (void)setAllButtonsTextColor:(UIColor *)color
 {
     for (UIButton *button in self.buttons) {
-        button.titleLabel.textColor = color;
+        [button setTitleColor:color forState:UIControlStateNormal];
+        [button setTitleColor:color forState:UIControlStateHighlighted];
     }
 }
 
 - (void)setOtherButtonTextColor:(UIColor *)color
 {
-    self.otherButton.titleLabel.textColor = color;
+    [self.otherButton setTitleColor:color forState:UIControlStateNormal];
+    [self.otherButton setTitleColor:color forState:UIControlStateHighlighted];
 }
 @end

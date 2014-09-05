@@ -66,11 +66,21 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4oJ-6h-3Pd">
                                 <rect key="frame" x="31" y="459" width="259" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Show copy of UIAlertView">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showCopyOfUIAlertView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ZTs-Tt-ukM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7C7-yF-Kag">
+                                <rect key="frame" x="31" y="497" width="259" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Show UIAlertView">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="showLargeUIAlertView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="wvQ-KM-ofN"/>
+                                    <action selector="showLargeUIAlertView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="4qx-pF-dmS"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oZ2-EW-fof">

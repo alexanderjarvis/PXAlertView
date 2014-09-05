@@ -21,7 +21,7 @@
 
 static const CGFloat AlertViewWidth = 270.0;
 static const CGFloat AlertViewContentMargin = 9;
-static const CGFloat AlertViewVerticalElementSpace = 5;
+static const CGFloat AlertViewVerticalElementSpace = 10;
 static const CGFloat AlertViewButtonHeight = 44;
 static const CGFloat AlertViewLineLayerWidth = 0.5;
 
@@ -598,7 +598,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 {
     UIButton *button = [self genericButton];
     [button setTitle:title forState:UIControlStateNormal];
-    
+
     if (!self.cancelButton) {
         button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
         self.cancelButton = button;

@@ -185,6 +185,17 @@
                          }];
 }
 
+- (IBAction)showCopyOfUIAlertView:(id)sender
+{
+    PXAlertView *alertView = [PXAlertView showAlertWithTitle:@"Some really long title that should wrap to two lines at least. But does it cut off after a certain number of lines? Does it? Does it really? And then what? Does it truncate? Nooo it still hasn't cut off yet. Wow this AlertView can take a lot of characters."
+                                                     message:@"How long does the standard UIAlertView stretch to? This should give a good estimation"
+                                                 cancelTitle:@"Cancel"
+                                                  otherTitle:@"Ok"
+                                                 contentView:nil
+                                                  completion:nil];
+    [alertView useDefaultIOS7Style];
+}
+
 - (IBAction)showLargeUIAlertView:(id)sender
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Some really long title that should wrap to two lines at least. But does it cut off after a certain number of lines? Does it? Does it really? And then what? Does it truncate? Nooo it still hasn't cut off yet. Wow this AlertView can take a lot of characters."
