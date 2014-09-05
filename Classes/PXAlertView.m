@@ -559,6 +559,26 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 + (instancetype)showAlertWithTitle:(NSString *)title
                            message:(NSString *)message
                        cancelTitle:(NSString *)cancelTitle
+                        otherTitle:(NSString *)otherTitle
+                buttonsShouldStack:(BOOL)shouldStack
+                       contentView:(UIView *)view
+                        completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                              otherTitle:otherTitle
+                                      buttonsShouldStack:shouldStack
+                                             contentView:view
+                                              completion:completion];
+    [alertView show];
+    return alertView;
+}
+
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
                        otherTitles:(NSArray *)otherTitles
                        contentView:(UIView *)view
                         completion:(PXAlertViewCompletionBlock)completion
