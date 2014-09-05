@@ -104,9 +104,28 @@
     [alert setOtherButtonBackgroundColor:[UIColor redColor]];
 }
 
+- (IBAction)showTwoStackedButtonAlertView:(id)sender
+{
+    PXAlertView *alert = [PXAlertView showAlertWithTitle:@"The Matrix"
+                                                 message:@"Pick the Red pill, or the blue pill"
+                                             cancelTitle:@"Blue"
+                                              otherTitle:@"Red"
+                                      buttonsShouldStack:YES
+                                              completion:^(BOOL cancelled, NSInteger buttonIndex) {
+                                                  if (cancelled) {
+                                                      NSLog(@"Cancel (Blue) button pressed");
+                                                  } else {
+                                                      NSLog(@"Other (Red) button pressed");
+                                                  }
+                                              }];
+    
+    [alert setCancelButtonBackgroundColor:[UIColor blueColor]];
+    [alert setOtherButtonBackgroundColor:[UIColor redColor]];
+}
+
 - (IBAction)showMultiButtonAlertView:(id)sender
 {
-    [PXAlertView showAlertWithTitle:@"Porridge"
+    PXAlertView *alert = [PXAlertView showAlertWithTitle:@"Porridge"
                             message:@"How would you like it?"
                         cancelTitle:@"No thanks"
                         otherTitles:@[ @"Too Hot", @"Luke Warm", @"Quite nippy" ]
@@ -117,6 +136,7 @@
                                  NSLog(@"Button with index %li pressed", (long)buttonIndex);
                              }
                          }];
+    [alert setAllButtonsBackgroundColor:[UIColor greenColor]];
 }
 
 - (IBAction)showAlertViewWithContentView:(id)sender

@@ -21,5 +21,6 @@
 
 - (void)setCancelButtonBackgroundColor:(UIColor *)color;
 - (void)setOtherButtonBackgroundColor:(UIColor *)color;
+- (void)setAllButtonsBackgroundColor:(UIColor *)color;
 
 @end
