@@ -59,6 +59,7 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
 
 #pragma mark -
 #pragma mark Buttons Customization
+#pragma mark Buttons Background Colors
 - (void)setCustomBackgroundColorForButton:(id)sender
 {
     if (sender == self.cancelButton && [self cancelButtonBackgroundColor]) {
@@ -112,4 +113,21 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
     return objc_getAssociatedObject(self, kOtherBGKey);
 }
 
+#pragma mark Buttons Text Colors
+- (void)setCancelButtonTextColor:(UIColor *)color
+{
+    self.cancelButton.titleLabel.textColor = color;
+}
+
+- (void)setAllButtonsTextColor:(UIColor *)color
+{
+    for (UIButton *button in self.buttons) {
+        button.titleLabel.textColor = color;
+    }
+}
+
+- (void)setOtherButtonTextColor:(UIColor *)color
+{
+    self.otherButton.titleLabel.textColor = color;
+}
 @end
