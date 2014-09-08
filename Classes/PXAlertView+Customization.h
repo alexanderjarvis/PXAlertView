@@ -21,5 +21,12 @@
 
 - (void)setCancelButtonBackgroundColor:(UIColor *)color;
 - (void)setOtherButtonBackgroundColor:(UIColor *)color;
+- (void)setAllButtonsBackgroundColor:(UIColor *)color;
+
+- (void)setCancelButtonTextColor:(UIColor *)color;
+- (void)setAllButtonsTextColor:(UIColor *)color;
+- (void)setOtherButtonTextColor:(UIColor *)color;
+
+- (void)useDefaultIOS7Style;
 
 @end
