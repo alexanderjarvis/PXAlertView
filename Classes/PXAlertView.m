@@ -87,7 +87,32 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     if (self) {
         self.mainWindow = [self windowWithLevel:UIWindowLevelNormal];
         self.alertWindow = [self windowWithLevel:UIWindowLevelAlert];
+            
+        UIInterfaceOrientation interfaceOrientation = self.interfaceOrientation;
         
+        CGSize screenSize = [UIScreen mainScreen].bounds.size;
+        CGPoint center;
+        CGRect bounds = CGRectMake(0, 0, screenSize.width, screenSize.height);
+        
+        // Is the iOS version less than 8?
+        if( [[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending ) {
+            if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+                center.x = screenSize.height * 0.5;
+                center.y = screenSize.width * 0.5;
+            } else {
+                center.x = screenSize.width * 0.5;
+                center.y = screenSize.height * 0.5;
+            }
+            
+            if(UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+                bounds.size.width = screenSize.height;
+                bounds.size.height = screenSize.width;
+            }
+        } else {
+            center.x = screenSize.width * 0.5;
+            center.y = screenSize.height * 0.5;
+        }
+
         if (!self.alertWindow) {
             self.alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
             self.alertWindow.windowLevel = UIWindowLevelAlert;
@@ -95,7 +120,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         }
         self.alertWindow.rootViewController = self;
         
-        CGRect frame = [self frameForOrientation:self.interfaceOrientation];
+        CGRect frame = bounds;
         self.view.frame = frame;
         
         self.backgroundView = [[UIView alloc] initWithFrame:frame];
