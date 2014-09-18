@@ -7,6 +7,8 @@
 
 #import "UIAlertView+PXAlertViewOverride.h"
 
+#ifdef PXALERT_SWIZZLING
+
 @implementation UIAlertView (PXAlertViewOverride)
 
 + (void)load {
@@ -354,3 +356,5 @@
 }
 
 @end
+
+#endif
