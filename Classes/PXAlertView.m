@@ -95,7 +95,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         }
         self.alertWindow.rootViewController = self;
         
-        CGRect frame = [self frameForOrientation:self.interfaceOrientation];
+        CGRect frame = [self frameForOrientation];
         self.view.frame = frame;
         
         self.backgroundView = [[UIView alloc] initWithFrame:frame];
@@ -188,20 +188,54 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         self.alertView.center = [self centerWithFrame:frame];
         
         [self setupGestures];
+		
+		if ((self = [super init])) {
+			NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+			[center addObserver:self selector:@selector(keyboardWillShown:) name:UIKeyboardWillShowNotification object:nil];
+			[center addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+		}
+		return self;
     }
     return self;
 }
 
-- (CGRect)frameForOrientation:(UIInterfaceOrientation)orientation
+- (void)keyboardWillShown:(NSNotification*)notification
 {
-    CGRect frame;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-        CGRect bounds = [UIScreen mainScreen].bounds;
-        frame = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.height, bounds.size.width);
-    } else {
-        frame = [UIScreen mainScreen].bounds;
-    }
-    return frame;
+	if(self.isVisible)
+	{
+		CGRect keyboardFrameBeginRect = [[[notification userInfo] valueForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+		if (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+			keyboardFrameBeginRect = (CGRect){keyboardFrameBeginRect.origin.y, keyboardFrameBeginRect.origin.x, keyboardFrameBeginRect.size.height, keyboardFrameBeginRect.size.width};
+		}
+		CGRect interfaceFrame = [self frameForOrientation];
+		
+		if(interfaceFrame.size.height -  keyboardFrameBeginRect.size.height <= _alertView.frame.size.height + _alertView.frame.origin.y)
+		{
+			[UIView animateWithDuration:.35 delay:0 options:0x70000 animations:^(void)
+			 {
+				 _alertView.frame = (CGRect){_alertView.frame.origin.x, interfaceFrame.size.height - keyboardFrameBeginRect.size.height - _alertView.frame.size.height - 20, _alertView.frame.size};
+			 } completion:nil];
+		}
+	}
+}
+
+- (void)keyboardWillHide:(NSNotification*)notification
+{
+    if(self.isVisible)
+	{
+		[UIView animateWithDuration:.35 delay:0 options:0x70000 animations:^(void)
+		 {
+			 _alertView.center = [self centerWithFrame:[self frameForOrientation]];
+		 } completion:nil];
+	}
+}
+
+- (CGRect)frameForOrientation
+{
+	UIWindow *window = [[UIApplication sharedApplication].windows count] > 0 ? [[UIApplication sharedApplication].windows objectAtIndex:0] : nil;
+	if (!window)
+		window = [UIApplication sharedApplication].keyWindow;
+	return [[[window subviews] objectAtIndex:0] bounds];
 }
 
 - (CGRect)adjustLabelFrameHeight:(UILabel *)label
@@ -444,7 +478,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
 {
-    CGRect frame = [self frameForOrientation:interfaceOrientation];
+    CGRect frame = [self frameForOrientation];
     self.backgroundView.frame = frame;
     self.alertView.center = [self centerWithFrame:frame];
 }
