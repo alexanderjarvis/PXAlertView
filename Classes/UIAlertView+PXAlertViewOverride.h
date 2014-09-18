@@ -1,9 +1,8 @@
 //
-//  PXAlertView.h
-//  PXAlertViewDemo
+//  UIAlertView+PXAlertViewOverride.h
+//  PXAlertView
 //
 //  Created by Bryan Way on 18/09/2014.
-//  Copyright (c) 2013 Panaxiom Ltd. All rights reserved.
 //
 
 #import "PXAlertView.h"
