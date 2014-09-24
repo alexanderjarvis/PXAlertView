@@ -46,7 +46,6 @@ See [PXAlertView.h](Classes/PXAlertView.h) for the complete API.
 
 * Add style that matches iOS 7 exactly
 * Ability to dynamically specify the styling of AlertView: default/dark
-* Allow usage using the same API methods as UIAlertView and delegate.
 
 ## License
 
