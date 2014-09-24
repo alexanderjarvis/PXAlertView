@@ -242,7 +242,7 @@
 			}
 			if([self.delegate respondsToSelector:@selector(alertView:didDismissWithButtonIndex:)])
 			{
-				[self.delegate alertView:self clickedButtonAtIndex:buttonIndex];
+				[self.delegate alertView:self didDismissWithButtonIndex:buttonIndex];
 			}
 		}
 		
