@@ -96,6 +96,11 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
     return objc_getAssociatedObject(self, kCancelBGKey);
 }
 
+- (void)setCancelButtonNonSelectedBackgroundColor:(UIColor *)color
+{
+    self.cancelButton.backgroundColor = color;
+}
+
 - (void)setAllButtonsBackgroundColor:(UIColor *)color
 {
     objc_setAssociatedObject(self, kOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -112,6 +117,13 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
     return objc_getAssociatedObject(self, kAllBGKey);
 }
 
+- (void)setAllButtonsNonSelectedBackgroundColor:(UIColor *)color
+{
+    for (UIButton *button in self.buttons) {
+        button.backgroundColor = color;
+    }
+}
+
 - (void)setOtherButtonBackgroundColor:(UIColor *)color
 {
     objc_setAssociatedObject(self, kOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -122,6 +134,11 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
 - (UIColor *)otherButtonBackgroundColor
 {
     return objc_getAssociatedObject(self, kOtherBGKey);
+}
+
+- (void)setOtherButtonNonSelectedBackgroundColor:(UIColor *)color
+{
+    self.otherButton.backgroundColor = color;
 }
 
 #pragma mark Buttons Text Colors
