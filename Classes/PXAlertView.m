@@ -64,6 +64,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
          otherTitle:(NSString *)otherTitle
  buttonsShouldStack:(BOOL)shouldstack
         contentView:(UIView *)contentView
+verticalElementSpace:(CGFloat)verticalElementSpace
          completion:(PXAlertViewCompletionBlock)completion
 {
     return [self initWithTitle:title
@@ -72,6 +73,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                    otherTitles:(otherTitle) ? @[ otherTitle ] : nil
             buttonsShouldStack:(BOOL)shouldstack
                    contentView:contentView
+          verticalElementSpace:verticalElementSpace
                     completion:completion];
 }
 
@@ -81,6 +83,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         otherTitles:(NSArray *)otherTitles
  buttonsShouldStack:(BOOL)shouldstack
         contentView:(UIView *)contentView
+verticalElementSpace:(CGFloat)verticalElementSpace
          completion:(PXAlertViewCompletionBlock)completion
 {
     self = [super init];
@@ -109,7 +112,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         
         // Title
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
-                                                                    AlertViewVerticalElementSpace,
+                                                                    verticalElementSpace,
                                                                     AlertViewWidth - AlertViewContentMargin*2,
                                                                     44)];
         self.titleLabel.text = title;
@@ -122,7 +125,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         self.titleLabel.frame = [self adjustLabelFrameHeight:self.titleLabel];
         [self.alertView addSubview:self.titleLabel];
         
-        CGFloat messageLabelY = self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + AlertViewVerticalElementSpace;
+        CGFloat messageLabelY = self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + verticalElementSpace;
         
         // Optional Content View
         if (contentView) {
@@ -133,9 +136,9 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                                                 self.contentView.frame.size.height);
             self.contentView.center = CGPointMake(AlertViewWidth/2, self.contentView.center.y);
             [self.alertView addSubview:self.contentView];
-            messageLabelY += contentView.frame.size.height + AlertViewVerticalElementSpace;
+            messageLabelY += contentView.frame.size.height + verticalElementSpace;
         }
-
+        
         // Message
         self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
                                                                       messageLabelY,
@@ -153,7 +156,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         
         // Line
         CALayer *lineLayer = [self lineLayer];
-        lineLayer.frame = CGRectMake(0, self.messageLabel.frame.origin.y + self.messageLabel.frame.size.height + AlertViewVerticalElementSpace, AlertViewWidth, AlertViewLineLayerWidth);
+        lineLayer.frame = CGRectMake(0, self.messageLabel.frame.origin.y + self.messageLabel.frame.size.height + verticalElementSpace, AlertViewWidth, AlertViewLineLayerWidth);
         [self.alertView.layer addSublayer:lineLayer];
         
         self.buttonsY = lineLayer.frame.origin.y + lineLayer.frame.size.height;
@@ -179,8 +182,8 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         if (completion) {
             self.completion = completion;
         }
-
-        [self resizeViews];
+        
+        [self resizeViewsWithVerticalElementSpace:verticalElementSpace];
         
         self.alertView.center = [self centerWithFrame:frame];
         
@@ -204,16 +207,16 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 - (CGRect)adjustLabelFrameHeight:(UILabel *)label
 {
     CGFloat height;
-
+    
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         CGSize size = [label.text sizeWithFont:label.font
                              constrainedToSize:CGSizeMake(label.frame.size.width, FLT_MAX)
                                  lineBreakMode:NSLineBreakByWordWrapping];
-
+        
         height = size.height;
-        #pragma clang diagnostic pop
+#pragma clang diagnostic pop
     } else {
         NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
         context.minimumScaleFactor = 1.0;
@@ -265,12 +268,12 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     [self.backgroundView addGestureRecognizer:self.tap];
 }
 
-- (void)resizeViews
+- (void)resizeViewsWithVerticalElementSpace:(CGFloat)verticalElementSpace
 {
     CGFloat totalHeight = 0;
     for (UIView *view in [self.alertView subviews]) {
         if ([view class] != [UIButton class]) {
-            totalHeight += view.frame.size.height + AlertViewVerticalElementSpace;
+            totalHeight += view.frame.size.height + verticalElementSpace;
         }
     }
     if (self.buttons) {
@@ -281,7 +284,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
             totalHeight += AlertViewButtonHeight * (otherButtonsCount > 2 ? otherButtonsCount : 1);
         }
     }
-    totalHeight += AlertViewVerticalElementSpace;
+    totalHeight += verticalElementSpace;
     
     self.alertView.frame = CGRectMake(self.alertView.frame.origin.x,
                                       self.alertView.frame.origin.y,
@@ -337,7 +340,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 - (void)dismiss:(id)sender animated:(BOOL)animated
 {
     self.visible = NO;
-
+    
     if ([[[PXAlertViewStack sharedInstance] alertViews] count] == 1) {
         if (animated) {
             [self dismissAlertAnimation];
@@ -363,7 +366,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         [[PXAlertViewStack sharedInstance] pop:self];
         [self.view removeFromSuperview];
     }];
-
+    
     if (self.completion) {
         BOOL cancelled = NO;
         if (sender == self.cancelButton || sender == self.tap) {
@@ -383,7 +386,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 - (void)showAlertAnimation
 {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-
+    
     animation.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.2, 1.2, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.05, 1.05, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1)]];
@@ -391,21 +394,21 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     animation.fillMode = kCAFillModeForwards;
     animation.removedOnCompletion = NO;
     animation.duration = .3;
-
+    
     [self.alertView.layer addAnimation:animation forKey:@"showAlert"];
 }
 
 - (void)dismissAlertAnimation
 {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-
+    
     animation.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.95, 0.95, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.8, 0.8, 1)]];
     animation.keyTimes = @[ @0, @0.5, @1 ];
     animation.fillMode = kCAFillModeRemoved;
     animation.duration = .2;
-
+    
     [self.alertView.layer addAnimation:animation forKey:@"dismissAlert"];
 }
 
@@ -421,7 +424,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 - (BOOL)prefersStatusBarHidden
 {
-	return [UIApplication sharedApplication].statusBarHidden;
+    return [UIApplication sharedApplication].statusBarHidden;
 }
 
 - (BOOL)shouldAutorotate
@@ -478,6 +481,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                                               otherTitle:nil
                                       buttonsShouldStack:NO
                                              contentView:nil
+                                    verticalElementSpace:AlertViewVerticalElementSpace
                                               completion:completion];
     [alertView show];
     return alertView;
@@ -495,6 +499,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                                               otherTitle:otherTitle
                                       buttonsShouldStack:NO
                                              contentView:nil
+                                    verticalElementSpace:AlertViewVerticalElementSpace
                                               completion:completion];
     [alertView show];
     return alertView;
@@ -513,23 +518,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                                               otherTitle:otherTitle
                                       buttonsShouldStack:shouldStack
                                              contentView:nil
-                                              completion:completion];
-    [alertView show];
-    return alertView;
-}
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                       otherTitles:(NSArray *)otherTitles
-                        completion:(PXAlertViewCompletionBlock)completion
-{
-    PXAlertView *alertView = [[self alloc] initWithTitle:title
-                                                 message:message
-                                             cancelTitle:cancelTitle
-                                             otherTitles:otherTitles
-                                      buttonsShouldStack:NO
-                                             contentView:nil
+                                    verticalElementSpace:AlertViewVerticalElementSpace
                                               completion:completion];
     [alertView show];
     return alertView;
@@ -548,6 +537,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                                               otherTitle:otherTitle
                                       buttonsShouldStack:NO
                                              contentView:view
+                                    verticalElementSpace:AlertViewVerticalElementSpace
                                               completion:completion];
     [alertView show];
     return alertView;
@@ -567,11 +557,32 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                                               otherTitle:otherTitle
                                       buttonsShouldStack:shouldStack
                                              contentView:view
+                                    verticalElementSpace:AlertViewVerticalElementSpace
                                               completion:completion];
     [alertView show];
     return alertView;
 }
 
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                        otherTitle:(NSString *)otherTitle
+                buttonsShouldStack:(BOOL)shouldStack
+                       contentView:(UIView *)view
+              verticalElementSpace:(CGFloat)verticalElementSpace
+                        completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                              otherTitle:otherTitle
+                                      buttonsShouldStack:shouldStack
+                                             contentView:view
+                                    verticalElementSpace:verticalElementSpace
+                                              completion:completion];
+    [alertView show];
+    return alertView;
+}
 
 + (instancetype)showAlertWithTitle:(NSString *)title
                            message:(NSString *)message
@@ -586,6 +597,48 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                                              otherTitles:otherTitles
                                       buttonsShouldStack:NO
                                              contentView:view
+                                    verticalElementSpace:AlertViewVerticalElementSpace
+                                              completion:completion];
+    [alertView show];
+    return alertView;
+}
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                       otherTitles:(NSArray *)otherTitles
+                       contentView:(UIView *)view
+                buttonsShouldStack:(BOOL)shouldStack
+                        completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                             otherTitles:otherTitles
+                                      buttonsShouldStack:shouldStack
+                                             contentView:view
+                                    verticalElementSpace:AlertViewVerticalElementSpace
+                                              completion:completion];
+    [alertView show];
+    return alertView;
+}
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                       otherTitles:(NSArray *)otherTitles
+                       contentView:(UIView *)view
+                buttonsShouldStack:(BOOL)shouldStack
+              verticalElementSpace:(CGFloat)verticalElementSpace
+                        completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                             otherTitles:otherTitles
+                                      buttonsShouldStack:shouldStack
+                                             contentView:view
+                                    verticalElementSpace:verticalElementSpace
                                               completion:completion];
     [alertView show];
     return alertView;
@@ -595,7 +648,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 {
     UIButton *button = [self genericButton];
     [button setTitle:title forState:UIControlStateNormal];
-
+    
     if (!self.cancelButton) {
         button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
         self.cancelButton = button;
@@ -664,7 +717,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         _sharedInstance = [[PXAlertViewStack alloc] init];
         _sharedInstance.alertViews = [NSMutableArray array];
     });
-
+    
     return _sharedInstance;
 }
 

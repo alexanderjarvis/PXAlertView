@@ -41,16 +41,6 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
                 buttonsShouldStack:(BOOL)shouldStack
                         completion:(PXAlertViewCompletionBlock)completion;
 
-/**
- * @param otherTitles Must be a NSArray containing type NSString, or set to nil for no otherTitles.
- */
-+ (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                       otherTitles:(NSArray *)otherTitles
-                        completion:(PXAlertViewCompletionBlock)completion;
-
-
 + (instancetype)showAlertWithTitle:(NSString *)title
                            message:(NSString *)message
                        cancelTitle:(NSString *)cancelTitle
@@ -66,6 +56,24 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
                        contentView:(UIView *)view
                         completion:(PXAlertViewCompletionBlock)completion;
 
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                        otherTitle:(NSString *)otherTitle
+                buttonsShouldStack:(BOOL)shouldStack
+                       contentView:(UIView *)view
+              verticalElementSpace:(CGFloat)verticalElementSpace
+                        completion:(PXAlertViewCompletionBlock)completion;
+
+/**
+ * @param otherTitles Must be a NSArray containing type NSString, or set to nil for no otherTitles.
+ */
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                       otherTitles:(NSArray *)otherTitles
+                        completion:(PXAlertViewCompletionBlock)completion;
+
 /**
  * @param otherTitles Must be a NSArray containing type NSString, or set to nil for no otherTitles.
  */
@@ -74,6 +82,29 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
                        cancelTitle:(NSString *)cancelTitle
                        otherTitles:(NSArray *)otherTitles
                        contentView:(UIView *)view
+                        completion:(PXAlertViewCompletionBlock)completion;
+
+/**
+ * @param otherTitles Must be a NSArray containing type NSString, or set to nil for no otherTitles.
+ */
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                       otherTitles:(NSArray *)otherTitles
+                       contentView:(UIView *)view
+                buttonsShouldStack:(BOOL)shouldStack
+                        completion:(PXAlertViewCompletionBlock)completion;
+
+/**
+ * @param otherTitles Must be a NSArray containing type NSString, or set to nil for no otherTitles.
+ */
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                       otherTitles:(NSArray *)otherTitles
+                       contentView:(UIView *)view
+                buttonsShouldStack:(BOOL)shouldStack
+              verticalElementSpace:(CGFloat)verticalElementSpace
                         completion:(PXAlertViewCompletionBlock)completion;
 
 /**
