@@ -24,6 +24,8 @@ static const CGFloat AlertViewContentMargin = 9;
 static const CGFloat AlertViewVerticalElementSpace = 10;
 static const CGFloat AlertViewButtonHeight = 44;
 static const CGFloat AlertViewLineLayerWidth = 0.5;
+static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
+
 
 @interface PXAlertView ()
 
@@ -34,6 +36,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 @property (nonatomic) UIView *alertView;
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UIView *contentView;
+@property (nonatomic) UIScrollView *messageScrollView;
 @property (nonatomic) UILabel *messageLabel;
 @property (nonatomic) UIButton *cancelButton;
 @property (nonatomic) UIButton *otherButton;
@@ -137,10 +140,15 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 		}
 		
 		// Message
-		self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
-																	  messageLabelY,
-																	  AlertViewWidth - AlertViewContentMargin*2,
-																	  44)];
+		self.messageScrollView = [[UIScrollView alloc] initWithFrame:(CGRect){
+			AlertViewContentMargin,
+			messageLabelY,
+			AlertViewWidth - AlertViewContentMargin*2,
+			44}];
+		self.messageScrollView.scrollEnabled = YES;
+		
+		self.messageLabel = [[UILabel alloc] initWithFrame:(CGRect){0, 0,
+			self.messageScrollView.frame.size}];
 		self.messageLabel.text = message;
 		self.messageLabel.backgroundColor = [UIColor clearColor];
 		self.messageLabel.textColor = [UIColor whiteColor];
@@ -149,11 +157,38 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 		self.messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
 		self.messageLabel.numberOfLines = 0;
 		self.messageLabel.frame = [self adjustLabelFrameHeight:self.messageLabel];
-		[self.alertView addSubview:self.messageLabel];
+		self.messageScrollView.contentSize = self.messageLabel.frame.size;
+		
+		[self.messageScrollView addSubview:self.messageLabel];
+		[self.alertView addSubview:self.messageScrollView];
+		
+		// Get total button height
+		CGFloat totalBottomHeight = AlertViewLineLayerWidth;
+		if(self.buttonsShouldStack)
+		{
+			if(cancelTitle)
+			{
+				totalBottomHeight += AlertViewButtonHeight;
+			}
+			if (otherTitles && [otherTitles count] > 0)
+			{
+				totalBottomHeight += (AlertViewButtonHeight + AlertViewLineLayerWidth) * [otherTitles count];
+			}
+		}
+		else
+		{
+			totalBottomHeight += AlertViewButtonHeight;
+		}
+		
+		self.messageScrollView.frame = (CGRect) {
+			self.messageScrollView.frame.origin,
+			self.messageScrollView.frame.size.width,
+			MIN(self.messageLabel.frame.size.height, self.alertWindow.frame.size.height - self.messageScrollView.frame.origin.y - totalBottomHeight - AlertViewVerticalEdgeMinMargin * 2)
+		};
 		
 		// Line
 		CALayer *lineLayer = [self lineLayer];
-		lineLayer.frame = CGRectMake(0, self.messageLabel.frame.origin.y + self.messageLabel.frame.size.height + AlertViewVerticalElementSpace, AlertViewWidth, AlertViewLineLayerWidth);
+		lineLayer.frame = CGRectMake(0, self.messageScrollView.frame.origin.y + self.messageScrollView.frame.size.height + AlertViewVerticalElementSpace, AlertViewWidth, AlertViewLineLayerWidth);
 		[self.alertView.layer addSublayer:lineLayer];
 		
 		self.buttonsY = lineLayer.frame.origin.y + lineLayer.frame.size.height;
@@ -324,7 +359,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 	self.alertView.frame = CGRectMake(self.alertView.frame.origin.x,
 									  self.alertView.frame.origin.y,
 									  self.alertView.frame.size.width,
-									  totalHeight);
+									  MIN(totalHeight, self.alertWindow.frame.size.height));
 }
 
 - (void)setBackgroundColorForButton:(id)sender

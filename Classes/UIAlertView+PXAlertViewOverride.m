@@ -9,6 +9,8 @@
 
 #ifdef PXALERT_SWIZZLING
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
 @implementation UIAlertView (PXAlertViewOverride)
 
 + (void)load {
@@ -183,7 +185,7 @@
 	{
 		if(contentView)
 		{
-			clog(@"Warning: Unable to display contentView when alertViewStyle != UIAlertViewStyleDefault. contentView will not be displayed.");
+			NSLog(@"Warning: Unable to display contentView when alertViewStyle != UIAlertViewStyleDefault. contentView will not be displayed.");
 		}
 		contentView = [[UIView alloc] initWithFrame:(CGRect){0, 0, 270.0, (UIAlertViewStyleLoginAndPasswordInput ? 77.0 : 36.0)}];
 		
@@ -356,5 +358,7 @@
 }
 
 @end
+
+#pragma clang diagnostic pop
 
 #endif

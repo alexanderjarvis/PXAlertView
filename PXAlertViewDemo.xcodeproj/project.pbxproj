@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		37CD3A5A181526A1009FC40D /* PXAlertView+Customization.m in Sources */ = {isa = PBXBuildFile; fileRef = 37CD3A59181526A1009FC40D /* PXAlertView+Customization.m */; };
 		37CD3A5B181526A1009FC40D /* PXAlertView+Customization.m in Sources */ = {isa = PBXBuildFile; fileRef = 37CD3A59181526A1009FC40D /* PXAlertView+Customization.m */; };
+		7F99B3721A1BF53400E09D88 /* UIAlertView+PXAlertViewOverride.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F99B3711A1BF53400E09D88 /* UIAlertView+PXAlertViewOverride.m */; };
 		FA11B68217F3867100236222 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11B68117F3867100236222 /* Foundation.framework */; };
 		FA11B68417F3867100236222 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11B68317F3867100236222 /* CoreGraphics.framework */; };
 		FA11B68617F3867100236222 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11B68517F3867100236222 /* UIKit.framework */; };
@@ -40,6 +41,8 @@
 /* Begin PBXFileReference section */
 		37CD3A58181526A1009FC40D /* PXAlertView+Customization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PXAlertView+Customization.h"; sourceTree = "<group>"; };
 		37CD3A59181526A1009FC40D /* PXAlertView+Customization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PXAlertView+Customization.m"; sourceTree = "<group>"; };
+		7F99B3701A1BF53400E09D88 /* UIAlertView+PXAlertViewOverride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+PXAlertViewOverride.h"; sourceTree = "<group>"; };
+		7F99B3711A1BF53400E09D88 /* UIAlertView+PXAlertViewOverride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+PXAlertViewOverride.m"; sourceTree = "<group>"; };
 		FA11B67E17F3867100236222 /* PXAlertViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PXAlertViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA11B68117F3867100236222 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FA11B68317F3867100236222 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -166,6 +169,8 @@
 		FA53E9531809B3BC001E6B60 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7F99B3701A1BF53400E09D88 /* UIAlertView+PXAlertViewOverride.h */,
+				7F99B3711A1BF53400E09D88 /* UIAlertView+PXAlertViewOverride.m */,
 				37CD3A58181526A1009FC40D /* PXAlertView+Customization.h */,
 				37CD3A59181526A1009FC40D /* PXAlertView+Customization.m */,
 				FA53E9541809B3BC001E6B60 /* PXAlertView.h */,
@@ -274,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA11B69B17F3867100236222 /* PXViewController.m in Sources */,
+				7F99B3721A1BF53400E09D88 /* UIAlertView+PXAlertViewOverride.m in Sources */,
 				FA11B69217F3867100236222 /* PXAppDelegate.m in Sources */,
 				FA11B68E17F3867100236222 /* main.m in Sources */,
 				FA53E9561809B3BC001E6B60 /* PXAlertView.m in Sources */,

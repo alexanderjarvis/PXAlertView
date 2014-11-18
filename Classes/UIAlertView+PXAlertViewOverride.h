@@ -5,7 +5,7 @@
 //  Created by Bryan Way on 18/09/2014.
 //
 
-// Uncomment next line to enable automatic implementation
+// Uncomment next line to enable automatic implementation or define PXALERT_SWIZZLING globally
 //#define PXALERT_SWIZZLING
 
 #ifdef PXALERT_SWIZZLING
