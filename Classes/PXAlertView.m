@@ -86,13 +86,10 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 	self = [super init];
 	if (self) {
 		self.mainWindow = [self windowWithLevel:UIWindowLevelNormal];
-		self.alertWindow = [self windowWithLevel:UIWindowLevelAlert];
 		
-		if (!self.alertWindow) {
-			self.alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-			self.alertWindow.windowLevel = UIWindowLevelAlert;
-			self.alertWindow.backgroundColor = [UIColor clearColor];
-		}
+		self.alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+		self.alertWindow.windowLevel = UIWindowLevelAlert;
+		self.alertWindow.backgroundColor = [UIColor clearColor];
 		self.alertWindow.rootViewController = self;
 		
 		CGRect frame = [self frameForOrientation];
