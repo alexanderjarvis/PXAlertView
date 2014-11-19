@@ -413,6 +413,7 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 	
 	[UIView animateWithDuration:(animated ? 0.2 : 0) animations:^{
 		self.alertView.alpha = 0;
+		self.alertWindow.alpha = 0;
 	} completion:^(BOOL finished) {
 		if (self.completion) {
 			BOOL cancelled = NO;
