@@ -7,13 +7,6 @@
 //
 
 #import "PXAlertView.h"
-#import <objc/runtime.h>
-
-void * const kCancelBGKey = (void * const) &kCancelBGKey;
-void * const kOtherBGKey = (void * const) &kOtherBGKey;
-void * const kAllBGKey = (void * const) &kAllBGKey;
-
-
 
 @interface PXAlertViewStack : NSObject
 
@@ -94,7 +87,6 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     if (self) {
         self.mainWindow = [self windowWithLevel:UIWindowLevelNormal];
         
-        //make alert window
         self.alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
         self.alertWindow.windowLevel = UIWindowLevelAlert;
         self.alertWindow.backgroundColor = [UIColor clearColor];
@@ -143,7 +135,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
             [self.alertView addSubview:self.contentView];
             messageLabelY += contentView.frame.size.height + AlertViewVerticalElementSpace;
         }
-        
+
         // Message
         self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(AlertViewContentMargin,
                                                                       messageLabelY,
@@ -187,7 +179,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         if (completion) {
             self.completion = completion;
         }
-        
+
         [self resizeViews];
         
         self.alertView.center = [self centerWithFrame:frame];
@@ -195,41 +187,6 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         [self setupGestures];
     }
     return self;
-}
-
--(void)reAlignViews {
-    //title
-    self.titleLabel.frame = [self adjustLabelFrameHeight:self.titleLabel];
-    CGFloat yPosition = self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + AlertViewVerticalElementSpace;
-    //content
-    if (self.contentView) {
-        CGRect contentViewFrame = self.contentView.frame;
-        contentViewFrame.origin.y = yPosition;
-        self.contentView.frame = contentViewFrame;
-        yPosition += contentViewFrame.size.height + AlertViewVerticalElementSpace;
-    }
-    //messagelabel
-    self.messageLabel.frame = [self adjustLabelFrameHeight:self.messageLabel];
-    CGRect frame = self.messageLabel.frame;
-    frame.origin.y = yPosition;
-    self.messageLabel.frame = frame;
-    yPosition += frame.size.height + AlertViewVerticalElementSpace;
-    //line
-    frame = [self lineLayer].frame;
-    frame.origin.y = yPosition;
-    [self lineLayer].frame = frame;
-    yPosition += frame.size.height;
-    //buttons
-    frame = self.cancelButton ? self.cancelButton.frame : self.otherButton.frame;
-    CGFloat frameDifference = yPosition - frame.origin.y;
-    
-    for (UIButton *b in self.buttons) {
-        frame = b.frame;
-        frame.origin.y += frameDifference;
-        b.frame = frame;
-    }
-    
-    [self resizeViews];
 }
 
 - (CGRect)frameForOrientation:(UIInterfaceOrientation)orientation
@@ -247,16 +204,16 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 - (CGRect)adjustLabelFrameHeight:(UILabel *)label
 {
     CGFloat height;
-    
+
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         CGSize size = [label.text sizeWithFont:label.font
                              constrainedToSize:CGSizeMake(label.frame.size.width, FLT_MAX)
                                  lineBreakMode:NSLineBreakByWordWrapping];
-        
+
         height = size.height;
-#pragma clang diagnostic pop
+        #pragma clang diagnostic pop
     } else {
         NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
         context.minimumScaleFactor = 1.0;
@@ -380,7 +337,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 - (void)dismiss:(id)sender animated:(BOOL)animated
 {
     self.visible = NO;
-    
+
     if ([[[PXAlertViewStack sharedInstance] alertViews] count] == 1) {
         if (animated) {
             [self dismissAlertAnimation];
@@ -406,7 +363,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         [[PXAlertViewStack sharedInstance] pop:self];
         [self.view removeFromSuperview];
     }];
-    
+
     if (self.completion) {
         BOOL cancelled = NO;
         if (sender == self.cancelButton || sender == self.tap) {
@@ -426,7 +383,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 - (void)showAlertAnimation
 {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    
+
     animation.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.2, 1.2, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.05, 1.05, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1)]];
@@ -434,21 +391,21 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     animation.fillMode = kCAFillModeForwards;
     animation.removedOnCompletion = NO;
     animation.duration = .3;
-    
+
     [self.alertView.layer addAnimation:animation forKey:@"showAlert"];
 }
 
 - (void)dismissAlertAnimation
 {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    
+
     animation.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.95, 0.95, 1)],
                          [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.8, 0.8, 1)]];
     animation.keyTimes = @[ @0, @0.5, @1 ];
     animation.fillMode = kCAFillModeRemoved;
     animation.duration = .2;
-    
+
     [self.alertView.layer addAnimation:animation forKey:@"dismissAlert"];
 }
 
@@ -464,7 +421,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 - (BOOL)prefersStatusBarHidden
 {
-    return [UIApplication sharedApplication].statusBarHidden;
+	return [UIApplication sharedApplication].statusBarHidden;
 }
 
 - (BOOL)shouldAutorotate
@@ -484,19 +441,9 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
 {
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
-        CGRect frame = [self frameForOrientation:interfaceOrientation];
-        self.backgroundView.frame = frame;
-        self.alertView.center = [self centerWithFrame:frame];
-    }
-}
-
--(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        CGRect frame = {{0,0},size};
-        self.backgroundView.frame = frame;
-        self.alertView.center = [self centerWithFrame:frame];
-    } completion:nil];
+    CGRect frame = [self frameForOrientation:interfaceOrientation];
+    self.backgroundView.frame = frame;
+    self.alertView.center = [self centerWithFrame:frame];
 }
 
 #pragma mark -
@@ -525,13 +472,15 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                        cancelTitle:(NSString *)cancelTitle
                         completion:(PXAlertViewCompletionBlock)completion
 {
-    return [[self class] showAlertWithTitle:title
-                                    message:message
-                                cancelTitle:cancelTitle
-                                 otherTitle:nil
-                         buttonsShouldStack:NO
-                                contentView:nil
-                                 completion:completion];
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                              otherTitle:nil
+                                      buttonsShouldStack:NO
+                                             contentView:nil
+                                              completion:completion];
+    [alertView show];
+    return alertView;
 }
 
 + (instancetype)showAlertWithTitle:(NSString *)title
@@ -540,59 +489,15 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                         otherTitle:(NSString *)otherTitle
                         completion:(PXAlertViewCompletionBlock)completion
 {
-    return [[self class] showAlertWithTitle:title
-                                    message:message
-                                cancelTitle:cancelTitle
-                                 otherTitle:otherTitle
-                         buttonsShouldStack:NO
-                                contentView:nil
-                                 completion:completion];
-}
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                        otherTitle:(NSString *)otherTitle
-                buttonsShouldStack:(BOOL)shouldStack
-                        completion:(PXAlertViewCompletionBlock)completion
-{
-    return [[self class] showAlertWithTitle:title
-                                    message:message
-                                cancelTitle:cancelTitle
-                                otherTitles:(otherTitle? @[otherTitle] : nil)
-                         buttonsShouldStack:shouldStack
-                                contentView:nil
-                                 completion:completion];
-}
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                       otherTitles:(NSArray *)otherTitles
-                        completion:(PXAlertViewCompletionBlock)completion
-{
-    return [[self class] showAlertWithTitle:title
-                                    message:message
-                                cancelTitle:cancelTitle
-                                otherTitles:otherTitles
-                         buttonsShouldStack:NO
-                                contentView:nil
-                                 completion:completion];}
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                        otherTitle:(NSString *)otherTitle
-                       contentView:(UIView *)view
-                        completion:(PXAlertViewCompletionBlock)completion
-{
-    return [[self class] showAlertWithTitle:title
-                                    message:message
-                                cancelTitle:cancelTitle
-                                otherTitles:(otherTitle? @[otherTitle] : nil)
-                         buttonsShouldStack:NO
-                                contentView:view
-                                 completion:completion];
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                              otherTitle:otherTitle
+                                      buttonsShouldStack:NO
+                                             contentView:nil
+                                              completion:completion];
+    [alertView show];
+    return alertView;
 }
 
 + (instancetype)showAlertWithTitle:(NSString *)title
@@ -600,39 +505,58 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
                        cancelTitle:(NSString *)cancelTitle
                         otherTitle:(NSString *)otherTitle
                 buttonsShouldStack:(BOOL)shouldStack
-                       contentView:(UIView *)view
                         completion:(PXAlertViewCompletionBlock)completion
 {
-    return [[self class] showAlertWithTitle:title
-                                    message:message
-                                cancelTitle:cancelTitle
-                                otherTitles:(otherTitle? @[otherTitle] : nil)
-                         buttonsShouldStack:shouldStack
-                                contentView:view
-                                 completion:completion];
-}
-
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                       otherTitles:(NSArray *)otherTitles
-                       contentView:(UIView *)view
-                        completion:(PXAlertViewCompletionBlock)completion
-{
-    return [[self class] showAlertWithTitle:title
-                                    message:message
-                                cancelTitle:cancelTitle
-                                otherTitles:otherTitles
-                         buttonsShouldStack:NO
-                                contentView:view
-                                 completion:completion];
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                              otherTitle:otherTitle
+                                      buttonsShouldStack:shouldStack
+                                             contentView:nil
+                                              completion:completion];
+    [alertView show];
+    return alertView;
 }
 
 + (instancetype)showAlertWithTitle:(NSString *)title
                            message:(NSString *)message
                        cancelTitle:(NSString *)cancelTitle
                        otherTitles:(NSArray *)otherTitles
+                        completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                             otherTitles:otherTitles
+                                      buttonsShouldStack:NO
+                                             contentView:nil
+                                              completion:completion];
+    [alertView show];
+    return alertView;
+}
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                        otherTitle:(NSString *)otherTitle
+                       contentView:(UIView *)view
+                        completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                              otherTitle:otherTitle
+                                      buttonsShouldStack:NO
+                                             contentView:view
+                                              completion:completion];
+    [alertView show];
+    return alertView;
+}
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                        otherTitle:(NSString *)otherTitle
                 buttonsShouldStack:(BOOL)shouldStack
                        contentView:(UIView *)view
                         completion:(PXAlertViewCompletionBlock)completion
@@ -640,8 +564,27 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     PXAlertView *alertView = [[self alloc] initWithTitle:title
                                                  message:message
                                              cancelTitle:cancelTitle
-                                             otherTitles:otherTitles
+                                              otherTitle:otherTitle
                                       buttonsShouldStack:shouldStack
+                                             contentView:view
+                                              completion:completion];
+    [alertView show];
+    return alertView;
+}
+
+
++ (instancetype)showAlertWithTitle:(NSString *)title
+                           message:(NSString *)message
+                       cancelTitle:(NSString *)cancelTitle
+                       otherTitles:(NSArray *)otherTitles
+                       contentView:(UIView *)view
+                        completion:(PXAlertViewCompletionBlock)completion
+{
+    PXAlertView *alertView = [[self alloc] initWithTitle:title
+                                                 message:message
+                                             cancelTitle:cancelTitle
+                                             otherTitles:otherTitles
+                                      buttonsShouldStack:NO
                                              contentView:view
                                               completion:completion];
     [alertView show];
@@ -652,7 +595,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 {
     UIButton *button = [self genericButton];
     [button setTitle:title forState:UIControlStateNormal];
-    
+
     if (!self.cancelButton) {
         button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
         self.cancelButton = button;
@@ -709,178 +652,6 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     self.tap.enabled = enabled;
 }
 
-#pragma mark - customization
-
-- (void)useDefaultIOS7Style {
-    [self setTapToDismissEnabled:NO];
-    UIColor *ios7BlueColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
-    [self setAllButtonsTextColor:ios7BlueColor];
-    [self setTitleColor:[UIColor blackColor]];
-    [self setMessageColor:[UIColor blackColor]];
-    UIColor *defaultBackgroundColor = [UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1.0];
-    [self setAllButtonsBackgroundColor:defaultBackgroundColor];
-    [self setBackgroundColor:[UIColor whiteColor]];
-}
-
-- (void)setWindowTintColor:(UIColor *)color
-{
-    self.backgroundView.backgroundColor = color;
-}
-
-- (void)setBackgroundColor:(UIColor *)color
-{
-    self.alertView.backgroundColor = color;
-}
-
-- (void)setTitleColor:(UIColor *)color
-{
-    self.titleLabel.textColor = color;
-}
-
-- (void)setTitleFont:(UIFont *)font
-{
-    self.titleLabel.font = font;
-    self.titleLabel.frame = [self adjustLabelFrameHeight:self.titleLabel];
-    
-    [self reAlignViews];
-}
-
-- (void)setMessageColor:(UIColor *)color
-{
-    self.messageLabel.textColor = color;
-}
-
-- (void)setMessageFont:(UIFont *)font
-{
-    self.messageLabel.font = font;
-    
-    [self reAlignViews];
-}
-
-#pragma mark -
-#pragma mark Buttons Customization
-#pragma mark Buttons Background Colors
-- (void)setCustomBackgroundColorForButton:(id)sender
-{
-    if (sender == self.cancelButton && [self cancelButtonBackgroundColor]) {
-        self.cancelButton.backgroundColor = [self cancelButtonBackgroundColor];
-    } else if (sender == self.otherButton && [self otherButtonBackgroundColor]) {
-        self.otherButton.backgroundColor = [self otherButtonBackgroundColor];
-    } else if ([self allButtonsBackgroundColor]) {
-        [sender setBackgroundColor:[self allButtonsBackgroundColor]];
-    } else {
-        [sender setBackgroundColor:[UIColor colorWithRed:94/255.0 green:196/255.0 blue:221/255.0 alpha:1]];
-    }
-}
-
-- (void)setCancelButtonBackgroundColor:(UIColor *)color
-{
-    objc_setAssociatedObject(self, kCancelBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.cancelButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
-    [self.cancelButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
-}
-
-- (UIColor *)cancelButtonBackgroundColor
-{
-    return objc_getAssociatedObject(self, kCancelBGKey);
-}
-
-- (void)setAllButtonsBackgroundColor:(UIColor *)color
-{
-    objc_setAssociatedObject(self, kOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    objc_setAssociatedObject(self, kCancelBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    objc_setAssociatedObject(self, kAllBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    for (UIButton *button in self.buttons) {
-        [button addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
-        [button addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
-    }
-}
-
-- (UIColor *)allButtonsBackgroundColor
-{
-    return objc_getAssociatedObject(self, kAllBGKey);
-}
-
-- (void)setOtherButtonBackgroundColor:(UIColor *)color
-{
-    objc_setAssociatedObject(self, kOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.otherButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
-    [self.otherButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
-}
-
-- (UIColor *)otherButtonBackgroundColor
-{
-    return objc_getAssociatedObject(self, kOtherBGKey);
-}
-
--(void)setCancelButtonColor:(UIColor *)color {
-    [self.cancelButton setBackgroundColor:color];
-}
-
--(void)setOtherButtonColor:(UIColor *)color {
-    [self.otherButton setBackgroundColor:color];
-}
-
--(void)setAllButtonsColor:(UIColor *)color {
-    for (UIButton *b in self.buttons) {
-        [b setBackgroundColor:color];
-    }
-}
-
-#pragma mark Buttons Text Colors
-- (void)setCancelButtonTextColor:(UIColor *)color
-{
-    [self.cancelButton setTitleColor:color forState:UIControlStateNormal];
-    [self.cancelButton setTitleColor:color forState:UIControlStateHighlighted];
-}
-
-- (void)setAllButtonsTextColor:(UIColor *)color
-{
-    for (UIButton *button in self.buttons) {
-        [button setTitleColor:color forState:UIControlStateNormal];
-        [button setTitleColor:color forState:UIControlStateHighlighted];
-    }
-}
-
-- (void)setOtherButtonTextColor:(UIColor *)color
-{
-    [self.otherButton setTitleColor:color forState:UIControlStateNormal];
-    [self.otherButton setTitleColor:color forState:UIControlStateHighlighted];
-}
-
-#pragma mark - Button Font
-
-- (void)setCancelButtonFont:(UIFont *)font
-{
-    [self.cancelButton.titleLabel setFont:font];
-}
-
-- (void)setAllButtonsFont:(UIFont *)font
-{
-    for (UIButton *button in self.buttons) {
-        [button.titleLabel setFont:font];
-    }
-}
-
-- (void)setOtherButtonFont:(UIFont *)font
-{
-    [self.otherButton.titleLabel setFont:font];
-}
-
-#pragma mark - other configuration
-
--(void)setAlertViewBackgroundColor:(UIColor *)color {
-    [self.alertView setBackgroundColor:color];
-}
-
--(void)setAlertViewLineHidden {
-    self.verticalLine.hidden = YES;
-}
-
--(void)setCornerRadius:(CGFloat)cornerRadius {
-    [self.alertView.layer setCornerRadius:cornerRadius];
-}
-
 @end
 
 @implementation PXAlertViewStack
@@ -893,7 +664,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
         _sharedInstance = [[PXAlertViewStack alloc] init];
         _sharedInstance.alertViews = [NSMutableArray array];
     });
-    
+
     return _sharedInstance;
 }
 

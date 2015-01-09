@@ -76,15 +76,6 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
                        contentView:(UIView *)view
                         completion:(PXAlertViewCompletionBlock)completion;
 
-
-+ (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                       otherTitles:(NSArray *)otherTitles
-                buttonsShouldStack:(BOOL)shouldStack
-                       contentView:(UIView *)view
-                        completion:(PXAlertViewCompletionBlock)completion;
-
 /**
  * Adds a button to the receiver with the given title.
  * @param title The title of the new button
@@ -102,41 +93,5 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
  * This method enables or disables this feature.
  */
 - (void)setTapToDismissEnabled:(BOOL)enabled;
-
-
-#pragma mark - configuration
-
-- (void)setWindowTintColor:(UIColor *)color;
-- (void)setBackgroundColor:(UIColor *)color;
-
-- (void)setTitleColor:(UIColor *)color;
-- (void)setTitleFont:(UIFont *)font;
-
-- (void)setMessageColor:(UIColor *)color;
-- (void)setMessageFont:(UIFont *)font;
-
-- (void)setCancelButtonBackgroundColor:(UIColor *)color;
-- (void)setOtherButtonBackgroundColor:(UIColor *)color;
-- (void)setAllButtonsBackgroundColor:(UIColor *)color;
-
-
-- (void)setCancelButtonColor:(UIColor *)color;
-- (void)setOtherButtonColor:(UIColor *)color;
-- (void)setAllButtonsColor:(UIColor *)color;
-
-
-- (void)setCancelButtonTextColor:(UIColor *)color;
-- (void)setAllButtonsTextColor:(UIColor *)color;
-- (void)setOtherButtonTextColor:(UIColor *)color;
-
-- (void)setCancelButtonFont:(UIFont *)font;
-- (void)setAllButtonsFont:(UIFont *)font;
-- (void)setOtherButtonFont:(UIFont *)font;
-
--(void)setAlertViewBackgroundColor:(UIColor *)color;
--(void)setAlertViewLineHidden;
--(void)setCornerRadius:(CGFloat)cornerRadius;
-
-- (void)useDefaultIOS7Style;
 
 @end
