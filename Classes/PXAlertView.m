@@ -12,8 +12,7 @@
 void * const kCancelBGKey = (void * const) &kCancelBGKey;
 void * const kOtherBGKey = (void * const) &kOtherBGKey;
 void * const kAllBGKey = (void * const) &kAllBGKey;
-
-
+void * const kFGKey = (void * const) &kFGKey;
 
 @interface PXAlertViewStack : NSObject
 
@@ -49,6 +48,12 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 @property (nonatomic) CALayer *verticalLine;
 @property (nonatomic) UITapGestureRecognizer *tap;
 @property (nonatomic, copy) void (^completion)(BOOL cancelled, NSInteger buttonIndex);
+
+@property (strong, nonatomic) UIColor *cancelButtonPressedColor;
+@property (strong, nonatomic) UIColor *otherButtonPressedColor;
+@property (strong, nonatomic) UIColor *allButtonPressedColor;
+
+@property (strong, nonatomic) UIColor *cachedUnpressedColor;
 
 @end
 
@@ -280,7 +285,8 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor colorWithWhite:0.25 alpha:1] forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
-    [button addTarget:self action:@selector(setBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
+    [button addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
+    [button addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
     [button addTarget:self action:@selector(clearBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
     return button;
 }
@@ -339,7 +345,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 - (void)clearBackgroundColorForButton:(id)sender
 {
-    [sender setBackgroundColor:[UIColor clearColor]];
+    [sender setBackgroundColor:_cachedUnpressedColor];
 }
 
 - (void)show
@@ -762,6 +768,8 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 #pragma mark Buttons Background Colors
 - (void)setCustomBackgroundColorForButton:(id)sender
 {
+    _cachedUnpressedColor = [sender backgroundColor];
+    
     if (sender == self.cancelButton && [self cancelButtonBackgroundColor]) {
         self.cancelButton.backgroundColor = [self cancelButtonBackgroundColor];
     } else if (sender == self.otherButton && [self otherButtonBackgroundColor]) {
@@ -775,42 +783,34 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 - (void)setCancelButtonBackgroundColor:(UIColor *)color
 {
-    objc_setAssociatedObject(self, kCancelBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.cancelButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
-    [self.cancelButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
+    _cancelButtonPressedColor = color;
 }
 
 - (UIColor *)cancelButtonBackgroundColor
 {
-    return objc_getAssociatedObject(self, kCancelBGKey);
+    return _cancelButtonPressedColor;
 }
 
 - (void)setAllButtonsBackgroundColor:(UIColor *)color
 {
-    objc_setAssociatedObject(self, kOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    objc_setAssociatedObject(self, kCancelBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    objc_setAssociatedObject(self, kAllBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    for (UIButton *button in self.buttons) {
-        [button addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
-        [button addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
-    }
+    _otherButtonPressedColor = color;
+    _cancelButtonPressedColor = color;
+    _allButtonPressedColor = color;
 }
 
 - (UIColor *)allButtonsBackgroundColor
 {
-    return objc_getAssociatedObject(self, kAllBGKey);
+    return _allButtonPressedColor;
 }
 
 - (void)setOtherButtonBackgroundColor:(UIColor *)color
 {
-    objc_setAssociatedObject(self, kOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.otherButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
-    [self.otherButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
+    _otherButtonPressedColor = color;
 }
 
 - (UIColor *)otherButtonBackgroundColor
 {
-    return objc_getAssociatedObject(self, kOtherBGKey);
+    return _otherButtonPressedColor;
 }
 
 -(void)setCancelButtonColor:(UIColor *)color {

@@ -103,8 +103,9 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
  */
 - (void)setTapToDismissEnabled:(BOOL)enabled;
 
-#pragma mark - configuration
 
+
+#pragma mark - configuration
 
 - (void)setWindowTintColor:(UIColor *)color;
 - (void)setBackgroundColor:(UIColor *)color;
