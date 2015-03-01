@@ -17,80 +17,91 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
 + (instancetype)showAlertWithTitle:(NSString *)title;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message;
+						   message:(NSString *)message;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                        completion:(PXAlertViewCompletionBlock)completion;
+						   message:(NSString *)message
+						completion:(PXAlertViewCompletionBlock)completion;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                        completion:(PXAlertViewCompletionBlock)completion;
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						completion:(PXAlertViewCompletionBlock)completion;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                        otherTitle:(NSString *)otherTitle
-                        completion:(PXAlertViewCompletionBlock)completion;
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						otherTitle:(NSString *)otherTitle
+						completion:(PXAlertViewCompletionBlock)completion;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                        otherTitle:(NSString *)otherTitle
-                buttonsShouldStack:(BOOL)shouldStack
-                        completion:(PXAlertViewCompletionBlock)completion;
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						otherTitle:(NSString *)otherTitle
+				buttonsShouldStack:(BOOL)shouldStack
+						completion:(PXAlertViewCompletionBlock)completion;
 
 /**
  * @param otherTitles Must be a NSArray containing type NSString, or set to nil for no otherTitles.
  */
 + (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                       otherTitles:(NSArray *)otherTitles
-                        completion:(PXAlertViewCompletionBlock)completion;
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+					   otherTitles:(NSArray *)otherTitles
+						completion:(PXAlertViewCompletionBlock)completion;
 
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                        otherTitle:(NSString *)otherTitle
-                       contentView:(UIView *)view
-                        completion:(PXAlertViewCompletionBlock)completion;
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						otherTitle:(NSString *)otherTitle
+					   contentView:(UIView *)view
+						completion:(PXAlertViewCompletionBlock)completion;
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                        otherTitle:(NSString *)otherTitle
-                buttonsShouldStack:(BOOL)shouldStack
-                       contentView:(UIView *)view
-                        completion:(PXAlertViewCompletionBlock)completion;
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+						otherTitle:(NSString *)otherTitle
+				buttonsShouldStack:(BOOL)shouldStack
+					   contentView:(UIView *)view
+						completion:(PXAlertViewCompletionBlock)completion;
 
 /**
  * @param otherTitles Must be a NSArray containing type NSString, or set to nil for no otherTitles.
  */
 + (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                       otherTitles:(NSArray *)otherTitles
-                       contentView:(UIView *)view
-                        completion:(PXAlertViewCompletionBlock)completion;
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+					   otherTitles:(NSArray *)otherTitles
+					   contentView:(UIView *)view
+						completion:(PXAlertViewCompletionBlock)completion;
 
 
 + (instancetype)showAlertWithTitle:(NSString *)title
-                           message:(NSString *)message
-                       cancelTitle:(NSString *)cancelTitle
-                       otherTitles:(NSArray *)otherTitles
-                buttonsShouldStack:(BOOL)shouldStack
-                       contentView:(UIView *)view
-                        completion:(PXAlertViewCompletionBlock)completion;
+						   message:(NSString *)message
+					   cancelTitle:(NSString *)cancelTitle
+					   otherTitles:(NSArray *)otherTitles
+				buttonsShouldStack:(BOOL)shouldStack
+					   contentView:(UIView *)view
+						completion:(PXAlertViewCompletionBlock)completion;
+
+/* to manually init, then setup, then call show */
+
+- (void)setupWithTitle:(NSString *)title
+			   message:(NSString *)message
+		   cancelTitle:(NSString *)cancelTitle
+		   otherTitles:(NSArray *)otherTitles
+	buttonsShouldStack:(BOOL)shouldstack
+		   contentView:(UIView *)contentView
+			completion:(PXAlertViewCompletionBlock)completion;
+
+- (void)show;
 
 /**
  * Adds a button to the receiver with the given title.
  * @param title The title of the new button
- * @return The index of the new button. Button indices start at 0 and increase in the order they are added.
  */
-- (NSInteger)addButtonWithTitle:(NSString *)title;
+- (void)addButtonWithTitle:(NSString *)title;
 
 /**
  * Dismisses the receiver, optionally with animation.
@@ -135,7 +146,9 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
 - (void)setOtherButtonFont:(UIFont *)font;
 
 -(void)setAlertViewBackgroundColor:(UIColor *)color;
+-(void)setAlertViewLineVisible;
 -(void)setAlertViewLineHidden;
+-(void)setAlertViewLineColor:(UIColor *)color;
 -(void)setCornerRadius:(CGFloat)cornerRadius;
 
 - (void)useDefaultIOS7Style;
