@@ -106,6 +106,8 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
 /**
  * Dismisses the receiver, optionally with animation.
  */
+- (void)dismiss:(id)sender;
+- (void)dismiss:(id)sender animated:(BOOL)animated;
 - (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex animated:(BOOL)animated;
 
 /**
