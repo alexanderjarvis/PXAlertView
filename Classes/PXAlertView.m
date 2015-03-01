@@ -175,7 +175,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 		[contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
 		[self.alertView addSubview:self.contentView];
 
-		hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(margin)-[view]-(margin)-|" options:0 metrics:@{@"margin":@(AlertViewContentMargin)} views:@{@"view":contentView}];
+		hConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(0)-[view]-(0)-|" options:0 metrics:@{@"margin":@(AlertViewContentMargin)} views:@{@"view":contentView}];
 		constraints = [hConstraints arrayByAddingObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[lastElement]-(spacing)-[view]" options:0 metrics:@{@"spacing":@(AlertViewVerticalElementSpace)} views:@{@"lastElement":_lastElement,@"view":contentView}]];
 		[self.alertView addConstraints:constraints];
 		_lastElement = contentView;
