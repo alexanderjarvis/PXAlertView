@@ -226,6 +226,10 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 		}
 	}
 
+	//move content view to very front (if it animates content out of its bounds)
+	[self.alertView bringSubviewToFront:_contentView];
+	[self.alertView setClipsToBounds:NO];
+
 	//line color
 	[self setAlertViewLineColor:[UIColor colorWithWhite:0.90 alpha:0.3]];
 
@@ -900,15 +904,17 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 	PXAlertView *last = [self.alertViews lastObject];
 
-	if (last) {
-		[last showInternal];
-	}
-	else {
-		[self.alertWindow setHidden:YES];
-		[self.alertWindow removeFromSuperview];
-		self.alertWindow.rootViewController = nil;
-		self.alertWindow = nil;
-		[self.mainWindow makeKeyAndVisible];
+	if (!last.view.superview) {
+		if (last) {
+			[last showInternal];
+		}
+		else {
+			[self.alertWindow setHidden:YES];
+			[self.alertWindow removeFromSuperview];
+			self.alertWindow.rootViewController = nil;
+			self.alertWindow = nil;
+			[self.mainWindow makeKeyAndVisible];
+		}
 	}
 }
 
