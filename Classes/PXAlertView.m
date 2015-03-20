@@ -486,6 +486,7 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 {
 	CALayer *lineLayer = [CALayer layer];
 	lineLayer.backgroundColor = [[UIColor colorWithWhite:0.90 alpha:0.3] CGColor];
+    [lineLayer setName:@"PXAlertView_lineLayer"];
 	return lineLayer;
 }
 

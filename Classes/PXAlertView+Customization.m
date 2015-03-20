@@ -38,6 +38,14 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
     [self setBackgroundColor:[UIColor whiteColor]];
 }
 
+-(void)setLineLayerColor:(UIColor*)color
+{
+    for (CALayer* subLayer in [self.alertView.layer sublayers]) {
+        if ([subLayer.name isEqualToString:@"PXAlertView_lineLayer"]) {
+            subLayer.backgroundColor = color.CGColor;
+        }
+    }
+}
 - (void)setWindowTintColor:(UIColor *)color
 {
     self.backgroundView.backgroundColor = color;

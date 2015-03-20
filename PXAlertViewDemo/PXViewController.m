@@ -194,6 +194,7 @@
                                                  contentView:nil
                                                   completion:nil];
     [alertView useDefaultIOS7Style];
+    [alertView setLineLayerColor:[UIColor blackColor]];
 }
 
 - (IBAction)showLargeUIAlertView:(id)sender
