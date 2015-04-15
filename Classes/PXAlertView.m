@@ -311,6 +311,7 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 	[button setTitleColor:[UIColor colorWithWhite:0.25 alpha:1] forState:UIControlStateHighlighted];
 	[button addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
 	[button addTarget:self action:@selector(setBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
+    [button addTarget:self action:@selector(setBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
 	[button addTarget:self action:@selector(clearBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
 	return button;
 }
