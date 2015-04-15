@@ -33,6 +33,4 @@
 
 - (void)useDefaultIOS7Style;
 
-- (void)setCornerRadius:(CGFloat)radius;
-
 @end
