@@ -10,8 +10,11 @@
 #import <objc/runtime.h>
 
 void * const kCancelBGKey = (void * const) &kCancelBGKey;
+void * const kNonSelectedCancelBGKey = (void * const) &kNonSelectedCancelBGKey;
 void * const kOtherBGKey = (void * const) &kOtherBGKey;
+void * const kNonSelectedOtherBGKey = (void * const) &kNonSelectedOtherBGKey;
 void * const kAllBGKey = (void * const) &kAllBGKey;
+void * const kNonSelectedAllBGKey = (void * const) &kNonSelectedAllBGKey;
 
 @interface PXAlertView ()
 
@@ -89,11 +92,25 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
     }
 }
 
+- (void)setNonSelectedCustomBackgroundColorForButton:(id)sender
+{
+    if (sender == self.cancelButton && [self nonSelectedCancelButtonBackgroundColor]) {
+        self.cancelButton.backgroundColor = [self nonSelectedCancelButtonBackgroundColor];
+    } else if (sender == self.otherButton && [self nonSelectedOtherButtonBackgroundColor]) {
+        self.otherButton.backgroundColor = [self nonSelectedOtherButtonBackgroundColor];
+    } else if ([self nonSelectedAllButtonsBackgroundColor]) {
+        [sender setBackgroundColor:[self nonSelectedAllButtonsBackgroundColor]];
+    } else {
+        [sender setBackgroundColor:[UIColor clearColor]];
+    }
+}
+
 - (void)setCancelButtonBackgroundColor:(UIColor *)color
 {
     objc_setAssociatedObject(self, kCancelBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self.cancelButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
     [self.cancelButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
+    [self.cancelButton addTarget:self action:@selector(setNonSelectedCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
 }
 
 - (UIColor *)cancelButtonBackgroundColor
@@ -103,7 +120,13 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
 
 - (void)setCancelButtonNonSelectedBackgroundColor:(UIColor *)color
 {
+    objc_setAssociatedObject(self, kNonSelectedCancelBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     self.cancelButton.backgroundColor = color;
+}
+
+- (UIColor *)nonSelectedCancelButtonBackgroundColor
+{
+    return objc_getAssociatedObject(self, kNonSelectedCancelBGKey);
 }
 
 - (void)setAllButtonsBackgroundColor:(UIColor *)color
@@ -114,6 +137,7 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
     for (UIButton *button in self.buttons) {
         [button addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
         [button addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
+        [button addTarget:self action:@selector(setNonSelectedCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
     }
 }
 
@@ -124,9 +148,17 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
 
 - (void)setAllButtonsNonSelectedBackgroundColor:(UIColor *)color
 {
+    objc_setAssociatedObject(self, kNonSelectedOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, kNonSelectedCancelBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, kNonSelectedAllBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     for (UIButton *button in self.buttons) {
         button.backgroundColor = color;
     }
+}
+
+- (UIColor *)nonSelectedAllButtonsBackgroundColor
+{
+    return objc_getAssociatedObject(self, kNonSelectedAllBGKey);
 }
 
 - (void)setOtherButtonBackgroundColor:(UIColor *)color
@@ -134,6 +166,9 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
     objc_setAssociatedObject(self, kOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self.otherButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
     [self.otherButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
+    [self.otherButton addTarget:self action:@selector(setNonSelectedCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.otherButton addTarget:self action:@selector(setNonSelectedCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchUpOutside];
+    [self.otherButton addTarget:self action:@selector(setNonSelectedCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
 }
 
 - (UIColor *)otherButtonBackgroundColor
@@ -143,7 +178,13 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
 
 - (void)setOtherButtonNonSelectedBackgroundColor:(UIColor *)color
 {
+    objc_setAssociatedObject(self, kNonSelectedOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     self.otherButton.backgroundColor = color;
+}
+
+- (UIColor *)nonSelectedOtherButtonBackgroundColor
+{
+    return objc_getAssociatedObject(self, kNonSelectedOtherBGKey);
 }
 
 #pragma mark Buttons Text Colors
