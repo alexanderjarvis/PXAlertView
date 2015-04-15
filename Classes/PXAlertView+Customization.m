@@ -161,8 +161,6 @@ void * const kNonSelectedAllBGKey = (void * const) &kNonSelectedAllBGKey;
     objc_setAssociatedObject(self, kOtherBGKey, color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self.otherButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDown];
     [self.otherButton addTarget:self action:@selector(setCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragEnter];
-    [self.otherButton addTarget:self action:@selector(setNonSelectedCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.otherButton addTarget:self action:@selector(setNonSelectedCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchUpOutside];
     [self.otherButton addTarget:self action:@selector(setNonSelectedCustomBackgroundColorForButton:) forControlEvents:UIControlEventTouchDragExit];
 }
 
