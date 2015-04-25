@@ -38,6 +38,11 @@ void * const kAllBGKey = (void * const) &kAllBGKey;
     [self setBackgroundColor:[UIColor whiteColor]];
 }
 
+- (void)setCornerRadius:(CGFloat)radius
+{
+    self.alertView.layer.cornerRadius = radius;
+}
+
 - (void)setWindowTintColor:(UIColor *)color
 {
     self.backgroundView.backgroundColor = color;
