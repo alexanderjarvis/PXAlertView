@@ -100,8 +100,17 @@
                              }
                          }];
     
-    [alert setCancelButtonBackgroundColor:[UIColor blueColor]];
-    [alert setOtherButtonBackgroundColor:[UIColor redColor]];
+    UIColor *blueNormal = [UIColor blueColor];
+    UIColor *blueSelected = [UIColor colorWithRed:0.5 green:0.5 blue:1 alpha:1];
+    [alert setCancelButtonNonSelectedBackgroundColor:blueNormal];
+    [alert setCancelButtonBackgroundColor:blueSelected];
+    
+    UIColor *redNormal = [UIColor redColor];
+    UIColor *redSelected = [UIColor colorWithRed:1 green:0.5 blue:0.5 alpha:1];
+    [alert setOtherButtonNonSelectedBackgroundColor:redNormal];
+    [alert setOtherButtonBackgroundColor:redSelected];
+    
+    [alert setAllButtonsTextColor:[UIColor whiteColor]];
 }
 
 - (IBAction)showTwoStackedButtonAlertView:(id)sender
@@ -119,8 +128,17 @@
                                                   }
                                               }];
     
-    [alert setCancelButtonBackgroundColor:[UIColor blueColor]];
-    [alert setOtherButtonBackgroundColor:[UIColor redColor]];
+    UIColor *blueNormal = [UIColor blueColor];
+    UIColor *blueSelected = [UIColor colorWithRed:0.5 green:0.5 blue:1 alpha:1];
+    [alert setCancelButtonNonSelectedBackgroundColor:blueNormal];
+    [alert setCancelButtonBackgroundColor:blueSelected];
+    
+    UIColor *redNormal = [UIColor redColor];
+    UIColor *redSelected = [UIColor colorWithRed:1 green:0.5 blue:0.5 alpha:1];
+    [alert setOtherButtonNonSelectedBackgroundColor:redNormal];
+    [alert setOtherButtonBackgroundColor:redSelected];
+    
+    [alert setAllButtonsTextColor:[UIColor whiteColor]];
 }
 
 - (IBAction)showMultiButtonAlertView:(id)sender
