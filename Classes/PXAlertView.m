@@ -126,11 +126,13 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 	[self.alertView addConstraints:constraints];
 
+	NSLayoutConstraint *maxHeightConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self.alertView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+
 	NSLayoutConstraint *centerV = [NSLayoutConstraint constraintWithItem:self.alertView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
 
 	NSLayoutConstraint *centerH = [NSLayoutConstraint constraintWithItem:self.alertView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
 
-	[self.view addConstraints:@[centerH, centerV]];
+	[self.view addConstraints:@[centerH, centerV, maxHeightConstraint]];
 
 	self.alertView.backgroundColor = [UIColor colorWithWhite:0.25 alpha:1];
 	self.alertView.layer.cornerRadius = 8.0;

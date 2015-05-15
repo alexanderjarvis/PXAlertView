@@ -188,7 +188,7 @@
 - (IBAction)showCopyOfUIAlertView:(id)sender
 {
     PXAlertView *alertView = [PXAlertView showAlertWithTitle:@"Some really long title that should wrap to two lines at least. But does it cut off after a certain number of lines? Does it? Does it really? And then what? Does it truncate? Nooo it still hasn't cut off yet. Wow this AlertView can take a lot of characters."
-                                                     message:@"How long does the standard UIAlertView stretch to? This should give a good estimation"
+                                                     message:@"How long does the standard UIAlertView stretch to? This should give a good estimation.  But it will most probably clip when in Landscape on 4 inch iPhones."
                                                  cancelTitle:@"Cancel"
                                                   otherTitle:@"Ok"
                                                  contentView:nil
@@ -199,7 +199,7 @@
 - (IBAction)showLargeUIAlertView:(id)sender
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Some really long title that should wrap to two lines at least. But does it cut off after a certain number of lines? Does it? Does it really? And then what? Does it truncate? Nooo it still hasn't cut off yet. Wow this AlertView can take a lot of characters."
-                               message:@"How long does the standard UIAlertView stretch to? This should give a good estimation"
+                               message:@"How long does the standard UIAlertView stretch to? This should give a good estimation. But it will most probably clip when in Landscape on 4 inch iPhones."
                               delegate:self
                      cancelButtonTitle:@"Cancel"
                      otherButtonTitles:@"Ok", nil];
