@@ -120,6 +120,11 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
 
 #pragma mark - configuration
 
+/* set absolute width - disables previously set margin */
+- (void)setAlertViewWidth:(CGFloat)width;
+/* set margin from screen sides - disables previously set width */
+- (void)setAlertViewSideMargin:(CGFloat)margin;
+
 - (void)setWindowTintColor:(UIColor *)color;
 - (void)setBackgroundColor:(UIColor *)color;
 
@@ -133,11 +138,9 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
 - (void)setOtherButtonBackgroundColor:(UIColor *)color;
 - (void)setAllButtonsBackgroundColor:(UIColor *)color;
 
-
 - (void)setCancelButtonColor:(UIColor *)color;
 - (void)setOtherButtonColor:(UIColor *)color;
 - (void)setAllButtonsColor:(UIColor *)color;
-
 
 - (void)setCancelButtonTextColor:(UIColor *)color;
 - (void)setAllButtonsTextColor:(UIColor *)color;

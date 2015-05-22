@@ -55,6 +55,9 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 @property (nonatomic) UITapGestureRecognizer *tap;
 @property (nonatomic, copy) void (^completion)(BOOL cancelled, NSInteger buttonIndex);
 
+@property (weak, nonatomic) NSLayoutConstraint *widthConstraint;
+@property (weak, nonatomic) NSLayoutConstraint *marginConstraint;
+
 @property (strong, nonatomic) UIColor *cancelButtonPressedColor;
 @property (strong, nonatomic) UIColor *otherButtonPressedColor;
 @property (strong, nonatomic) UIColor *allButtonPressedColor;
@@ -123,7 +126,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 	[self.view addSubview:self.alertView];
 
 	constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[view(alertViewWidth)]" options:0 metrics:@{@"alertViewWidth":@(AlertViewWidth)} views:@{@"view":self.alertView}];
-
+	_widthConstraint = constraints[0];
 	[self.alertView addConstraints:constraints];
 
 	NSLayoutConstraint *maxHeightConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self.alertView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
@@ -679,6 +682,35 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 }
 
 #pragma mark - customization
+
+-(void)setAlertViewWidth:(CGFloat)width {
+	if (_widthConstraint) {
+		/* adjust width */
+		[_widthConstraint setConstant:width];
+		[self.view layoutIfNeeded];
+	}
+	else {
+		/* replace margin with absolute width */
+		[self.view removeConstraint:_marginConstraint];
+		NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[view(alertViewWidth)]" options:0 metrics:@{@"alertViewWidth":@(AlertViewWidth)} views:@{@"view":self.alertView}];
+		_widthConstraint = constraints[0];
+		[self.alertView addConstraints:constraints];
+	}
+}
+
+-(void)setAlertViewSideMargin:(CGFloat)margin {
+	if (_marginConstraint) {
+		/* adjust margin */
+		[_marginConstraint setConstant:margin];
+	}
+	else {
+		/* replace width with margin */
+		[self.alertView removeConstraint:_widthConstraint];
+		NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-(margin)-[view]" options:0 metrics:@{@"margin":@(margin)} views:@{@"view":self.alertView}];
+		[self.view addConstraints:constraints];
+	}
+}
+
 
 - (void)useDefaultIOS7Style {
 	[self setTapToDismissEnabled:NO];
