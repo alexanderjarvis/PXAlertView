@@ -883,6 +883,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 
 -(void)setCornerRadius:(CGFloat)cornerRadius {
 	[self.alertView.layer setCornerRadius:cornerRadius];
+	[self.alertView setClipsToBounds:cornerRadius > 0];
 }
 
 @end
