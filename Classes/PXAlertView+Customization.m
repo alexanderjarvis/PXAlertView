@@ -46,6 +46,11 @@ void * const kNonSelectedAllBGKey = (void * const) &kNonSelectedAllBGKey;
     self.alertView.layer.cornerRadius = radius;
 }
 
+- (void)setCenter:(CGPoint)center
+{
+	self.alertView.center = center;
+}
+
 - (void)setWindowTintColor:(UIColor *)color
 {
     self.backgroundView.backgroundColor = color;
