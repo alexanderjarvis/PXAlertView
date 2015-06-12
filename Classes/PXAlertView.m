@@ -596,13 +596,14 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 						   message:(NSString *)message
 					   cancelTitle:(NSString *)cancelTitle
 					   otherTitles:(NSArray *)otherTitles
+                        buttonsShouldStack:(BOOL)shouldStack
 						completion:(PXAlertViewCompletionBlock)completion
 {
 	PXAlertView *alertView = [[self alloc] initWithTitle:title
 												 message:message
 											 cancelTitle:cancelTitle
 											 otherTitles:otherTitles
-									  buttonsShouldStack:NO
+									  buttonsShouldStack:shouldStack
 											 contentView:nil
 											  completion:completion];
 	[alertView show];
@@ -651,6 +652,7 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 						   message:(NSString *)message
 					   cancelTitle:(NSString *)cancelTitle
 					   otherTitles:(NSArray *)otherTitles
+                        buttonsShouldStack:(BOOL)shouldStack
 					   contentView:(UIView *)view
 						completion:(PXAlertViewCompletionBlock)completion
 {
@@ -658,7 +660,7 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 												 message:message
 											 cancelTitle:cancelTitle
 											 otherTitles:otherTitles
-									  buttonsShouldStack:NO
+									  buttonsShouldStack:shouldStack
 											 contentView:view
 											  completion:completion];
 	[alertView show];

@@ -147,6 +147,7 @@
                             message:@"How would you like it?"
                         cancelTitle:@"No thanks"
                         otherTitles:@[ @"Too Hot", @"Luke Warm", @"Quite nippy" ]
+                                      buttonsShouldStack:YES
                          completion:^(BOOL cancelled, NSInteger buttonIndex) {
                              if (cancelled) {
                                  NSLog(@"Cancel button pressed");
