@@ -403,6 +403,11 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 	[self.view removeFromSuperview];
 }
 
+- (void)dismiss
+{
+	[self dismiss:nil];
+}
+
 - (void)dismiss:(id)sender
 {
 	[self dismiss:sender animated:YES];
