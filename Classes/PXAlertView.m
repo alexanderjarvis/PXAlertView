@@ -106,7 +106,7 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
         self.alertView = [[UIView alloc] init];
         self.alertView.backgroundColor = [UIColor colorWithWhite:0.25 alpha:1];
         self.alertView.layer.cornerRadius = 8.0;
-        self.alertView.layer.opacity = .95;
+        self.alertView.layer.opacity = 1.0;
         self.alertView.clipsToBounds = YES;
         [self.view addSubview:self.alertView];
         
