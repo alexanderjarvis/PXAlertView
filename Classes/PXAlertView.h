@@ -48,6 +48,7 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
                            message:(NSString *)message
                        cancelTitle:(NSString *)cancelTitle
                        otherTitles:(NSArray *)otherTitles
+                        buttonsShouldStack:(BOOL)shouldStack
                         completion:(PXAlertViewCompletionBlock)completion;
 
 
@@ -73,6 +74,7 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
                            message:(NSString *)message
                        cancelTitle:(NSString *)cancelTitle
                        otherTitles:(NSArray *)otherTitles
+                        buttonsShouldStack:(BOOL)shouldStack
                        contentView:(UIView *)view
                         completion:(PXAlertViewCompletionBlock)completion;
 
