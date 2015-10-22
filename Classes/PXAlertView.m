@@ -61,6 +61,17 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 	return nil;
 }
 
+- (UIWindow *)findMainWindow
+{
+	NSArray *windows = [[UIApplication sharedApplication] windows];
+	for (UIWindow *window in windows) {
+		if (window.keyWindow) {
+			return window;
+		}
+	}
+	return nil;
+}
+
 - (id)initWithTitle:(NSString *)title
 			message:(NSString *)message
 		cancelTitle:(NSString *)cancelTitle
@@ -88,7 +99,7 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 {
 	self = [super init];
 	if (self) {
-		self.mainWindow = [self windowWithLevel:UIWindowLevelNormal];
+        self.mainWindow = [self findMainWindow];
 		
 		self.alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 		self.alertWindow.windowLevel = UIWindowLevelAlert;
