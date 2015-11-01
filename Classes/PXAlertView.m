@@ -429,7 +429,7 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 			NSInteger buttonIndex = -1;
 			if (self.buttons) {
 				NSUInteger index = [self.buttons indexOfObject:sender];
-				if (buttonIndex != NSNotFound) {
+				if (index != NSNotFound) {
 					buttonIndex = index;
 				}
 			}
