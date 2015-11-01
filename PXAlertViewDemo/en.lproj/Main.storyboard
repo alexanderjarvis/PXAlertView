@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="PXViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GdN-WN-heA"/>
+                        <viewControllerLayoutGuide type="bottom" id="qmg-kH-QoE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sxs-9L-zfe">
+                                <rect key="frame" x="209" y="20" width="180" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="k5l-7T-cto"/>
+                                </constraints>
+                                <state key="normal" title="Show Simple Alert View">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showSimpleAlertView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="biv-OH-W6P"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="klm-s3-XWV">
+                                <rect key="frame" x="209" y="96" width="180" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Show Large Alert View">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showLargeAlertView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="aGN-67-nUQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="prx-IR-UCM">
+                                <rect key="frame" x="192" y="134" width="215" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="215" id="VJe-g9-BjC"/>
+                                </constraints>
+                                <state key="normal" title="Show Two Button Alert View">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showTwoButtonAlertView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lZg-H5-D4D"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dcy-YM-HVZ">
+                                <rect key="frame" x="170" y="248" width="259" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="259" id="7Tk-e9-tWY"/>
+                                </constraints>
+                                <state key="normal" title="Show Alert View with Content View">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showAlertViewWithContentView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="B4S-6k-HhW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4oJ-6h-3Pd">
+                                <rect key="frame" x="170" y="433" width="259" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Show copy of UIAlertView">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showCopyOfUIAlertView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ZTs-Tt-ukM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7C7-yF-Kag">
+                                <rect key="frame" x="170" y="471" width="259" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Show UIAlertView">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showLargeUIAlertView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="4qx-pF-dmS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oZ2-EW-fof">
+                                <rect key="frame" x="170" y="286" width="259" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Show 5 Stacked Alert Views">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="show5StackedAlertViews:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="wgd-lv-cSh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xtq-kE-KDu">
+                                <rect key="frame" x="175" y="58" width="249" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="249" id="pdS-S0-xmk"/>
+                                </constraints>
+                                <state key="normal" title="Show Simple Customized Alert View">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showSimpleCustomizedAlertView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="8op-uQ-MbS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tlg-G8-HMf">
+                                <rect key="frame" x="192" y="210" width="215" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Show Multi Button Alert View">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showMultiButtonAlertView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="CYW-12-lCi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nOK-rb-Oz8">
+                                <rect key="frame" x="170" y="324" width="259" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Show with no tap to dismiss">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showNoTapToDismiss:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="6Pg-L9-Qqq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQh-O3-Wyp">
+                                <rect key="frame" x="159" y="362" width="282" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="282" id="Wvh-9Y-LaY"/>
+                                </constraints>
+                                <state key="normal" title="Dismiss with no animation after 1 second">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissWithNoAnimationAfter1Second:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="F5b-HV-Hie"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yet-HP-s6d">
+                                <rect key="frame" x="176" y="400" width="250" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="bJp-sk-IEP"/>
+                                </constraints>
+                                <state key="normal" title="Alert inception (alert inside an alert)">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showAlertInsideAlertCompletion:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="MMU-k9-rIj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rY7-V0-qXG">
+                                <rect key="frame" x="172" y="172" width="254" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="254" id="MdX-Wi-iNU"/>
+                                </constraints>
+                                <state key="normal" title="Show Two Stacked Button Alert View">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showTwoStackedButtonAlertView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="zG7-n1-X68"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Dcy-YM-HVZ" firstAttribute="top" secondItem="Tlg-G8-HMf" secondAttribute="bottom" constant="8" symbolic="YES" id="2IK-3W-avO"/>
+                            <constraint firstItem="Dcy-YM-HVZ" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="2TI-9c-37R"/>
+                            <constraint firstItem="Yet-HP-s6d" firstAttribute="trailing" secondItem="rY7-V0-qXG" secondAttribute="trailing" id="5Ky-XK-c0D"/>
+                            <constraint firstItem="4oJ-6h-3Pd" firstAttribute="trailing" secondItem="nOK-rb-Oz8" secondAttribute="trailing" id="6EY-Wb-Y13"/>
+                            <constraint firstItem="klm-s3-XWV" firstAttribute="leading" secondItem="Sxs-9L-zfe" secondAttribute="leading" id="72L-mc-lYI"/>
+                            <constraint firstItem="rQh-O3-Wyp" firstAttribute="centerX" secondItem="nOK-rb-Oz8" secondAttribute="centerX" id="8Jk-KT-xLc"/>
+                            <constraint firstItem="prx-IR-UCM" firstAttribute="centerX" secondItem="klm-s3-XWV" secondAttribute="centerX" id="8YR-K7-tT2"/>
+                            <constraint firstItem="Tlg-G8-HMf" firstAttribute="top" secondItem="rY7-V0-qXG" secondAttribute="bottom" constant="8" symbolic="YES" id="9I7-cc-iwZ"/>
+                            <constraint firstItem="7C7-yF-Kag" firstAttribute="leading" secondItem="4oJ-6h-3Pd" secondAttribute="leading" id="A15-2W-lqt"/>
+                            <constraint firstItem="7C7-yF-Kag" firstAttribute="top" secondItem="4oJ-6h-3Pd" secondAttribute="bottom" constant="8" symbolic="YES" id="Agh-rX-sJ4"/>
+                            <constraint firstItem="rY7-V0-qXG" firstAttribute="top" secondItem="prx-IR-UCM" secondAttribute="bottom" constant="8" symbolic="YES" id="FQg-Xu-QCD"/>
+                            <constraint firstItem="4oJ-6h-3Pd" firstAttribute="leading" secondItem="nOK-rb-Oz8" secondAttribute="leading" id="Fp5-oX-wQi"/>
+                            <constraint firstItem="Tlg-G8-HMf" firstAttribute="leading" secondItem="prx-IR-UCM" secondAttribute="leading" id="GAA-S6-5Zl"/>
+                            <constraint firstItem="4oJ-6h-3Pd" firstAttribute="top" secondItem="Yet-HP-s6d" secondAttribute="bottom" constant="3" id="KWJ-QT-s4V"/>
+                            <constraint firstItem="oZ2-EW-fof" firstAttribute="leading" secondItem="nOK-rb-Oz8" secondAttribute="leading" id="Y3F-3W-u48"/>
+                            <constraint firstItem="klm-s3-XWV" firstAttribute="top" secondItem="xtq-kE-KDu" secondAttribute="bottom" constant="8" symbolic="YES" id="Ys3-s8-dhs"/>
+                            <constraint firstItem="oZ2-EW-fof" firstAttribute="trailing" secondItem="Dcy-YM-HVZ" secondAttribute="trailing" id="a7b-ed-lPB"/>
+                            <constraint firstItem="xtq-kE-KDu" firstAttribute="top" secondItem="Sxs-9L-zfe" secondAttribute="bottom" constant="8" symbolic="YES" id="bd3-kX-xB2"/>
+                            <constraint firstItem="Yet-HP-s6d" firstAttribute="top" secondItem="rQh-O3-Wyp" secondAttribute="bottom" constant="8" symbolic="YES" id="d7W-OA-z6c"/>
+                            <constraint firstItem="Sxs-9L-zfe" firstAttribute="trailing" secondItem="klm-s3-XWV" secondAttribute="trailing" id="dZR-zT-MxE"/>
+                            <constraint firstItem="Sxs-9L-zfe" firstAttribute="centerX" secondItem="xtq-kE-KDu" secondAttribute="centerX" id="eIB-hX-PnZ"/>
+                            <constraint firstItem="rY7-V0-qXG" firstAttribute="centerX" secondItem="prx-IR-UCM" secondAttribute="centerX" id="el0-7l-imQ"/>
+                            <constraint firstItem="nOK-rb-Oz8" firstAttribute="trailing" secondItem="oZ2-EW-fof" secondAttribute="trailing" id="flv-Ba-Mlj"/>
+                            <constraint firstItem="nOK-rb-Oz8" firstAttribute="top" secondItem="oZ2-EW-fof" secondAttribute="bottom" constant="8" symbolic="YES" id="g67-E5-kYT"/>
+                            <constraint firstItem="prx-IR-UCM" firstAttribute="top" secondItem="klm-s3-XWV" secondAttribute="bottom" constant="8" symbolic="YES" id="gxP-bF-EKh"/>
+                            <constraint firstItem="rQh-O3-Wyp" firstAttribute="top" secondItem="nOK-rb-Oz8" secondAttribute="bottom" constant="8" symbolic="YES" id="hbE-Ia-Ljh"/>
+                            <constraint firstItem="Sxs-9L-zfe" firstAttribute="top" secondItem="GdN-WN-heA" secondAttribute="bottom" id="qC5-6L-Kgo"/>
+                            <constraint firstItem="Tlg-G8-HMf" firstAttribute="centerX" secondItem="Dcy-YM-HVZ" secondAttribute="centerX" id="qWW-54-3xE"/>
+                            <constraint firstItem="4oJ-6h-3Pd" firstAttribute="trailing" secondItem="7C7-yF-Kag" secondAttribute="trailing" id="roL-0S-jr4"/>
+                            <constraint firstItem="Tlg-G8-HMf" firstAttribute="trailing" secondItem="prx-IR-UCM" secondAttribute="trailing" id="vuF-YB-eKa"/>
+                            <constraint firstItem="oZ2-EW-fof" firstAttribute="top" secondItem="Dcy-YM-HVZ" secondAttribute="bottom" constant="8" symbolic="YES" id="xXa-pO-7Ld"/>
+                            <constraint firstItem="oZ2-EW-fof" firstAttribute="leading" secondItem="Dcy-YM-HVZ" secondAttribute="leading" id="yDI-Ln-hyv"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="755" y="393"/>
+        </scene>
+    </scenes>
+</document>

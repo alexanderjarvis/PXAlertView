@@ -16,7 +16,7 @@
 		FA11B68C17F3867100236222 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA11B68A17F3867100236222 /* InfoPlist.strings */; };
 		FA11B68E17F3867100236222 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B68D17F3867100236222 /* main.m */; };
 		FA11B69217F3867100236222 /* PXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B69117F3867100236222 /* PXAppDelegate.m */; };
-		FA11B69517F3867100236222 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA11B69317F3867100236222 /* Main_iPhone.storyboard */; };
+		FA11B69517F3867100236222 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA11B69317F3867100236222 /* Main.storyboard */; };
 		FA11B69B17F3867100236222 /* PXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B69A17F3867100236222 /* PXViewController.m */; };
 		FA11B69D17F3867100236222 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA11B69C17F3867100236222 /* Images.xcassets */; };
 		FA11B6A417F3867100236222 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA11B6A317F3867100236222 /* XCTest.framework */; };
@@ -25,6 +25,7 @@
 		FA11B6AE17F3867100236222 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA11B6AC17F3867100236222 /* InfoPlist.strings */; };
 		FA11B6B017F3867100236222 /* PXAlertViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA11B6AF17F3867100236222 /* PXAlertViewDemoTests.m */; };
 		FA53E9561809B3BC001E6B60 /* PXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA53E9551809B3BC001E6B60 /* PXAlertView.m */; };
+		FA54BA551BE6B733002F6411 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA54BA541BE6B733002F6411 /* LaunchScreen.storyboard */; };
 		FADF87D717F99E950059B2B8 /* ExampleImage.png in Resources */ = {isa = PBXBuildFile; fileRef = FADF87D617F99E950059B2B8 /* ExampleImage.png */; };
 /* End PBXBuildFile section */
 
@@ -61,9 +62,10 @@
 		FA11B6AB17F3867100236222 /* PXAlertViewDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PXAlertViewDemoTests-Info.plist"; sourceTree = "<group>"; };
 		FA11B6AD17F3867100236222 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FA11B6AF17F3867100236222 /* PXAlertViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PXAlertViewDemoTests.m; sourceTree = "<group>"; };
-		FA53E9511809A8FB001E6B60 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		FA53E9511809A8FB001E6B60 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FA53E9541809B3BC001E6B60 /* PXAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PXAlertView.h; sourceTree = "<group>"; };
 		FA53E9551809B3BC001E6B60 /* PXAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PXAlertView.m; sourceTree = "<group>"; };
+		FA54BA541BE6B733002F6411 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FADF87D617F99E950059B2B8 /* ExampleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ExampleImage.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -127,7 +129,8 @@
 			children = (
 				FA11B69017F3867100236222 /* PXAppDelegate.h */,
 				FA11B69117F3867100236222 /* PXAppDelegate.m */,
-				FA11B69317F3867100236222 /* Main_iPhone.storyboard */,
+				FA54BA541BE6B733002F6411 /* LaunchScreen.storyboard */,
+				FA11B69317F3867100236222 /* Main.storyboard */,
 				FA11B69917F3867100236222 /* PXViewController.h */,
 				FA11B69A17F3867100236222 /* PXViewController.m */,
 				FA11B69C17F3867100236222 /* Images.xcassets */,
@@ -258,7 +261,8 @@
 			files = (
 				FA11B69D17F3867100236222 /* Images.xcassets in Resources */,
 				FADF87D717F99E950059B2B8 /* ExampleImage.png in Resources */,
-				FA11B69517F3867100236222 /* Main_iPhone.storyboard in Resources */,
+				FA11B69517F3867100236222 /* Main.storyboard in Resources */,
+				FA54BA551BE6B733002F6411 /* LaunchScreen.storyboard in Resources */,
 				FA11B68C17F3867100236222 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,12 +319,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		FA11B69317F3867100236222 /* Main_iPhone.storyboard */ = {
+		FA11B69317F3867100236222 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				FA53E9511809A8FB001E6B60 /* en */,
 			);
-			name = Main_iPhone.storyboard;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		FA11B6AC17F3867100236222 /* InfoPlist.strings */ = {
