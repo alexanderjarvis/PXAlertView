@@ -7,6 +7,7 @@
 //
 
 #import "PXAlertView.h"
+#import "TTTAttributedLabel.h"
 
 @interface PXAlertViewStack : NSObject
 
@@ -27,7 +28,7 @@ static const CGFloat AlertViewLineLayerWidth = 0.5;
 static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 
 
-@interface PXAlertView ()
+@interface PXAlertView () <TTTAttributedLabel>
 
 @property (nonatomic) BOOL buttonsShouldStack;
 @property (nonatomic) UIWindow *mainWindow;
@@ -35,8 +36,9 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 @property (nonatomic) UIView *backgroundView;
 @property (nonatomic) UIView *alertView;
 @property (nonatomic) UILabel *titleLabel;
+@property (nonatomic) UIView *contentView;
 @property (nonatomic) UIScrollView *messageScrollView;
-@property (nonatomic) UILabel *messageLabel;
+@property (nonatomic) TTTAttributedLabel *messageLabel;
 @property (nonatomic) UIButton *cancelButton;
 @property (nonatomic) UIButton *otherButton;
 @property (nonatomic) NSArray *buttons;
@@ -146,8 +148,13 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
             44}];
         self.messageScrollView.scrollEnabled = YES;
         
-        self.messageLabel = [[UILabel alloc] initWithFrame:(CGRect){0, 0,
+        self.messageLabel = [[TTTAttributedLabel alloc] initWithFrame:(CGRect){0, 0,
             self.messageScrollView.frame.size}];
+        self.messageLabel.delegate = self;
+        self.messageLabel.linkAttributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:15.0],
+                                             NSForegroundColorAttributeName: [UIColor darkGrayColor],
+                                             NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone),
+                                             };
         self.messageLabel.text = message;
         self.messageLabel.backgroundColor = [UIColor clearColor];
         self.messageLabel.textColor = [UIColor whiteColor];
@@ -723,6 +730,28 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 - (void)setTapToDismissEnabled:(BOOL)enabled
 {
     self.tap.enabled = enabled;
+}
+
+- (void)addLinkToStringInMessage:(NSString *)stringInMessage URL:(NSURL *)URL
+{
+    NSRange range = [self.messageLabel.text rangeOfString:stringInMessage];
+    
+    [self.messageLabel setText:self.messageLabel.text afterInheritingLabelAttributesAndConfiguringWithBlock:nil];
+    
+    [self.messageLabel addLinkToURL:URL withRange:range];
+}
+
+// Don't ask.......
+- (void)fixTTTAttributedLabelFormat
+{
+    [self.messageLabel setText:self.messageLabel.text afterInheritingLabelAttributesAndConfiguringWithBlock:nil];
+}
+
+#pragma mark - TTTAttributedLabelDelegate
+
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
+{
+    NSLog(@"TEST");
 }
 
 @end

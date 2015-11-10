@@ -7,6 +7,7 @@
 //
 
 #import "PXAlertView+Customization.h"
+#import "TTTAttributedLabel.h"
 #import <objc/runtime.h>
 
 void * const kCancelBGKey = (void * const) &kCancelBGKey;
@@ -21,7 +22,7 @@ void * const kNonSelectedAllBGKey = (void * const) &kNonSelectedAllBGKey;
 @property (nonatomic) UIView *backgroundView;
 @property (nonatomic) UIView *alertView;
 @property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UILabel *messageLabel;
+@property (nonatomic) TTTAttributedLabel *messageLabel;
 @property (nonatomic) UIButton *cancelButton;
 @property (nonatomic) UIButton *otherButton;
 @property (nonatomic) NSArray *buttons;
@@ -205,4 +206,5 @@ void * const kNonSelectedAllBGKey = (void * const) &kNonSelectedAllBGKey;
     [self.otherButton setTitleColor:color forState:UIControlStateNormal];
     [self.otherButton setTitleColor:color forState:UIControlStateHighlighted];
 }
+
 @end

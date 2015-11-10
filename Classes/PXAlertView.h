@@ -13,7 +13,6 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
 @interface PXAlertView : UIViewController
 
 @property (nonatomic, getter = isVisible) BOOL visible;
-@property (nonatomic) UIView *contentView;
 
 + (instancetype)showAlertWithTitle:(NSString *)title;
 
@@ -49,7 +48,7 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
                            message:(NSString *)message
                        cancelTitle:(NSString *)cancelTitle
                        otherTitles:(NSArray *)otherTitles
-                        buttonsShouldStack:(BOOL)shouldStack
+                buttonsShouldStack:(BOOL)shouldStack
                         completion:(PXAlertViewCompletionBlock)completion;
 
 
@@ -75,7 +74,7 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
                            message:(NSString *)message
                        cancelTitle:(NSString *)cancelTitle
                        otherTitles:(NSArray *)otherTitles
-                        buttonsShouldStack:(BOOL)shouldStack
+                buttonsShouldStack:(BOOL)shouldStack
                        contentView:(UIView *)view
                         completion:(PXAlertViewCompletionBlock)completion;
 
@@ -96,5 +95,19 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex)
  * This method enables or disables this feature.
  */
 - (void)setTapToDismissEnabled:(BOOL)enabled;
+
+- (id)initWithTitle:(NSString *)title
+            message:(NSString *)message
+        cancelTitle:(NSString *)cancelTitle
+        otherTitles:(NSArray *)otherTitles
+ buttonsShouldStack:(BOOL)shouldstack
+        contentView:(UIView *)contentView
+         completion:(PXAlertViewCompletionBlock)completion;
+
+- (void)addLinkToStringInMessage:(NSString *)string URL:(NSURL *)URL;
+
+- (void)show;
+
+- (void)fixTTTAttributedLabelFormat;
 
 @end
