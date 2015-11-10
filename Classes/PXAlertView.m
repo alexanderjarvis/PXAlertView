@@ -36,7 +36,6 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 @property (nonatomic) UIView *backgroundView;
 @property (nonatomic) UIView *alertView;
 @property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UIView *contentView;
 @property (nonatomic) UIScrollView *messageScrollView;
 @property (nonatomic) TTTAttributedLabel *messageLabel;
 @property (nonatomic) UIButton *cancelButton;
