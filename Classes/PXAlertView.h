@@ -12,10 +12,17 @@
 
 typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex, PXAlertView *alert);
 
+@protocol PXAlertViewDelegate <NSObject>
+
+- (void)alertViewDidSelectLinkWithURL:(NSURL *)url;
+
+@end
+
 @interface PXAlertView : UIViewController
 
 @property (nonatomic, getter = isVisible) BOOL visible;
 @property (nonatomic) UIView *contentView;
+@property (nonatomic, weak) id<PXAlertViewDelegate> delegate;
 
 + (instancetype)showAlertWithTitle:(NSString *)title;
 

@@ -750,7 +750,9 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
 {
-    NSLog(@"TEST");
+    if ([self.delegate respondsToSelector:@selector(alertViewDidSelectLinkWithURL:)]) {
+        [self.delegate alertViewDidSelectLinkWithURL:url];
+    }
 }
 
 @end
