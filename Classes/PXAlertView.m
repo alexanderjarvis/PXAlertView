@@ -44,7 +44,7 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 @property (nonatomic) CGFloat buttonsY;
 @property (nonatomic) CALayer *verticalLine;
 @property (nonatomic) UITapGestureRecognizer *tap;
-@property (nonatomic, copy) void (^completion)(BOOL cancelled, NSInteger buttonIndex);
+@property (nonatomic, copy) void (^completion)(BOOL cancelled, NSInteger buttonIndex, PXAlertView *alert);
 
 @end
 
@@ -432,7 +432,7 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
                     buttonIndex = index;
                 }
             }
-            self.completion(cancelled, buttonIndex);
+            self.completion(cancelled, buttonIndex, self);
         }
         
         if ([[[PXAlertViewStack sharedInstance] alertViews] count] == 1) {
