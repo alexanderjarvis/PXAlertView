@@ -20,7 +20,7 @@
 
 @end
 
-#define AlertViewWidth (self.view.bound.size.width - 20.0)
+#define AlertViewWidth (self.view.bounds.size.width - 20.0)
 static const CGFloat AlertViewContentMargin = 20;
 static const CGFloat AlertViewVerticalElementSpace = 20;
 static const CGFloat AlertViewButtonHeight = 50.0f;
