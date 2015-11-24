@@ -21,11 +21,11 @@
 @end
 
 static const CGFloat AlertViewWidth = 270.0;
-static const CGFloat AlertViewContentMargin = 9;
-static const CGFloat AlertViewVerticalElementSpace = 10;
+static const CGFloat AlertViewContentMargin = 20;
+static const CGFloat AlertViewVerticalElementSpace = 20;
 static const CGFloat AlertViewButtonHeight = 50.0f;
 static const CGFloat AlertViewLineLayerWidth = 0.5;
-static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
+static const CGFloat AlertViewVerticalEdgeMinMargin = 20;
 
 
 @interface PXAlertView () <TTTAttributedLabel>
