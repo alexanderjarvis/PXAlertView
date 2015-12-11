@@ -676,7 +676,7 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 20;
     [button setTitle:title forState:UIControlStateNormal];
     
     if (!self.cancelButton) {
-        button.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+        button.titleLabel.font = [UIFont systemFontOfSize:17];
         self.cancelButton = button;
         self.cancelButton.frame = CGRectMake(0, self.buttonsY, AlertViewWidth, AlertViewButtonHeight);
     } else if (self.buttonsShouldStack) {
