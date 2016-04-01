@@ -383,6 +383,11 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 20;
     [[PXAlertViewStack sharedInstance] push:self];
 }
 
+- (void)dismiss
+{
+    [self dismiss:nil];
+}
+
 - (void)showInternal
 {
     [self.alertWindow addSubview:self.view];

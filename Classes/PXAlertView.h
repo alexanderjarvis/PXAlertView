@@ -117,6 +117,7 @@ typedef void(^PXAlertViewCompletionBlock)(BOOL cancelled, NSInteger buttonIndex,
 - (void)addLinkToStringInMessage:(NSString *)string URL:(NSURL *)URL;
 
 - (void)show;
+- (void)dismiss;
 
 - (void)fixTTTAttributedLabelFormat;
 
