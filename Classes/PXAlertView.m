@@ -385,7 +385,8 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 20;
 
 - (void)dismiss
 {
-    [self dismiss:nil];
+    self.completion = nil;
+    [self dismiss:nil animated:NO];
 }
 
 - (void)showInternal
@@ -414,7 +415,6 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 20;
 
 - (void)dismiss:(id)sender
 {
-    self.completion = nil;
     [self dismiss:sender animated:YES];
 }
 
