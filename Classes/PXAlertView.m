@@ -221,12 +221,9 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 		
 		[self setupGestures];
 		
-		if ((self = [super init])) {
-			NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-			[center addObserver:self selector:@selector(keyboardWillShown:) name:UIKeyboardWillShowNotification object:nil];
-			[center addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-		}
-		return self;
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(keyboardWillShown:) name:UIKeyboardWillShowNotification object:nil];
+        [center addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 	}
 	return self;
 }
