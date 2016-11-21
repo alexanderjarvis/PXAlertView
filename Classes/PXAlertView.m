@@ -264,14 +264,23 @@ static const CGFloat AlertViewVerticalEdgeMinMargin = 25;
 
 - (CGRect)frameForOrientation
 {
-	UIWindow *window = [[UIApplication sharedApplication].windows count] > 0 ? [[UIApplication sharedApplication].windows objectAtIndex:0] : nil;
-	if (!window)
-		window = [UIApplication sharedApplication].keyWindow;
-	if([[window subviews] count] > 0)
-	{
-		return [[[window subviews] objectAtIndex:0] bounds];
-	}
-	return [[self windowWithLevel:UIWindowLevelNormal] bounds];
+    
+#ifdef __IPHONE_8_0
+    return [UIScreen mainScreen].bounds;
+#else
+
+    UIWindow *window = [[UIApplication sharedApplication].windows count] > 0 ? [[UIApplication sharedApplication].windows objectAtIndex:0] : nil;
+    if (!window)
+        window = [UIApplication sharedApplication].keyWindow;
+    if([[window subviews] count] > 0)
+    {
+        return [[[window subviews] objectAtIndex:0] bounds];
+    }
+    return [[self windowWithLevel:UIWindowLevelNormal] bounds];
+    
+#endif
+    
+	
 }
 
 - (CGRect)adjustLabelFrameHeight:(UILabel *)label
